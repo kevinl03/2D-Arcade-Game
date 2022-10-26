@@ -1,4 +1,4 @@
-package project.src.main.java.Entities;
+package Entities;
 
 public class StaticEntity extends Position {
     protected int start_time; //reads the timer 
