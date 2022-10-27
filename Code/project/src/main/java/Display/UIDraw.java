@@ -1,8 +1,11 @@
 package Display;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class UIDraw {
+public class UIDraw{
     StartDisplay sd;
     Graphics2D g2;
     Font titlefont;
@@ -11,6 +14,12 @@ public class UIDraw {
     private int centery = 7*60;
 
     public int select = 0;
+
+    JPanel buttonPanel;
+    JButton backButton;
+    JButton easyButton;
+    JButton mediumButton;
+    JButton hardButton;
 
     public UIDraw(StartDisplay sd) {
         this.sd = sd;
@@ -23,6 +32,16 @@ public class UIDraw {
         this.g2 = g2;
         if (sd.screens == sd.title) {
             drawTitle();
+        }
+
+        // Settings
+        if(sd.screens == sd.settings) {
+            drawSetting();
+        }
+
+        // Difficulty
+        if(sd.screens == sd.difficulty){
+            drawDifficulty();
         }
 
         // Gaming
@@ -57,7 +76,78 @@ public class UIDraw {
         }
     }
 
+    public void drawSetting(){
+    }
+
+    public void drawDifficulty(){
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(null);
+        backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Runnable backThread = new Runnable(){
+                    public void run() {
+                        System.out.println("Back Clicked");
+                        sd.screens = sd.title;
+                        sd.freeze = 0;
+                        buttonPanel.setVisible(false);
+                        //buttonPanel.remove(backButton);
+                        //buttonPanel.remove(easyButton);
+                    }
+                };
+                SwingUtilities.invokeLater(backThread);
+            }
+        });
+        easyButton = new JButton("Easy");
+        easyButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Runnable backThread = new Runnable(){
+                    public void run() {
+                        sd.challenge = 0;
+                        System.out.println(sd.challenge);
+                    }
+                };
+                SwingUtilities.invokeLater(backThread);
+            }
+        });
+        mediumButton = new JButton("Medium");
+        mediumButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Runnable backThread = new Runnable(){
+                    public void run() {
+                        sd.challenge = 1;
+                        System.out.println(sd.challenge);
+                    }
+                };
+                SwingUtilities.invokeLater(backThread);
+            }
+        });
+        hardButton = new JButton("Hard");
+        hardButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Runnable backThread = new Runnable(){
+                    public void run() {
+                        sd.challenge = 2;
+                        System.out.println(sd.challenge);
+                    }
+                };
+                SwingUtilities.invokeLater(backThread);
+            }
+        });
+        easyButton.setBounds(12*60,1*60,100,60);
+        mediumButton.setBounds(12*60,3*60,100,60);
+        hardButton.setBounds(12*60,5*60,100,60);
+        backButton.setBounds(12*60,10*60,100,60);
+        buttonPanel.add(easyButton);
+        buttonPanel.add(mediumButton);
+        buttonPanel.add(hardButton);
+        buttonPanel.add(backButton);
+        sd.Startup.add(buttonPanel);
+        sd.Startup.setVisible(true);
+    }
+
     public void drawGaming(){
         g2.drawImage(sd.squirrel_png, sd.updatecolumns * 60, sd.updaterows * 60, sd.pixelsize, sd.pixelsize, null);
     }
+
 }
