@@ -1,5 +1,6 @@
 package Logic;
 
+import Entities.Enemy;
 import Entities.Position;
 import Helpers.Direction;
 import Helpers.Node;
@@ -10,8 +11,32 @@ import java.util.Queue;
 
 public class EnemyLogic {
 
-    private void processEnemyMovement(){
-        //TODO utilize findShortestPath to adjust enemy posisition's
+    private void processEnemyMovement(Enemy[] enemies){
+        for (int i = 0; i < enemies.length; i++) {
+            char[][] temp = {{'c'}};
+            Direction nextMove = findShortestPath(temp , enemies[i]);
+            switch(nextMove){
+                case NORTH:
+                    enemies[i].incrementY();
+                    break;
+                case EAST:
+                    enemies[i].incrementX();
+                    break;
+                case SOUTH:
+                    enemies[i].decrementY();
+                    break;
+                case WEST:
+                    enemies[i].decrementX();
+                    break;
+                case NULL:
+                    break;
+
+            }
+            //TODO complete this step
+//            if(enemies[i].getX() == hero.x && enemies[i].getY() == hero.y){
+//                game over
+//            }
+        }
 
     };
 
