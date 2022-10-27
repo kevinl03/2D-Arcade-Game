@@ -1,4 +1,4 @@
-package project.src.main.java.Entities;
+package Entities;
 
 public class RegularReward extends Reward {
     

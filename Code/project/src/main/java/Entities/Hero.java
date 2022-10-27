@@ -14,4 +14,8 @@ public class Hero extends MovingEntity {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public void addScore(int score){this.score += score;}
+
+    public void deductScore(int damage){this.score -= damage;}
 }
