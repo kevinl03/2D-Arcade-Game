@@ -35,6 +35,13 @@ public class StartDisplay extends JPanel implements Runnable{
     public int settings = 2;
     public int difficulty = 3;
 
+    public int challenge = 0;   //   0-easy   1-medium   2-hard
+
+    public int freeze = 0;
+
+    public int count = 0;
+
+    static JFrame Startup;
 
     public void getSquirrel(){
         try {
@@ -55,8 +62,7 @@ public class StartDisplay extends JPanel implements Runnable{
 
 
     public static void main (String[] args){
-        //testShortestPath();
-        JFrame Startup = new JFrame();   //   New window
+        Startup = new JFrame();   //   New window
         Startup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   //   Exits when clicking top-right x
         Startup.setTitle("Hidden Squirrel: Peanuts and Acorns");
 
@@ -64,7 +70,6 @@ public class StartDisplay extends JPanel implements Runnable{
         Display.getSquirrel();
         Startup.add(Display);
         Startup.pack();   //   Window fits preferred size
-
         Startup.setLocationRelativeTo(null);   //   Opens window at default center of screen
         Startup.setVisible(true);   //   Show screen
         Display.screens = Display.title;
@@ -81,10 +86,11 @@ public class StartDisplay extends JPanel implements Runnable{
     @Override
     public void run(){   //   When starting thread, have thread use this run method
         while(repeatThread != null){
-            updates();
-            repaint();
+            //System.out.println("");
             if(screens == title) {
                 try {
+                    updates();
+                    repaint();
                     Thread.sleep(100);   //   Rest time before every update
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
@@ -92,6 +98,29 @@ public class StartDisplay extends JPanel implements Runnable{
             }
             else if(screens == gaming) {
                 try {
+                    updates();
+                    repaint();
+                    Thread.sleep(100);   //   Rest time before every update
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else if(screens == difficulty) {
+                if (freeze == 0) {
+                    updates();
+                    repaint();
+                    freeze++;
+                }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else{
+                try {
+                    updates();
+                    repaint();
                     Thread.sleep(100);   //   Rest time before every update
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
