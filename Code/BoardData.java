@@ -15,8 +15,8 @@ public class BoardData {
     private void replaceTMPTrees(){
         for(int i = 0; i < columns; i++){
             for (int j = 0; j < rows; j++){
-                if (string2DArray[i][j] == "TMP"){
-                    string2DArray[i][j] = "TREE";
+                if (string2DArray[i][j] == Object.TMP){
+                    string2DArray[i][j] = Object.TREE;
                 };
             }
         }
@@ -25,8 +25,8 @@ public class BoardData {
     private void removeTMPTrees(){
         for(int i = 0; i < columns; i++){
             for (int j = 0; j < rows; j++){
-                if (string2DArray[i][j] == "TMP"){
-                    string2DArray[i][j] = "EMPTY";
+                if (string2DArray[i][j] == Object.TMP){
+                    string2DArray[i][j] = Objects.EMPTY;
                 };
             }
         }
@@ -38,23 +38,23 @@ public class BoardData {
      */
     public void setOuterWalls(){
         for (int i = 0; i < rows; i++){
-            string2DArray[0][i] = "TREE";
+            string2DArray[0][i] = Object.TREE;
         }
         for (int i = 0; i < rows; i++){
-            string2DArray[columns-1][i] = "TREE";
+            string2DArray[columns-1][i] = Object.TREE;
         }
         for (int i = 0; i < columns; i++){
-            string2DArray[i][0] = "TREE";
+            string2DArray[i][0] = Object.TREE;
         }
         for (int i = 0; i < columns; i++){
-            string2DArray[i][rows-1] = "TREE";
+            string2DArray[i][rows-1] = Object.TREE;
         }
     }
 
     static void setEmptyTiles(){
         for(int i = 0; i < columns; i++){
             for (int j = 0; j < rows; j++){
-                string2DArray[i][j] = "EMPTY";
+                string2DArray[i][j] = Objects.EMPTY;
             }
         }
     }
@@ -63,29 +63,29 @@ public class BoardData {
     static boolean foundAdjacentTrees(int xcoord, int ycoord){
         boolean isadjecent = false;
         //check north west east west
-        if (string2DArray[xcoord+1][ycoord] == "TREE"){
+        if (string2DArray[xcoord+1][ycoord] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord][ycoord+1] == "TREE"){
+        if (string2DArray[xcoord][ycoord+1] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord-1][ycoord] == "TREE"){
+        if (string2DArray[xcoord-1][ycoord] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord+1][ycoord-1] == "TREE"){
+        if (string2DArray[xcoord+1][ycoord-1] == Object.TREE){
             isadjecent = true;
         }
         //check diagonals because those can cause loops too
-        if (string2DArray[xcoord+1][ycoord+1] == "TREE"){
+        if (string2DArray[xcoord+1][ycoord+1] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord-1][ycoord+1] == "TREE"){
+        if (string2DArray[xcoord-1][ycoord+1] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord-1][ycoord-1] == "TREE"){
+        if (string2DArray[xcoord-1][ycoord-1] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord+1][ycoord-1] == "TREE"){
+        if (string2DArray[xcoord+1][ycoord-1] == Object.TREE){
             isadjecent = true;
         }
 
@@ -153,7 +153,7 @@ public class BoardData {
                         }
                         //generate tmp tree which we will replace only if full generation succeeds
                         else {
-                            string2DArray[startx][starty+j*(int)(Math.pow(-1,north))] = "TMP";
+                            string2DArray[startx][starty+j*(int)(Math.pow(-1,north))] = Object.TMP;
                         }
                         //
 
@@ -188,7 +188,7 @@ public class BoardData {
                         }
                         //generate tmp tree which we will replace only if full generation succeeds
                         else {
-                            string2DArray[startx+j*(int)(Math.pow(-1,west))][starty] = "TMP";
+                            string2DArray[startx+j*(int)(Math.pow(-1,west))][starty] = Object.TMP;
                         }
                         //
                         

@@ -9,13 +9,13 @@ public class BoardData {
     private static int columns = 25;
     private static int rows = 15;
 
-    private static String[][] string2DArray = new String[columns][rows];
+    private static Objects[][] ObjectMap = new Objects[columns][rows];
 
     private void replaceTMPTrees(){
         for(int i = 0; i < columns; i++){
             for (int j = 0; j < rows; j++){
-                if (string2DArray[i][j] == "TMP"){
-                    string2DArray[i][j] = "TREE";
+                if (ObjectMap[i][j] == Objects.TMP){
+                    ObjectMap[i][j] = TREE;
                 };
             }
         }
@@ -24,8 +24,8 @@ public class BoardData {
     private void removeTMPTrees(){
         for(int i = 0; i < columns; i++){
             for (int j = 0; j < rows; j++){
-                if (string2DArray[i][j] == "TMP"){
-                    string2DArray[i][j] = "EMPTY";
+                if (ObjectMap[i][j] == Object.TMP){
+                    ObjectMap[i][j] = Objects.EMPTY;
                 };
             }
         }
@@ -37,23 +37,23 @@ public class BoardData {
      */
     public void setOuterWalls(){
         for (int i = 0; i < rows; i++){
-            string2DArray[0][i] = "TREE";
+            ObjectMap[0][i] = Object.TREE;
         }
         for (int i = 0; i < rows; i++){
-            string2DArray[columns-1][i] = "TREE";
+            ObjectMap[columns-1][i] = Object.TREE;
         }
         for (int i = 0; i < columns; i++){
-            string2DArray[i][0] = "TREE";
+            ObjectMap[i][0] = Object.TREE;
         }
         for (int i = 0; i < columns; i++){
-            string2DArray[i][rows-1] = "TREE";
+            ObjectMap[i][rows-1] = Object.TREE;
         }
     }
 
     static void setEmptyTiles(){
         for(int i = 0; i < columns; i++){
             for (int j = 0; j < rows; j++){
-                string2DArray[i][j] = "EMPTY";
+                ObjectMap[i][j] = Objects.EMPTY;
             }
         }
     }
@@ -62,29 +62,29 @@ public class BoardData {
     static boolean foundAdjacentTrees(int xcoord, int ycoord){
         boolean isadjecent = false;
         //check north west east west
-        if (string2DArray[xcoord+1][ycoord] == "TREE"){
+        if (ObjectMap[xcoord+1][ycoord] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord][ycoord+1] == "TREE"){
+        if (ObjectMap[xcoord][ycoord+1] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord-1][ycoord] == "TREE"){
+        if (ObjectMap[xcoord-1][ycoord] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord+1][ycoord-1] == "TREE"){
+        if (ObjectMap[xcoord+1][ycoord-1] == Object.TREE){
             isadjecent = true;
         }
         //check diagonals because those can cause loops too
-        if (string2DArray[xcoord+1][ycoord+1] == "TREE"){
+        if (ObjectMap[xcoord+1][ycoord+1] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord-1][ycoord+1] == "TREE"){
+        if (ObjectMap[xcoord-1][ycoord+1] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord-1][ycoord-1] == "TREE"){
+        if (ObjectMap[xcoord-1][ycoord-1] == Object.TREE){
             isadjecent = true;
         }
-        if (string2DArray[xcoord+1][ycoord-1] == "TREE"){
+        if (ObjectMap[xcoord+1][ycoord-1] == Object.TREE){
             isadjecent = true;
         }
 
@@ -152,7 +152,7 @@ public class BoardData {
                         }
                         //generate tmp tree which we will replace only if full generation succeeds
                         else {
-                            string2DArray[startx][starty+j*(int)(Math.pow(-1,north))] = "TMP";
+                            ObjectMap[startx][starty+j*(int)(Math.pow(-1,north))] = Object.TMP;
                         }
                         //
 
@@ -187,7 +187,7 @@ public class BoardData {
                         }
                         //generate tmp tree which we will replace only if full generation succeeds
                         else {
-                            string2DArray[startx+j*(int)(Math.pow(-1,west))][starty] = "TMP";
+                            ObjectMap[startx+j*(int)(Math.pow(-1,west))][starty] = Object.TMP;
                         }
                         //
                         
@@ -263,7 +263,7 @@ public class BoardData {
     //following will be used in game logic
 
     public String getString(int x, int y){
-        return string2DArray[x][y];
+        return ObjectMap[x][y];
     }
 
 
@@ -276,7 +276,7 @@ public class BoardData {
     }
     */
     public void updateBoard(int x, int y, stringNames data){
-        string2DArray[x][y] = data.toString();
+        ObjectMap[x][y] = data.toString();
     }
 
     public int getboardheight(){
