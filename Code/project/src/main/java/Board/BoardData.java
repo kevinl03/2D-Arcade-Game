@@ -15,7 +15,7 @@ public class BoardData {
         for(int i = 0; i < columns; i++){
             for (int j = 0; j < rows; j++){
                 if (ObjectMap[i][j] == Objects.TMP){
-                    ObjectMap[i][j] = TREE;
+                    ObjectMap[i][j] = Objects.TREE;
                 };
             }
         }
@@ -24,7 +24,7 @@ public class BoardData {
     private void removeTMPTrees(){
         for(int i = 0; i < columns; i++){
             for (int j = 0; j < rows; j++){
-                if (ObjectMap[i][j] == Object.TMP){
+                if (ObjectMap[i][j] == Objects.TMP){
                     ObjectMap[i][j] = Objects.EMPTY;
                 };
             }
@@ -37,16 +37,16 @@ public class BoardData {
      */
     public void setOuterWalls(){
         for (int i = 0; i < rows; i++){
-            ObjectMap[0][i] = Object.TREE;
+            ObjectMap[0][i] = Objects.TREE;
         }
         for (int i = 0; i < rows; i++){
-            ObjectMap[columns-1][i] = Object.TREE;
+            ObjectMap[columns-1][i] = Objects.TREE;
         }
         for (int i = 0; i < columns; i++){
-            ObjectMap[i][0] = Object.TREE;
+            ObjectMap[i][0] = Objects.TREE;
         }
         for (int i = 0; i < columns; i++){
-            ObjectMap[i][rows-1] = Object.TREE;
+            ObjectMap[i][rows-1] = Objects.TREE;
         }
     }
 
@@ -62,29 +62,29 @@ public class BoardData {
     static boolean foundAdjacentTrees(int xcoord, int ycoord){
         boolean isadjecent = false;
         //check north west east west
-        if (ObjectMap[xcoord+1][ycoord] == Object.TREE){
+        if (ObjectMap[xcoord+1][ycoord] == Objects.TREE){
             isadjecent = true;
         }
-        if (ObjectMap[xcoord][ycoord+1] == Object.TREE){
+        if (ObjectMap[xcoord][ycoord+1] == Objects.TREE){
             isadjecent = true;
         }
-        if (ObjectMap[xcoord-1][ycoord] == Object.TREE){
+        if (ObjectMap[xcoord-1][ycoord] == Objects.TREE){
             isadjecent = true;
         }
-        if (ObjectMap[xcoord+1][ycoord-1] == Object.TREE){
+        if (ObjectMap[xcoord+1][ycoord-1] == Objects.TREE){
             isadjecent = true;
         }
         //check diagonals because those can cause loops too
-        if (ObjectMap[xcoord+1][ycoord+1] == Object.TREE){
+        if (ObjectMap[xcoord+1][ycoord+1] == Objects.TREE){
             isadjecent = true;
         }
-        if (ObjectMap[xcoord-1][ycoord+1] == Object.TREE){
+        if (ObjectMap[xcoord-1][ycoord+1] == Objects.TREE){
             isadjecent = true;
         }
-        if (ObjectMap[xcoord-1][ycoord-1] == Object.TREE){
+        if (ObjectMap[xcoord-1][ycoord-1] == Objects.TREE){
             isadjecent = true;
         }
-        if (ObjectMap[xcoord+1][ycoord-1] == Object.TREE){
+        if (ObjectMap[xcoord+1][ycoord-1] == Objects.TREE){
             isadjecent = true;
         }
 
@@ -152,7 +152,7 @@ public class BoardData {
                         }
                         //generate tmp tree which we will replace only if full generation succeeds
                         else {
-                            ObjectMap[startx][starty+j*(int)(Math.pow(-1,north))] = Object.TMP;
+                            ObjectMap[startx][starty+j*(int)(Math.pow(-1,north))] = Objects.TMP;
                         }
                         //
 
@@ -187,7 +187,7 @@ public class BoardData {
                         }
                         //generate tmp tree which we will replace only if full generation succeeds
                         else {
-                            ObjectMap[startx+j*(int)(Math.pow(-1,west))][starty] = Object.TMP;
+                            ObjectMap[startx+j*(int)(Math.pow(-1,west))][starty] = Objects.TMP;
                         }
                         //
                         
@@ -262,21 +262,21 @@ public class BoardData {
 
     //following will be used in game logic
 
-    public String getString(int x, int y){
+    public Objects getString(int x, int y){
         return ObjectMap[x][y];
     }
 
 
 
-    /*currently throwing error until array type is switched to Object instead of string
-    public Objects getTypeAt(Position pos) {return string2DArray[pos.getX()][pos.getY()];}
+    //currently throwing error until array type is switched to Object instead of string
+    public Objects getTypeAt(Position pos) {return ObjectMap[pos.getX()][pos.getY()];}
 
     public void setTypeAt(Position pos, Objects type){
-        string2DArray[pos.getX()][pos.getY()] = type;
+        ObjectMap[pos.getX()][pos.getY()] = type;
     }
-    */
-    public void updateBoard(int x, int y, stringNames data){
-        ObjectMap[x][y] = data.toString();
+
+    public void updateBoard(int x, int y, Objects data){
+        ObjectMap[x][y] = data;
     }
 
     public int getboardheight(){
@@ -300,4 +300,4 @@ public class BoardData {
     }
     */
 
-}
+
