@@ -2,6 +2,9 @@ package Game;
 
 import Board.BoardData;
 import Entities.*;
+import Helpers.Stopwatch;
+
+import java.sql.Time;
 
 public class ObjectData {
     private Hero hero;
@@ -10,6 +13,9 @@ public class ObjectData {
     private RegularReward[] rewards;
     private BoardData board;
     private Bonus[] bonus;
+    private Exit exit;
+
+    private Stopwatch time = new Stopwatch();
 
 
     //getters
@@ -22,9 +28,9 @@ public class ObjectData {
         return enemies;
     }
 
-    public Enemy getEnemyAt(Position pos){
+    public Enemy getEnemyAt(Position pos) {
         for (int i = 0; i < enemies.length; i++) {
-            if(enemies[i] == pos) {
+            if (enemies[i] == pos) {
                 return enemies[i];
             }
         }
@@ -35,9 +41,9 @@ public class ObjectData {
         return traps;
     }
 
-    public Trap getTrapAt(Position pos){
+    public Trap getTrapAt(Position pos) {
         for (int i = 0; i < traps.length; i++) {
-            if(traps[i] == pos) {
+            if (traps[i] == pos) {
                 return traps[i];
             }
         }
@@ -49,9 +55,9 @@ public class ObjectData {
         return rewards;
     }
 
-    public RegularReward getRewardAt(Position pos){
+    public RegularReward getRewardAt(Position pos) {
         for (int i = 0; i < rewards.length; i++) {
-            if(rewards[i] == pos) {
+            if (rewards[i] == pos) {
                 return rewards[i];
             }
         }
@@ -67,17 +73,20 @@ public class ObjectData {
         return bonus;
     }
 
-    public Bonus getBonusAt(Position pos){
+    public Bonus getBonusAt(Position pos) {
         for (int i = 0; i < bonus.length; i++) {
-            if(bonus[i] == pos) {
+            if (bonus[i] == pos) {
                 return bonus[i];
             }
         }
         return null;
     }
 
+    public Exit getExit() {
+        return exit;
+    }
 
-
-
-
+    public Stopwatch getTime() {
+        return time;
+    }
 }

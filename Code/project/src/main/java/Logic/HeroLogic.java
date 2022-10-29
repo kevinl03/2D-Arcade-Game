@@ -1,5 +1,6 @@
 package Logic;
 
+import Board.Difficulty;
 import Board.Objects;
 import Board.BoardData;
 import Entities.*;
@@ -9,11 +10,6 @@ public class HeroLogic {
     private Hero hero;
 
     private void processPlayerMovement(Position pos, ObjectData gameObjectData){
-         /* TODO
-            access board datatype to check state of x,y tile
-            if movement allowed then return true else false
-            process any score changes.
-         */
 
         BoardData board = gameObjectData.getBoard();
 
@@ -68,7 +64,10 @@ public class HeroLogic {
 
         hero.addScore(score);
 
-        //TODO incrememt collected reward counter, not sure where its saved yet
+        Exit exit = gameObjectData.getExit();
+
+        //TODO CHANGE DIFFICULTY TO GAME DIFFICULTY RATHER THAN HARD CODED
+        exit.rewardCollected(Difficulty.HARD);
     }
 
     private void collectBonus(Position pos, ObjectData gameObjectData){
