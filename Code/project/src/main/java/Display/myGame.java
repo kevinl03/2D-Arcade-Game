@@ -47,21 +47,24 @@ public class myGame extends JPanel{
             updatecolumns++;
         }
         if (kh.escape) {
-            System.out.println("Paused");
-            //if panel is not open, pop out panel
-            if (dl.currentCard != 5) {
-                // show associated pause panel
-                cl.show(dp, "5");
+            if(dl.unpause == 0) {
+                System.out.println("Paused");
+                //unpress escape button
+                kh.escape = false;
+                dl.unpause = 1;
 
-                // current panel is pause Panel
-                dl.currentCard = 5;
+                //if panel is not open, pop out panel
+                if (dl.currentCard != 5) {
+                    // show associated pause panel
+                    cl.show(dp, "5");
 
-                mp.setFocusable(true);
-                mp.requestFocus();
+                    // current panel is pause Panel
+                    dl.currentCard = 5;
+
+                    mp.setFocusable(true);
+                    mp.requestFocus();
+                }
             }
-            //unpress escape button
-            kh.escape = false;
-            dl.unpause = 1;
         }
     }
 
