@@ -13,17 +13,21 @@ public class myGame extends JPanel{
     private int columns = 25;
     private int rows = 15;
     public BufferedImage squirrel_png;
-    KeyHandler kh = new KeyHandler(this);
+    KeyHandler kh;
     public int updaterows = 7;
     public int updatecolumns = 12;
     private CardLayout cl;
     private DisplayLayout dl;
     private JPanel dp;
+
+    private JPanel mp;
     public int goMain = 0;
-    public myGame(CardLayout cl, DisplayLayout dl, JPanel dp){
+    public myGame(CardLayout cl, DisplayLayout dl, JPanel dp, JPanel mp){
         this.cl = cl;
         this.dl = dl;
         this.dp = dp;
+        this.mp = mp;
+        this.kh = dl.kh;
         setPreferredSize(new Dimension(columns*pixelsize, rows*pixelsize));
         getSquirrel();
         addKeyListener(kh);
@@ -42,24 +46,22 @@ public class myGame extends JPanel{
         if (kh.right && (updatecolumns != 24)) {
             updatecolumns++;
         }
-        if (kh.escape)
-        {
+        if (kh.escape) {
             System.out.println("Paused");
             //if panel is not open, pop out panel
-            if(dl.currentCard != 5){
+            if (dl.currentCard != 5) {
                 // show associated pause panel
                 cl.show(dp, "5");
 
                 // current panel is pause Panel
                 dl.currentCard = 5;
+
+                mp.setFocusable(true);
+                mp.requestFocus();
             }
             //unpress escape button
             kh.escape = false;
-            dl.unpause=1;
-            //if back pause is not pressed
-            while(dl.unpause == 1) {
-                Thread.sleep(50);
-            }
+            dl.unpause = 1;
         }
     }
 
