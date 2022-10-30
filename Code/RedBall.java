@@ -54,16 +54,16 @@ public class RedBall extends JComponent implements ActionListener, MouseMotionLi
 
         //set walls!!
         for (int i = 0; i < rows; i++){
-            stringArray[0][i] = "Tree";
+            stringArray[0][i] = Object.TREE;
         }
         for (int i = 0; i < rows; i++){
-            stringArray[columns-1][i] = "Tree";
+            stringArray[columns-1][i] = Object.TREE;
         }
         for (int i = 0; i < columns; i++){
-            stringArray[i][0] = "Tree";
+            stringArray[i][0] = Object.TREE;
         }
         for (int i = 0; i < columns; i++){
-            stringArray[i][rows-1] = "Tree";
+            stringArray[i][rows-1] = Object.TREE;
         }
         
         //starting position
@@ -116,7 +116,7 @@ public class RedBall extends JComponent implements ActionListener, MouseMotionLi
 
         for (int x = 0; x < columns; x ++){
             for (int y = 0; y < rows; y++){
-                if (stringArray[x][y] == "Tree"){
+                if (stringArray[x][y] == Object.TREE){
                     g.drawImage(ii.getImage(), x*60, y*60, this);
                 }
                 if (stringArray[x][y] == "Squirrel"){

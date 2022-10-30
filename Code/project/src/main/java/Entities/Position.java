@@ -17,6 +17,12 @@ public class Position {
         return y;
     }
 
+    public void incrementX() { x++;}
+    public void incrementY() { y++;}
+
+    public void decrementX() { x--;}
+    public void decrementY() { y--;}
+
     public void setX(int x) {
         this.x = x;
     }
