@@ -50,7 +50,7 @@ public class myGame extends JPanel{
             if(dl.unpause == 0) {
                 System.out.println("Paused");
                 //unpress escape button
-                kh.escape = false;
+                //kh.escape = false;
                 dl.unpause = 1;
 
                 //if panel is not open, pop out panel
