@@ -1,14 +1,15 @@
 package Display;
 
+import Helpers.KeyHandler;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 public class DisplayLayout extends JFrame implements Runnable{
+    KeyHandler kh = new KeyHandler(this);
 
     // Set up display
     protected int pixelsize = 60;   //60x60 pixels
@@ -85,11 +86,8 @@ public class DisplayLayout extends JFrame implements Runnable{
         titlePanel.setLayout(new GridBagLayout());
         titlePanel.setBackground(Color.GREEN);
 
-        // Initialize Play JPanel class
-        playPanel = new myGame(dl, this, displayPanel);
 
         // Initialize Setting JPanel class
-        //settPanel = new JPanel();
         settPanel = new mySettings();
         settPanel.setLayout(new GridBagLayout());
 
@@ -99,8 +97,11 @@ public class DisplayLayout extends JFrame implements Runnable{
         diffPanel.setLayout(new GridBagLayout());
 
         // Initialize Pause JPanel class
-        pausePanel = new JPanel();
+        pausePanel = new myPause(this);
         pausePanel.setLayout(new GridBagLayout());
+
+        // Initialize Play JPanel class
+        playPanel = new myGame(dl, this, displayPanel, pausePanel);
 
         // Initialize labels for each JPanel
         titleLabel = new JLabel("Hidden Squirrel: Peanuts and Acorns");
@@ -338,10 +339,6 @@ public class DisplayLayout extends JFrame implements Runnable{
                 currentCard = 2;
                 playPanel.setFocusable(true);
                 playPanel.requestFocus();
-                playPanel.kh.up = false;
-                playPanel.kh.left = false;
-                playPanel.kh.down = false;
-                playPanel.kh.right = false;
             }
         });
 
@@ -382,11 +379,13 @@ public class DisplayLayout extends JFrame implements Runnable{
         while ( playPanel.goMain == 0 ) {
             System.out.println("" + playPanel.updatecolumns + ", " + playPanel.updaterows);
             try {
-                playPanel.updates();
-                if(playPanel.goMain == 0) {
-                    playPanel.repaint();
-                    Thread.sleep(150);
+                if(unpause == 0) {
+                    playPanel.updates();
                 }
+                if( (playPanel.goMain == 0) && (unpause == 0) ) {
+                    playPanel.repaint();
+                }
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
