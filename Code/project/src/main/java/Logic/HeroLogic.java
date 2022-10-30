@@ -7,14 +7,14 @@ import Entities.*;
 import Game.ObjectData;
 
 public class HeroLogic {
-    private Hero hero;
-
     private void processPlayerMovement(Position pos, ObjectData gameObjectData){
 
         BoardData board = gameObjectData.getBoard();
 
 
         Objects tileType = board.getTypeAt(pos);
+
+        Hero hero = gameObjectData.getHero();
 
         boolean heroMoved = true;
 

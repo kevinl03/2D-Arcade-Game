@@ -13,20 +13,20 @@ import java.util.Queue;
 public class EnemyLogic {
 
     private void processEnemyMovement(Enemy[] enemies, Objects[][] board){
-        for (int i = 0; i < enemies.length; i++) {
-            Direction nextMove = findShortestPath(board , enemies[i]);
-            switch(nextMove){
+        for (Enemy enemy : enemies) {
+            Direction nextMove = findShortestPath(board, enemy);
+            switch (nextMove) {
                 case NORTH:
-                    enemies[i].incrementY();
+                    enemy.incrementY();
                     break;
                 case EAST:
-                    enemies[i].incrementX();
+                    enemy.incrementX();
                     break;
                 case SOUTH:
-                    enemies[i].decrementY();
+                    enemy.decrementY();
                     break;
                 case WEST:
-                    enemies[i].decrementX();
+                    enemy.decrementX();
                     break;
                 case NULL:
                     break;
@@ -38,7 +38,7 @@ public class EnemyLogic {
 //            }
         }
 
-    };
+    }
 
     //findShortestPath runs a bfs on a 2d char array to find the direction the enemy at enemyPos
     //needs to move in order to get to the hero with the shortest distance
@@ -46,7 +46,7 @@ public class EnemyLogic {
         int width = board.length;
         int height = board[0].length;
 
-        Queue<Node> q = new LinkedList<Node>();
+        Queue<Node> q = new LinkedList<>();
         Node start = new Node(enemyPos, Direction.NULL, 0);
         q.add(start);
 
@@ -68,15 +68,14 @@ public class EnemyLogic {
 
         }
         return Direction.NULL;
-    };
+    }
 
     //getNeighbours returns a list containing all the direct neighbours to head
     private List<Node> getNeighbours(Node head, Objects[][] board, int width, int height){
         int x = head.getX();
         int y = head.getY();
-        Direction dir;
 
-        List<Node> neighbours = new LinkedList<Node>();
+        List<Node> neighbours = new LinkedList<>();
         //check if there is a non tree tile in each direction (North, East, South, West), if so, add it to neighbours list
         //only change the initialDirection if it is the initial node from where the search started (the enemy)
         if(x + 1 >= 0 && x + 1 < width && board[x + 1][y] != Objects.TREE){

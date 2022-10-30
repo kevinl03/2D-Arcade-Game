@@ -1,9 +1,12 @@
+import Board.BoardData;
 import Game.ObjectData;
 import Helpers.Stopwatch;
 import Logic.EnemyLogic;
 import Entities.Position;
 import Helpers.Direction;
 import Board.Objects;
+
+import java.util.Arrays;
 
 public class Main {
 
@@ -46,12 +49,29 @@ public class Main {
         }
     }
 
+    public static void testBoardGen(){
+
+        BoardData board = new BoardData();
+
+        board.initialiseBoard();
+
+//        System.out.println(Arrays.deepToString(board.getBoardData()));
+        System.out.println(Arrays.deepToString(board.getBoardData()).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
+
+
+
+
+
+    }
+
     public static void main (String[] args) throws InterruptedException {
 
 
-        testShortestPath();
-        testStopwatch();
-
+//        testShortestPath();
+//        testStopwatch();
+        for (int i = 0; i < 100000; i++) {
+            testBoardGen();
+        }
 
 
     }
