@@ -1,12 +1,17 @@
 package Helpers;
-
-import Display.StartDisplay;
+import Display.DisplayLayout;
+import Display.myGame;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyHandler implements KeyListener {
-    public boolean up, left, down, right;
+public class KeyHandler implements KeyListener{
+    public boolean up, left, down, right, escape;
+    DisplayLayout dl;
+
+    public KeyHandler(DisplayLayout dl){
+        this.dl = dl;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -16,21 +21,26 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_W){
-            up = true;
-        }
+        // Gaming key press
+            if (code == KeyEvent.VK_W) {
+                up = true;
+            }
 
-        if(code == KeyEvent.VK_A){
-            left = true;
-        }
+            if (code == KeyEvent.VK_A) {
+                left = true;
+            }
 
-        if(code == KeyEvent.VK_S){
-            down = true;
-        }
+            if (code == KeyEvent.VK_S) {
+                down = true;
+            }
 
-        if(code == KeyEvent.VK_D){
-            right = true;
-        }
+            if (code == KeyEvent.VK_D) {
+                right = true;
+            }
+            if (code == KeyEvent.VK_ESCAPE)
+            {
+                escape = true;
+            }
     }
 
     @Override
@@ -52,5 +62,10 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_D){
             right = false;
         }
+        if (code == KeyEvent.VK_ESCAPE)
+        {
+            escape = false;
+        }
     }
+
 }
