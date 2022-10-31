@@ -284,20 +284,103 @@ public class BoardData {
     }
 
     private void setEnemies() {
+        int enemyCount;
+        switch(dif){
+            case EASY:
+                enemyCount = 2;
+                break;
+            case MEDIUM:
+                enemyCount = 3;
+                break;
+            case HARD:
+            case INFINITE:
+                enemyCount = 5;
+                break;
+        }
+
 
     }
 
-    private void setTraps() {
+    public void generateTraps(int count){
+
+        for (int trapcount = 1; trapcount <= count; trapcount++){
+            boolean posfound = false;
+            while(!posfound){
+                int[] coords = getRandomXY();
+                //check to see if generation is a valid
+                if (ObjectMap[coords[0]][coords[1]] == Objects.EMPTY){
+
+                    ObjectMap[coords[0]][coords[1]] = Objects.TRAP;
+                    posfound = true;
+                }
+                //else case means we need a new XY so we go back to while loop
+                //and get another randomXY
+            }
+        }
+
+    }
+    private void setTraps(Difficulty dif) {
+        //does not matter if traps are in close to eachother
+        //so we don't check for proximity when generating
+        switch(dif){
+            case EASY:
+                generateTraps(4);
+            case MEDIUM:
+                generateTraps(7);
+            case HARD:
+                generateTraps(11);
+            case INFINITE:
+                generateTraps(11);
+        }
+
+
+
 
     }
 
     private void setHeroLocation() {
 
+        boolean heroNotSpawned = true;
+
+        while(heroNotSpawned){
+            int[] xy = getRandomXY();
+            int x = xy[0];
+            int y = xy[1];
+            if(ObjectMap[x][y] == Objects.EMPTY) {
+                ObjectMap[x][y] = Objects.HERO;
+                heroNotSpawned = false;
+            }
+        }
     }
 
-    //will be used for ending the game
     public void setDoor() {
+        Random rand = new Random(); //instance of random class
 
+        //0 = north, 1 = east, 2 = south, 3 = west;
+        int side = rand.nextInt(3);
+        int x = 0;
+        int y = 0;
+
+        switch(side){
+            case(0):
+                 x = rand.nextInt(columns-1);
+                 y = rows-1;
+                break;
+            case(1):
+                y = rand.nextInt(rows-1);
+                x = columns-1;
+                break;
+            case(2):
+                x = rand.nextInt(columns-1);
+                y = 0;
+                break;
+            case(3):
+                y = rand.nextInt(rows-1) ;
+                x = 0;
+                break;
+        }
+
+        ObjectMap[x][y] = Objects.EXIT;
     }
 
 
@@ -313,9 +396,10 @@ public class BoardData {
         }
         setBonusRewards();
         setRegRewards(dif);
-        setTraps();
+        setTraps(dif);
         setEnemies();
         setHeroLocation();
+        setDoor();
     }
 
     //following will be used in game logic
