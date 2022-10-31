@@ -1,3 +1,8 @@
+package Board;
+
+import Entities.Position;
+import Board.Objects;
+
 import java.util.Random;
 
 public class BoardData {
@@ -5,12 +10,6 @@ public class BoardData {
     private static int rows = 15;
 
     private static String[][] string2DArray = new String[columns][rows];
-
-
-    //to know organize all of the string names
-    public enum Objects {
-        HERO, ENEMY, REWARD, BONUS, TRAP, TREE, EXIT, EMPTY
-    }
 
     private void replaceTMPTrees(){
         for(int i = 0; i < columns; i++){
@@ -262,9 +261,20 @@ public class BoardData {
     }
 
     //following will be used in game logic
+
     public String getString(int x, int y){
         return string2DArray[x][y];
     }
+
+
+
+    /*currently throwing error until array type is switched to Object instead of string
+    public Objects getTypeAt(Position pos) {return string2DArray[pos.getX()][pos.getY()];}
+
+    public void setTypeAt(Position pos, Objects type){
+        string2DArray[pos.getX()][pos.getY()] = type;
+    }
+    */
     public void updateBoard(int x, int y, stringNames data){
         string2DArray[x][y] = data.toString();
     }
