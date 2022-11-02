@@ -1,5 +1,6 @@
 import Board.BoardData;
 import Board.Difficulty;
+import Game.GameStats;
 import Game.ObjectData;
 import Helpers.Stopwatch;
 import Logic.EnemyLogic;
@@ -33,9 +34,9 @@ public class Main {
     }
 
     public static void testStopwatch() throws InterruptedException {
-        ObjectData data = new ObjectData();
+        GameStats stats = new GameStats();
 
-        Stopwatch time = data.getTime();
+        Stopwatch time = stats.getTime();
 
         time.startTime();
         int counter = 0;
