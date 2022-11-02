@@ -1,5 +1,6 @@
 package Display;
 
+import Board.Objects;
 import Helpers.KeyHandler;
 
 import java.awt.*;
@@ -8,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import Board.BoardData;
 public class DisplayLayout extends JFrame implements Runnable{
     KeyHandler kh = new KeyHandler(this);
 
@@ -59,9 +62,13 @@ public class DisplayLayout extends JFrame implements Runnable{
     private int whileexit = 0;
     Image buttonIcon;
 
+    BoardData board;
+
     // Set up display
     public DisplayLayout()
     {
+        setResizable(false);
+
         titleText = new Font("Times New Roman", Font.BOLD, 50);
         headerText = new Font("Times New Roman", Font.BOLD, 30);
         // Function to set visibility of JFrame
@@ -82,10 +89,9 @@ public class DisplayLayout extends JFrame implements Runnable{
         gbc = new GridBagConstraints();   //   Helps position buttons
 
         // Initialize Title JPanel class
-        titlePanel = new JPanel();
+        titlePanel = new myTitle();
         titlePanel.setLayout(new GridBagLayout());
-        titlePanel.setBackground(Color.GREEN);
-
+        titlePanel.setBackground(Color.cyan);
 
         // Initialize Setting JPanel class
         settPanel = new mySettings();
@@ -350,6 +356,7 @@ public class DisplayLayout extends JFrame implements Runnable{
             {
                 playPanel.goMain = 1;
                 unpause = 0;
+                kh.escape = false;
                 //Go back to main menu
                 System.out.println("Going Back");
 
@@ -377,8 +384,20 @@ public class DisplayLayout extends JFrame implements Runnable{
     @Override
     public void run() {   //   When starting thread, have thread use this run method
         playPanel.goMain = 0;
+
+        board = new BoardData();
+        board.initialiseBoard();
+        Objects[][] boardMap = board.getBoardData();
+        for(int col = 0; col < 25; col++){
+            for(int row = 0; row < 15; row++){
+                if(boardMap[col][row] == Objects.HERO){
+                    playPanel.updaterows = row;
+                    playPanel.updatecolumns = col;
+                }
+            }
+        }
+
         while ( playPanel.goMain == 0 ) {
-            System.out.println("" + playPanel.updatecolumns + ", " + playPanel.updaterows);
             try {
                 if(unpause == 0) {
                     playPanel.updates();
