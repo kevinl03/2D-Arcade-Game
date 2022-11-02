@@ -1,4 +1,5 @@
 import Board.BoardData;
+import Board.Difficulty;
 import Game.ObjectData;
 import Helpers.Stopwatch;
 import Logic.EnemyLogic;
@@ -53,10 +54,10 @@ public class Main {
 
         BoardData board = new BoardData();
 
-        board.initialiseBoard();
+        board.initialiseBoard(Difficulty.HARD);
 
 //        System.out.println(Arrays.deepToString(board.getBoardData()));
-        System.out.println(Arrays.deepToString(board.getBoardData()).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
+//        System.out.println(Arrays.deepToString(board.getBoardData()).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
 
 
 
@@ -69,7 +70,8 @@ public class Main {
 
 //        testShortestPath();
 //        testStopwatch();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000000; i++) {
+//            System.out.println(i);
             testBoardGen();
         }
 
