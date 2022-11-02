@@ -1,7 +1,10 @@
 package Logic;
 
+import Board.BoardData;
 import Entities.Enemy;
 import Entities.Position;
+import Game.GameStats;
+import Game.ObjectData;
 import Helpers.Direction;
 import Helpers.Node;
 import Board.Objects;
@@ -12,9 +15,23 @@ import java.util.Queue;
 
 public class EnemyLogic {
 
-    private void processEnemyMovement(Enemy[] enemies, Objects[][] board){
+    private void processEnemyMovement(Enemy[] enemies, ObjectData gameObjectData){
+
+        BoardData board = gameObjectData.getBoard();
+        GameStats gameStats = gameObjectData.getGameStats();
+
         for (Enemy enemy : enemies) {
-            Direction nextMove = findShortestPath(board, enemy);
+            Direction nextMove = findShortestPath(board.getBoardData(), enemy);
+
+            if(nextMove != Direction.NULL){
+                Objects currentTile = board.getTypeAt(enemy);
+                if(currentTile == Objects.ENEMYANDREWARD){
+                    board.setTypeAt(enemy, Objects.REWARD);
+                }else if(currentTile == Objects.ENEMYANDTRAP){
+                    board.setTypeAt(enemy, Objects.TRAP);
+                }
+            }
+
             switch (nextMove) {
                 case NORTH:
                     enemy.incrementY();
@@ -32,10 +49,17 @@ public class EnemyLogic {
                     break;
 
             }
-            //TODO complete this step
-//            if(enemies[i].getX() == hero.x && enemies[i].getY() == hero.y){
-//                game over
-//            }
+
+            if(nextMove != Direction.NULL){
+                Objects currentTile = board.getTypeAt(enemy);
+                if(currentTile == Objects.REWARD){
+                    board.setTypeAt(enemy, Objects.ENEMYANDREWARD);
+                }else if(currentTile == Objects.TRAP){
+                    board.setTypeAt(enemy, Objects.ENEMYANDTRAP);
+                }else if(currentTile == Objects.HERO){
+                    gameStats.setGameOver(true);
+                }
+            }
         }
 
     }

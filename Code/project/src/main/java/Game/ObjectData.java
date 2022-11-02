@@ -4,8 +4,6 @@ import Board.BoardData;
 import Entities.*;
 import Helpers.Stopwatch;
 
-import java.sql.Time;
-
 public class ObjectData {
     private Hero hero;
     private Enemy[] enemies;
@@ -15,7 +13,7 @@ public class ObjectData {
     private Bonus[] bonus;
     private Exit exit;
 
-    private Stopwatch time = new Stopwatch();
+    private GameStats gameStats;
 
 
     //getters
@@ -29,9 +27,9 @@ public class ObjectData {
     }
 
     public Enemy getEnemyAt(Position pos) {
-        for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i] == pos) {
-                return enemies[i];
+        for (Enemy enemy : enemies) {
+            if (enemy == pos) {
+                return enemy;
             }
         }
         return null;
@@ -42,9 +40,9 @@ public class ObjectData {
     }
 
     public Trap getTrapAt(Position pos) {
-        for (int i = 0; i < traps.length; i++) {
-            if (traps[i] == pos) {
-                return traps[i];
+        for (Trap trap : traps) {
+            if (trap == pos) {
+                return trap;
             }
         }
         return null;
@@ -56,9 +54,9 @@ public class ObjectData {
     }
 
     public RegularReward getRewardAt(Position pos) {
-        for (int i = 0; i < rewards.length; i++) {
-            if (rewards[i] == pos) {
-                return rewards[i];
+        for (RegularReward reward : rewards) {
+            if (reward == pos) {
+                return reward;
             }
         }
         return null;
@@ -74,9 +72,9 @@ public class ObjectData {
     }
 
     public Bonus getBonusAt(Position pos) {
-        for (int i = 0; i < bonus.length; i++) {
-            if (bonus[i] == pos) {
-                return bonus[i];
+        for (Bonus value : bonus) {
+            if (value == pos) {
+                return value;
             }
         }
         return null;
@@ -86,7 +84,7 @@ public class ObjectData {
         return exit;
     }
 
-    public Stopwatch getTime() {
-        return time;
+    public GameStats getGameStats() {
+        return gameStats;
     }
 }
