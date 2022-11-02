@@ -62,10 +62,6 @@ public class KeyHandler implements KeyListener{
         if(code == KeyEvent.VK_D){
             right = false;
         }
-        if (code == KeyEvent.VK_ESCAPE)
-        {
-            escape = false;
-        }
     }
 
 }
