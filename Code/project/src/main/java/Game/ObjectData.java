@@ -1,21 +1,67 @@
 package Game;
 
 import Board.BoardData;
+import Board.Difficulty;
 import Entities.*;
-import Helpers.Stopwatch;
+import Logic.EnemyLogic;
+import Logic.HeroLogic;
 
-import java.sql.Time;
+import java.util.ArrayList;
 
 public class ObjectData {
     private Hero hero;
-    private Enemy[] enemies;
-    private Trap[] traps;
-    private RegularReward[] rewards;
+    private ArrayList<Enemy> enemies;
+    private ArrayList<Trap> traps;
+    private ArrayList<RegularReward> rewards;
     private BoardData board;
-    private Bonus[] bonus;
+    private ArrayList<Bonus> bonus;
     private Exit exit;
 
-    private Stopwatch time = new Stopwatch();
+    private GameStats gameStats;
+
+    private EnemyLogic enemyLogic;
+
+    private HeroLogic heroLogic;
+
+
+
+    public ObjectData(Difficulty dif){
+        hero = new Hero();
+        board = new BoardData();
+        exit = new Exit();
+        gameStats = new GameStats();
+        enemyLogic = new EnemyLogic();
+        heroLogic = new HeroLogic();
+        enemies = new ArrayList<>();
+        traps = new ArrayList<>();
+        rewards = new ArrayList<>();
+
+        board.initialiseBoard(dif);
+        int trapDamage = 50;
+        int rewardPoints = 50;
+
+        switch(dif){
+            case EASY -> trapDamage = 50;
+            case MEDIUM ->  trapDamage = 100;
+            case HARD, INFINITE -> trapDamage = 200;
+        }
+
+        for(int x = 0; x < board.getboardwidth() - 1; x++){
+            for(int y = 0; y < board.getboardheight() - 1; y++){
+
+                Position currentTile = new Position(x,y);
+
+                switch(board.getTypeAt(currentTile)){
+                    case HERO -> hero.setPosition(currentTile);
+                    case ENEMY -> enemies.add(new Enemy(x,y));
+                    case TRAP -> traps.add(new Trap(x,y, 0,trapDamage));
+                    case REWARD -> rewards.add(new RegularReward(x, y, 0, rewardPoints));
+                }
+            }
+        }
+
+
+    }
 
 
     //getters
@@ -24,41 +70,41 @@ public class ObjectData {
         return hero;
     }
 
-    public Enemy[] getEnemies() {
+    public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
 
     public Enemy getEnemyAt(Position pos) {
-        for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i] == pos) {
-                return enemies[i];
+        for (Enemy enemy : enemies) {
+            if ( (enemy.getX() == pos.getX()) && (enemy.getY() == pos.getY()) ) {
+                return enemy;
             }
         }
         return null;
     }
 
-    public Trap[] getTraps() {
+    public ArrayList<Trap> getTraps() {
         return traps;
     }
 
     public Trap getTrapAt(Position pos) {
-        for (int i = 0; i < traps.length; i++) {
-            if (traps[i] == pos) {
-                return traps[i];
+        for (Trap trap : traps) {
+            if ( (trap.getX() == pos.getX()) && (trap.getY() == pos.getY())) {
+                return trap;
             }
         }
         return null;
     }
 
 
-    public Reward[] getRewards() {
+    public ArrayList<RegularReward> getRewards() {
         return rewards;
     }
 
     public RegularReward getRewardAt(Position pos) {
-        for (int i = 0; i < rewards.length; i++) {
-            if (rewards[i] == pos) {
-                return rewards[i];
+        for (RegularReward reward : rewards) {
+            if ( (reward.getX() == pos.getX()) && (reward.getY() == pos.getY())) {
+                return reward;
             }
         }
         return null;
@@ -69,14 +115,14 @@ public class ObjectData {
         return board;
     }
 
-    public Bonus[] getBonus() {
+    public ArrayList<Bonus> getBonus() {
         return bonus;
     }
 
     public Bonus getBonusAt(Position pos) {
-        for (int i = 0; i < bonus.length; i++) {
-            if (bonus[i] == pos) {
-                return bonus[i];
+        for (Bonus value : bonus) {
+            if ( (value.getX() == pos.getX()) && (value.getY() == pos.getY()) ) {
+                return value;
             }
         }
         return null;
@@ -86,7 +132,16 @@ public class ObjectData {
         return exit;
     }
 
-    public Stopwatch getTime() {
-        return time;
+    public GameStats getGameStats() {
+        return gameStats;
+    }
+
+    public HeroLogic getHeroLogic() {
+        return heroLogic;
+    }
+
+    public EnemyLogic getEnemyLogic() {
+        return enemyLogic;
     }
 }
+

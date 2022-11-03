@@ -1,20 +1,56 @@
 package Logic;
 
+import Board.BoardData;
 import Entities.Enemy;
 import Entities.Position;
+import Game.GameStats;
+import Game.ObjectData;
 import Helpers.Direction;
 import Helpers.Node;
 import Board.Objects;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 public class EnemyLogic {
 
-    private void processEnemyMovement(Enemy[] enemies, Objects[][] board){
+    public void processEnemyMovement(ObjectData gameObjectData){
+
+        BoardData board = gameObjectData.getBoard();
+        GameStats gameStats = gameObjectData.getGameStats();
+        ArrayList<Enemy> enemies = gameObjectData.getEnemies();
+
+        Objects[][] boardArr = board.getBoardData();
+
+        int width = boardArr.length;
+        int height = boardArr[0].length;
+
+        Objects[][] tempArr = new Objects[width][height];
+
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                tempArr[i][j] = boardArr[i][j];
+            }
+        }
+        System.out.println("\n\n");
         for (Enemy enemy : enemies) {
-            Direction nextMove = findShortestPath(board, enemy);
+            Direction nextMove = findShortestPath(tempArr, enemy);
+
+//            System.out.println(nextMove);
+
+            if(nextMove != Direction.NULL){
+                Objects currentTile = board.getTypeAt(enemy);
+                if(currentTile == Objects.ENEMYANDREWARD){
+                    board.setTypeAt(enemy, Objects.REWARD);
+                }else if(currentTile == Objects.ENEMYANDTRAP){
+                    board.setTypeAt(enemy, Objects.TRAP);
+                }else{
+                    board.setTypeAt(enemy, Objects.EMPTY);
+                }
+            }
+
             switch (nextMove) {
                 case NORTH:
                     enemy.incrementY();
@@ -32,10 +68,19 @@ public class EnemyLogic {
                     break;
 
             }
-            //TODO complete this step
-//            if(enemies[i].getX() == hero.x && enemies[i].getY() == hero.y){
-//                game over
-//            }
+
+            if(nextMove != Direction.NULL){
+                Objects currentTile = board.getTypeAt(enemy);
+                if(currentTile == Objects.REWARD){
+                    board.setTypeAt(enemy, Objects.ENEMYANDREWARD);
+                }else if(currentTile == Objects.TRAP){
+                    board.setTypeAt(enemy, Objects.ENEMYANDTRAP);
+                }else if(currentTile == Objects.HERO){
+                    gameStats.setGameOver(true);
+                }else{
+                    board.setTypeAt(enemy, Objects.ENEMY);
+                }
+            }
         }
 
     }
@@ -45,6 +90,7 @@ public class EnemyLogic {
     public Direction findShortestPath(Objects[][] board, Position enemyPos){
         int width = board.length;
         int height = board[0].length;
+
 
         Queue<Node> q = new LinkedList<>();
         Node start = new Node(enemyPos, Direction.NULL, 0);
@@ -78,8 +124,7 @@ public class EnemyLogic {
         List<Node> neighbours = new LinkedList<>();
         //check if there is a non tree tile in each direction (North, East, South, West), if so, add it to neighbours list
         //only change the initialDirection if it is the initial node from where the search started (the enemy)
-        if(x + 1 >= 0 && x + 1 < width && board[x + 1][y] != Objects.TREE){
-            if(head.initialDirection == Direction.NULL){
+dddd            if(head.initialDirection == Direction.NULL){
                 neighbours.add(new Node(new Position(x + 1, y), Direction.EAST, head.pathLength+1));
             }else{
                 neighbours.add(new Node(new Position(x + 1, y), head.initialDirection, head.pathLength+1));

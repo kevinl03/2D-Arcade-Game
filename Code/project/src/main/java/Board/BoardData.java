@@ -12,7 +12,7 @@ public class BoardData {
     private static Objects[][] ObjectMap = new Objects[columns][rows];
 
     //TODO REPLACE HARD CODE
-    private Difficulty dif = Difficulty.HARD;
+//    private Difficulty dif = Difficulty.HARD;
 
     private void replaceTMPTrees() {
         for (int i = 0; i < columns; i++) {
@@ -20,7 +20,7 @@ public class BoardData {
                 if (ObjectMap[i][j] == Objects.TMP) {
                     ObjectMap[i][j] = Objects.TREE;
                 }
-
+                ;
             }
         }
     }
@@ -36,10 +36,6 @@ public class BoardData {
         }
     }
 
-
-    /**
-     *
-     */
     public void setOuterWalls() {
         for (int i = 0; i < rows; i++) {
             ObjectMap[0][i] = Objects.TREE;
@@ -236,9 +232,10 @@ public class BoardData {
 
             if(ObjectMap[x][y] == Objects.EMPTY){
                 int[] loc = {x,y};
-                boolean test = checkValidRewardProximity(rewardLocations, loc, dif);
+                boolean valid = checkValidRewardProximity(rewardLocations, loc, dif);
 //                System.out.println(test);
-                if(test){
+//                    System.out.println(valid);
+                if(valid){
                     ObjectMap[x][y] = Objects.REWARD;
                     rewardLocations.add(loc);
                 }else{
@@ -251,7 +248,7 @@ public class BoardData {
     }
 
     private boolean checkValidRewardProximity(ArrayList<int[]> rewards, int[] newReward, Difficulty dif){
-        System.out.println(rewards.size());
+//        System.out.println(rewards.size());
 
         int minProximity = 0;
 
@@ -262,18 +259,18 @@ public class BoardData {
             int newY = newReward[1];
 
             switch(dif){
-                case EASY: minProximity = 6;
+                case EASY: minProximity = 5;
                     break;
-                case MEDIUM: minProximity = 4;
+                case MEDIUM: minProximity = 3;
                     break;
                 case HARD:
-                case INFINITE: minProximity = 3;
+                case INFINITE: minProximity = 0;
                     break;
             }
             //using pythagorean theorem to make sure reward is atleast minProximity away from all other rewards
-            if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
-                return false;
-            }
+//            if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
+//                return false;
+//            }
         }
         return true;
     }
@@ -283,22 +280,31 @@ public class BoardData {
 
     }
 
-    private void setEnemies() {
-        int enemyCount;
+    private void setEnemies(Difficulty dif) {
+        int enemyCount = 0;
         switch(dif){
             case EASY:
-                enemyCount = 2;
+                enemyCount = 1;
                 break;
             case MEDIUM:
-                enemyCount = 3;
+                enemyCount = 2;
                 break;
             case HARD:
             case INFINITE:
-                enemyCount = 5;
+                enemyCount = 3;
                 break;
         }
 
-
+        for(int i = 0; i < enemyCount; i++){
+            int[] xy = getRandomXY();
+            int x = xy[0];
+            int y = xy[1];
+            if(ObjectMap[x][y] == Objects.EMPTY) {
+                ObjectMap[x][y] = Objects.ENEMY;
+            }else{
+                i--;
+            }
+        }
     }
 
     public void generateTraps(int count){
@@ -386,25 +392,46 @@ public class BoardData {
 
     //call initalise board at the begginning of every game
     public void initialiseBoard(Difficulty dif) {
+
         //may need to change the ordering
         setEmptyTiles();
         setOuterWalls();
         //harder difficulty means more wall segments so user has less space to move around
-        int wallsegments = 6;
+        int wallsegments = 1;
+        switch(dif){
+            case EASY: wallsegments = 5;
+                break;
+            case MEDIUM: wallsegments = 10;
+                break;
+            case HARD:
+            case INFINITE: wallsegments = 12;
+                break;
+        }
+//        System.out.println(-2);
+
+
         for (int i = 1; i < wallsegments; i++) {
             setInnerWalls();
         }
+//        System.out.println(-1);
+//
         setBonusRewards();
+//        System.out.println(1);
         setRegRewards(dif);
+//        System.out.println(2);
         setTraps(dif);
-        setEnemies();
+//        System.out.println(3);
+        setEnemies(dif);
+//        System.out.println(4);
         setHeroLocation();
+//        System.out.println(5);
         setDoor();
+//        System.out.println(6);
     }
 
     //following will be used in game logic
 
-    public Objects getString(int x, int y) {
+    public Objects getTypeAt(int x, int y) {
         return ObjectMap[x][y];
     }
 

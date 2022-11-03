@@ -12,6 +12,7 @@ public class Trap extends StaticEntity{
         super(x,y,time);
         damage = dmg;
     }
+
     public int getDamage(){
         return damage;
     }

@@ -1,5 +1,6 @@
 import Board.BoardData;
 import Board.Difficulty;
+import Game.GameStats;
 import Game.ObjectData;
 import Helpers.Stopwatch;
 import Logic.EnemyLogic;
@@ -33,9 +34,9 @@ public class Main {
     }
 
     public static void testStopwatch() throws InterruptedException {
-        ObjectData data = new ObjectData();
+        GameStats stats = new GameStats();
 
-        Stopwatch time = data.getTime();
+        Stopwatch time = stats.getTime();
 
         time.startTime();
         int counter = 0;
@@ -57,7 +58,7 @@ public class Main {
         board.initialiseBoard(Difficulty.HARD);
 
 //        System.out.println(Arrays.deepToString(board.getBoardData()));
-        System.out.println(Arrays.deepToString(board.getBoardData()).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
+//        System.out.println(Arrays.deepToString(board.getBoardData()).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
 
 
 
@@ -70,7 +71,8 @@ public class Main {
 
 //        testShortestPath();
 //        testStopwatch();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000000; i++) {
+//            System.out.println(i);
             testBoardGen();
         }
 
