@@ -20,7 +20,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     // Set up display
     protected int pixelsize = 60;   //60x60 pixels
     private int columns = 26;
-    private int rows = 16;
+    private int rows = 17;
 
     private int displaywidth = pixelsize * columns;
     private int displayheight = pixelsize * rows;
