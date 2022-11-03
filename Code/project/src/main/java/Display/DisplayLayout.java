@@ -1,5 +1,6 @@
 package Display;
 
+import Board.Difficulty;
 import Board.Objects;
 import Helpers.KeyHandler;
 
@@ -386,7 +387,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         playPanel.goMain = 0;
 
         board = new BoardData();
-        board.initialiseBoard();
+        board.initialiseBoard(Difficulty.HARD);
         Objects[][] boardMap = board.getBoardData();
         for(int col = 0; col < 25; col++){
             for(int row = 0; row < 15; row++){

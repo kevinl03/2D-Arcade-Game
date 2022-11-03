@@ -20,7 +20,7 @@ public class BoardData {
                 if (ObjectMap[i][j] == Objects.TMP) {
                     ObjectMap[i][j] = Objects.TREE;
                 }
-                ;
+
             }
         }
     }
@@ -385,7 +385,7 @@ public class BoardData {
 
 
     //call initalise board at the begginning of every game
-    public void initialiseBoard() {
+    public void initialiseBoard(Difficulty dif) {
         //may need to change the ordering
         setEmptyTiles();
         setOuterWalls();

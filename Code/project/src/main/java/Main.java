@@ -1,4 +1,5 @@
 import Board.BoardData;
+import Board.Difficulty;
 import Game.ObjectData;
 import Helpers.Stopwatch;
 import Logic.EnemyLogic;
@@ -53,7 +54,7 @@ public class Main {
 
         BoardData board = new BoardData();
 
-        board.initialiseBoard();
+        board.initialiseBoard(Difficulty.HARD);
 
 //        System.out.println(Arrays.deepToString(board.getBoardData()));
         System.out.println(Arrays.deepToString(board.getBoardData()).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
