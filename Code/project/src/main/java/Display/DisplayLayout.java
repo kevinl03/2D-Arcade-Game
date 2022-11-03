@@ -470,8 +470,8 @@ public class DisplayLayout extends JFrame implements Runnable{
         gameovertest = false;
         timer = 0;
         Objects[][] boardMap = board.getBoardData();
-        for(int col = 0; col < 25; col++){
-            for(int row = 0; row < 15; row++){
+        for(int col = 0; col < board.getboardwidth(); col++){
+            for(int row = 0; row < board.getboardheight(); row++){
                 if(boardMap[col][row] == Objects.HERO){
                     playPanel.updaterows = row;
                     playPanel.updatecolumns = col;
