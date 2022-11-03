@@ -37,6 +37,7 @@ public class myGame extends JPanel{
     private JPanel mp;
     public int goMain = 0;
     private JLabel timeLabel;
+    private JLabel scoreLabel;
     Font font;
     private int seconds;
 
@@ -56,6 +57,8 @@ public class myGame extends JPanel{
         this.setLayout(null);
         timeLabel = new JLabel();
         timeLabel.setText("Time");
+        scoreLabel = new JLabel();
+        scoreLabel.setText("Score");
         font = new Font("Times New Roman", Font.BOLD, 30);
     }
 
@@ -306,6 +309,12 @@ public class myGame extends JPanel{
                 }
             }
         }
+        g2.setColor(Color.gray);
+        g2.fillRect(700,0,150,30);
+        g2.setFont(font);
+        g2.setColor(Color.white);
+        g2.drawString(scoreLabel.getText() + ": " + dl.gameObjectData.getHero().getScore(), 700, 25);
+
         g2.setColor(Color.gray);
         g2.fillRect(1300,0,150,30);
         g2.setFont(font);
