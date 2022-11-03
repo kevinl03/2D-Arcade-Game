@@ -1,6 +1,8 @@
 package Display;
 
+import Board.Difficulty;
 import Board.Objects;
+import Game.ObjectData;
 import Helpers.KeyHandler;
 
 import java.awt.*;
@@ -63,6 +65,8 @@ public class DisplayLayout extends JFrame implements Runnable{
     Image buttonIcon;
 
     BoardData board;
+
+    ObjectData gameObjectData;
 
     // Set up display
     public DisplayLayout()
@@ -177,6 +181,9 @@ public class DisplayLayout extends JFrame implements Runnable{
         playButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0) {
+                gameObjectData = new ObjectData(Difficulty.HARD);
+                board = gameObjectData.getBoard();
+
                 // show associated play panel
                 dl.show(displayPanel, "2");
                 // current panel is play Panel
@@ -385,8 +392,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     public void run() {   //   When starting thread, have thread use this run method
         playPanel.goMain = 0;
 
-        board = new BoardData();
-        board.initialiseBoard();
+
         Objects[][] boardMap = board.getBoardData();
         for(int col = 0; col < 25; col++){
             for(int row = 0; row < 15; row++){

@@ -1,7 +1,11 @@
 package Display;
 
 import Board.Objects;
+import Entities.Hero;
+import Entities.Position;
 import Helpers.KeyHandler;
+import Logic.EnemyLogic;
+import Logic.HeroLogic;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,6 +38,9 @@ public class myGame extends JPanel{
     public int goMain = 0;
 
     Objects[][] boardMap;
+
+    EnemyLogic enemyLogic;
+    HeroLogic heroLogic;
     public myGame(CardLayout cl, DisplayLayout dl, JPanel dp, JPanel mp){
         this.cl = cl;
         this.dl = dl;
@@ -50,64 +57,92 @@ public class myGame extends JPanel{
         //
         //
         //
-        boardMap = dl.board.getBoardData();
+//        boardMap = dl.board.getBoardData();
+        Thread.sleep(300);
+        Hero hero = dl.gameObjectData.getHero();
 
-        //Cannot go through trees
+        Position heroPos = new Position(hero.getX(), hero.getY());
+
+        enemyLogic = dl.gameObjectData.getEnemyLogic();
+        heroLogic = dl.gameObjectData.getHeroLogic();
+
+
         if (kh.up && (updaterows != 0) ) {
-            if(boardMap[updatecolumns][updaterows-1]!= Objects.TREE && !kh.down) {
-                updaterows--;
-                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
-                    System.out.println("Got reward");
-                }
-                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
-                    System.out.println("Got trapped");
-                }
-                boardMap[updatecolumns][updaterows] = Objects.HERO;
-                boardMap[updatecolumns][updaterows+1] = Objects.EMPTY;
-            }
+            heroPos.decrementY();
         }
 
         else if (kh.down && (updaterows != 14)) {
-            if(boardMap[updatecolumns][updaterows+1]!=Objects.TREE && !kh.up) {
-                updaterows++;
-                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
-                    System.out.println("Got reward");
-                }
-                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
-                    System.out.println("Got trapped");
-                }
-                boardMap[updatecolumns][updaterows] = Objects.HERO;
-                boardMap[updatecolumns][updaterows-1] = Objects.EMPTY;
-            }
+            heroPos.incrementY();
         }
 
         else if (kh.left && (updatecolumns != 0)) {
-            if(boardMap[updatecolumns-1][updaterows]!=Objects.TREE && !kh.right) {
-                updatecolumns--;
-                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
-                    System.out.println("Got reward");
-                }
-                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
-                    System.out.println("Got trapped");
-                }
-                boardMap[updatecolumns][updaterows] = Objects.HERO;
-                boardMap[updatecolumns+1][updaterows] = Objects.EMPTY;
-            }
+            heroPos.decrementX();
         }
 
         else if (kh.right && (updatecolumns != 24)) {
-            if(boardMap[updatecolumns+1][updaterows]!=Objects.TREE && !kh.left) {
-                updatecolumns++;
-                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
-                    System.out.println("Got reward");
-                }
-                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
-                    System.out.println("Got trapped");
-                }
-                boardMap[updatecolumns][updaterows] = Objects.HERO;
-                boardMap[updatecolumns-1][updaterows] = Objects.EMPTY;
-            }
+            heroPos.incrementX();
         }
+
+        heroLogic.processPlayerMovement(heroPos, dl.gameObjectData);
+        enemyLogic.processEnemyMovement(dl.gameObjectData);
+
+
+//        //Cannot go through trees
+//        if (kh.up && (updaterows != 0) ) {
+//            if(boardMap[updatecolumns][updaterows-1]!= Objects.TREE && !kh.down) {
+//                updaterows--;
+//                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
+//                    System.out.println("Got reward");
+//                }
+//                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
+//                    System.out.println("Got trapped");
+//                }
+//                boardMap[updatecolumns][updaterows] = Objects.HERO;
+//                boardMap[updatecolumns][updaterows+1] = Objects.EMPTY;
+//            }
+//        }
+//
+//        else if (kh.down && (updaterows != 14)) {
+//            if(boardMap[updatecolumns][updaterows+1]!=Objects.TREE && !kh.up) {
+//                updaterows++;
+//                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
+//                    System.out.println("Got reward");
+//                }
+//                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
+//                    System.out.println("Got trapped");
+//                }
+//                boardMap[updatecolumns][updaterows] = Objects.HERO;
+//                boardMap[updatecolumns][updaterows-1] = Objects.EMPTY;
+//            }
+//        }
+//
+//        else if (kh.left && (updatecolumns != 0)) {
+//            if(boardMap[updatecolumns-1][updaterows]!=Objects.TREE && !kh.right) {
+//                updatecolumns--;
+//                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
+//                    System.out.println("Got reward");
+//                }
+//                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
+//                    System.out.println("Got trapped");
+//                }
+//                boardMap[updatecolumns][updaterows] = Objects.HERO;
+//                boardMap[updatecolumns+1][updaterows] = Objects.EMPTY;
+//            }
+//        }
+//
+//        else if (kh.right && (updatecolumns != 24)) {
+//            if(boardMap[updatecolumns+1][updaterows]!=Objects.TREE && !kh.left) {
+//                updatecolumns++;
+//                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
+//                    System.out.println("Got reward");
+//                }
+//                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
+//                    System.out.println("Got trapped");
+//                }
+//                boardMap[updatecolumns][updaterows] = Objects.HERO;
+//                boardMap[updatecolumns-1][updaterows] = Objects.EMPTY;
+//            }
+//        }
 
         //////////////////////////////////////////////////////////////////
         if (kh.escape) {
@@ -248,6 +283,8 @@ public class myGame extends JPanel{
                     break;
                     case HERO: g2.drawImage(squirrel_png, col * 60, row * 60, pixelsize, pixelsize, null);
                     break;
+                    case ENEMYANDTRAP:
+                    case ENEMYANDREWARD:
                     case ENEMY: g2.drawImage(bear_png, col * 60, row * 60, pixelsize, pixelsize, null);
                     break;
                     case REWARD: g2.drawImage(peanuts_png, col * 60, row * 60, pixelsize, pixelsize, null);

@@ -284,14 +284,14 @@ public class BoardData {
         int enemyCount = 0;
         switch(dif){
             case EASY:
-                enemyCount = 2;
+                enemyCount = 1;
                 break;
             case MEDIUM:
-                enemyCount = 3;
+                enemyCount = 2;
                 break;
             case HARD:
             case INFINITE:
-                enemyCount = 5;
+                enemyCount = 3;
                 break;
         }
 
@@ -431,7 +431,7 @@ public class BoardData {
 
     //following will be used in game logic
 
-    public Objects getString(int x, int y) {
+    public Objects getTypeAt(int x, int y) {
         return ObjectMap[x][y];
     }
 

@@ -7,7 +7,7 @@ import Entities.*;
 import Game.ObjectData;
 
 public class HeroLogic {
-    private void processPlayerMovement(Position pos, ObjectData gameObjectData){
+    public void processPlayerMovement(Position pos, ObjectData gameObjectData){
 
         BoardData board = gameObjectData.getBoard();
 
@@ -36,14 +36,10 @@ public class HeroLogic {
             case BONUS:
                 collectBonus(pos, gameObjectData);
         }
-
-
-
-
         if(heroMoved){
             board.setTypeAt(hero, Objects.EMPTY);
-            board.setTypeAt(pos, Objects.HERO);
             hero.setPosition(pos);
+            board.setTypeAt(hero, Objects.HERO);
         }
 
 

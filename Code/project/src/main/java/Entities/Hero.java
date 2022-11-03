@@ -3,7 +3,7 @@ package Entities;
 public class Hero extends MovingEntity {
     protected int score;
 
-    Hero(){
+    public Hero(){
         score = 0;
     }
 
