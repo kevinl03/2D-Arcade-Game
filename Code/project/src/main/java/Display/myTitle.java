@@ -24,7 +24,7 @@ public class myTitle extends JPanel {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.drawImage(title_png, 0, 0, 1500, 900, null);
+        g.drawImage(title_png, 0, 0, 1500, 960, null);
         g.drawImage(title_squirrel, 400, 400, 293, 400, null);
     }
 }

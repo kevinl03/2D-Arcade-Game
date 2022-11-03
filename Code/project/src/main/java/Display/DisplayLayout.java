@@ -2,6 +2,7 @@ package Display;
 
 import Board.Difficulty;
 import Board.Objects;
+import Entities.Hero;
 import Game.ObjectData;
 import Helpers.KeyHandler;
 
@@ -19,7 +20,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     // Set up display
     protected int pixelsize = 60;   //60x60 pixels
     private int columns = 26;
-    private int rows = 16;
+    private int rows = 17;
 
     private int displaywidth = pixelsize * columns;
     private int displayheight = pixelsize * rows;
@@ -274,7 +275,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         //-----------------------------------Difficulty--------------------------------------------------------
         // Initialize Toggle/Button objects and add to buttongroup and Difficulty Panel
         difGroup = new ButtonGroup();
-        easyButton = new JToggleButton(" Easy ");
+        easyButton = new JToggleButton(" Easy ", true);
         gbc.insets = new Insets(200,0,0,0);
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -517,7 +518,6 @@ public class DisplayLayout extends JFrame implements Runnable{
         gameovertest = false;
         gameWonTest = false;
         timer = 0;
-
         Objects[][] boardMap = board.getBoardData();
         for(int col = 0; col < 25; col++){
             for(int row = 0; row < 15; row++){

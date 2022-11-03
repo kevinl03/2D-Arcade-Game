@@ -91,9 +91,25 @@ public class BoardData {
 
         return isadjecent;
     }
+    private void setInnerWalls(Difficulty difficulty){
+        int wallsegments = 0;
+        switch(difficulty){
+            case EASY: wallsegments = 5;
+                break;
+            case MEDIUM: wallsegments = 10;
+                break;
+            case HARD:
+            case INFINITE: wallsegments = 15;
+                break;
+        }
 
+        for (int i = 1; i < wallsegments; i++) {
+            setSegment();
+        }
+
+    }
     //helper functions for generating map
-    private void setInnerWalls() {
+    private void setSegment() {
 
         Random rand = new Random(); //instance of random class
 
@@ -104,11 +120,15 @@ public class BoardData {
         int maxwallwidth = columns - 2;
         int minwallwidth = 2;
 
-        //int totalwalls = (int)Math.floor(Math.random()*(max-min+1)+min);
 
 
+        int attempts = 0;
         boolean createdwall = false;
         while (!createdwall) {
+            attempts++;
+            if (attempts > 100){
+
+            }
 
             int startx = (int) Math.floor(Math.random() * (maxwallwidth - minwallwidth + 1) + minwallwidth);
             int starty = (int) Math.floor(Math.random() * (maxwallheight - minwallheight + 1) + minwallheight);
@@ -120,7 +140,6 @@ public class BoardData {
 
             //if collision ever occurs, we go back to the top while to try again
             boolean failedgeneration = false;
-
 
             for (int wallnumber = 1; wallnumber <= totalwalls; wallnumber++) {
 
@@ -203,6 +222,12 @@ public class BoardData {
                 //System.out.printf("fail generation");
                 //get rid of unusable TMP trees which failed generation
                 removeTMPTrees();
+            }
+            //this creates a check so that a wall segment doesn't get stuck endlessly
+            //in the while loop
+            attempts++;
+            if (attempts > 100){
+                createdwall = true;
             }
 
         }
@@ -397,22 +422,8 @@ public class BoardData {
         setEmptyTiles();
         setOuterWalls();
         //harder difficulty means more wall segments so user has less space to move around
-        int wallsegments = 1;
-        switch(dif){
-            case EASY: wallsegments = 5;
-                break;
-            case MEDIUM: wallsegments = 10;
-                break;
-            case HARD:
-            case INFINITE: wallsegments = 12;
-                break;
-        }
-//        System.out.println(-2);
+        setInnerWalls(dif);
 
-
-        for (int i = 1; i < wallsegments; i++) {
-            setInnerWalls();
-        }
 //        System.out.println(-1);
 //
         setBonusRewards();
