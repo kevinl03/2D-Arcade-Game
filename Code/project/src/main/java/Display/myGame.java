@@ -51,7 +51,7 @@ public class myGame extends JPanel{
         this.dp = dp;
         this.mp = mp;
         this.kh = dl.kh;
-        setPreferredSize(new Dimension(columns*pixelsize, rows*pixelsize));
+        setPreferredSize(new Dimension(columns*pixelsize, rows*pixelsize+60));
         getImages();
         addKeyListener(kh);
         this.setLayout(null);
@@ -282,29 +282,29 @@ public class myGame extends JPanel{
     protected void paintComponent(Graphics g){   //   Draw something on JPanel
         super.paintComponent(g);   //   Method already exists, so super is used to add additional lines
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
-        g.drawImage(board_png, 0, 0, 1500, 900, null);
+        g.drawImage(board_png, 0, 0, 1500, 960, null);
 
         boardMap = dl.board.getBoardData();
 
         for(int col = 0; col < 25; col++){
             for(int row = 0; row < 15; row++){
                 switch (boardMap[col][row]) {
-                    case TREE: g2.drawImage(tree_png, col * 60, row * 60, pixelsize, pixelsize, null);
+                    case TREE: g2.drawImage(tree_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
                     break;
-                    case HERO: g2.drawImage(squirrel_png, col * 60, row * 60, pixelsize, pixelsize, null);
+                    case HERO: g2.drawImage(squirrel_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
                     break;
                     case ENEMYANDTRAP:
                     case ENEMYANDREWARD:
-                    case ENEMY: g2.drawImage(bear_png, col * 60, row * 60, pixelsize, pixelsize, null);
+                    case ENEMY: g2.drawImage(bear_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
                     break;
-                    case REWARD: g2.drawImage(peanuts_png, col * 60, row * 60, pixelsize, pixelsize, null);
+                    case REWARD: g2.drawImage(peanuts_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
                     break;
-                    case BONUS: g2.drawImage(acorn_png, col * 60, row * 60, pixelsize, pixelsize, null);
+                    case BONUS: g2.drawImage(acorn_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
                     break;
-                    case TRAP: g2.drawImage(trap_png, col * 60, row * 60, pixelsize, pixelsize, null);
+                    case TRAP: g2.drawImage(trap_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
                     break;
                     //no exit image yet
-                    case EXIT: g2.drawImage(exit_png, col * 60, row * 60, pixelsize, pixelsize, null);
+                    case EXIT: g2.drawImage(exit_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
                     break;
                 }
             }
