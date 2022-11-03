@@ -500,7 +500,7 @@ public class DisplayLayout extends JFrame implements Runnable{
             currentCard = 6;
 
             timeLabel.setText("Time : " + timer / 1000);
-            scoreLabel.setText("Score : ");
+            scoreLabel.setText("Score : " + gameObjectData.getHero().getScore());
         }
     }
 
@@ -516,7 +516,6 @@ public class DisplayLayout extends JFrame implements Runnable{
         // Function to set visibility of JFrame.
         display.setVisible(true);
 
-        //while(display.whileexit == 0){};
 
     }
 }
