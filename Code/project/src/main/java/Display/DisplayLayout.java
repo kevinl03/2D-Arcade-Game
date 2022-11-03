@@ -36,6 +36,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     private JPanel settPanel;
     private JPanel diffPanel;
     private JPanel gameOver;
+    private JPanel gameWon;
     private JLabel titleLabel;
     private JLabel settLabel;
     private JLabel diffLabel;
@@ -61,6 +62,9 @@ public class DisplayLayout extends JFrame implements Runnable{
     private JButton gameoverButton;
     private boolean gameovertest;
 
+    private boolean gameWonTest;
+
+
     private GridBagConstraints gbc;
     public int unpause = 0;
     Font titleText;
@@ -76,6 +80,8 @@ public class DisplayLayout extends JFrame implements Runnable{
     ObjectData gameObjectData;
 
     public int timer;
+
+    private Difficulty dif = Difficulty.EASY;
 
     // Set up display
     public DisplayLayout()
@@ -127,6 +133,10 @@ public class DisplayLayout extends JFrame implements Runnable{
         gameOver = new myGameOver();
         gameOver.setLayout(null);
 
+        //Initialize GameWon
+        gameWon = new myGameWon();
+        gameWon.setLayout(null);
+
         // Initialize labels for each JPanel
         titleLabel = new JLabel("Hidden Squirrel: Peanuts and Acorns");
         titleLabel.setFont(titleText);
@@ -154,6 +164,8 @@ public class DisplayLayout extends JFrame implements Runnable{
         displayPanel.add(diffPanel, "4");
         displayPanel.add(pausePanel, "5");
         displayPanel.add(gameOver, "6");
+        displayPanel.add(gameWon, "7");
+
 
         //---------------------------------------TITLE-----------------------------------------------------------
         // Initialize JButton objects and add to title Panel
@@ -194,7 +206,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         playButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0) {
-                gameObjectData = new ObjectData(Difficulty.HARD);
+                gameObjectData = new ObjectData(dif);
                 board = gameObjectData.getBoard();
 
                 // show associated play panel
@@ -301,7 +313,7 @@ public class DisplayLayout extends JFrame implements Runnable{
             public void actionPerformed(ActionEvent arg0)
             {
                 //Change difficulty to easy
-                System.out.println("Easy");
+                dif = Difficulty.EASY;
             }
         });
 
@@ -311,7 +323,7 @@ public class DisplayLayout extends JFrame implements Runnable{
             public void actionPerformed(ActionEvent arg0)
             {
                 //Change difficulty to medium
-                System.out.println("Medium");
+                dif = Difficulty.MEDIUM;
             }
         });
 
@@ -319,7 +331,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         hardButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 //Change difficulty to hard
-                System.out.println("Hard");
+                dif = Difficulty.HARD;
             }
         });
 
@@ -401,7 +413,7 @@ public class DisplayLayout extends JFrame implements Runnable{
             public void actionPerformed(ActionEvent arg0)
             {
                 playPanel.goMain = 1;
-                gameovertest = true;
+                 gameWonTest= true;
                 unpause = 0;
                 kh.escape = false;
                 //Go back to main menu
@@ -450,6 +462,44 @@ public class DisplayLayout extends JFrame implements Runnable{
 
             }
         });
+        //-----------------------------------GAME WON---------------------------------------------------------
+        gameLabel = new JLabel("CONGRATULATIONS");
+        gameLabel.setFont(titleText);
+        gameLabel.setBounds(500, 0, 550, 100);
+        timeLabel = new JLabel();
+        timeLabel.setFont(headerText);
+        timeLabel.setBounds(700, 100, 800, 100);
+        scoreLabel = new JLabel();
+        scoreLabel.setFont(headerText);
+        scoreLabel.setBounds(700, 200, 800, 100);
+        gameWon.add(gameLabel);
+        gameWon.add(timeLabel);
+        gameWon.add(scoreLabel);
+
+        gomenuButton = new JButton("Main Menu");
+        gomenuButton.setFocusable(false);
+        gomenuButton.setBounds(650, 400, 200, 100);
+        // Game over screen, add menu button
+        gameWon.add(gomenuButton);
+
+        gomenuButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent arg0)
+            {
+                playPanel.goMain = 1;
+                unpause = 0;
+                kh.escape = false;
+                //Go back to main menu
+                System.out.println("Going Back");
+
+                // show associated difficulty panel
+                dl.show(displayPanel, "1");
+
+                // current panel is difficulty Panel
+                currentCard = 1;
+
+            }
+        });
         //------------------------------------------------------------------------------------------------------
 
         // used to get content pane
@@ -465,6 +515,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     public void run() {   //   When starting thread, have thread use this run method
         playPanel.goMain = 0;
         gameovertest = false;
+        gameWonTest = false;
         timer = 0;
 
         Objects[][] boardMap = board.getBoardData();
@@ -485,6 +536,22 @@ public class DisplayLayout extends JFrame implements Runnable{
                 if( (playPanel.goMain == 0) && (unpause == 0) ) {
                     playPanel.repaint();
                 }
+                if(gameObjectData.getGameStats().getGameOver()){
+                    playPanel.goMain = 1;
+                    gameovertest = true;
+                    unpause = 0;
+                    kh.escape = false;
+                    //Go back to main menu
+                    System.out.println("Game is over");
+                }
+                if(gameObjectData.getGameStats().isGameWon()){
+                    playPanel.goMain = 1;
+                    gameWonTest = true;
+                    unpause = 0;
+                    kh.escape = false;
+                    System.out.println("Game has been won!!!");
+                }
+
                 Thread.sleep(150);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -497,6 +564,13 @@ public class DisplayLayout extends JFrame implements Runnable{
         if(gameovertest) {
             //Show game over
             dl.show(displayPanel, "6");
+            currentCard = 6;
+
+            timeLabel.setText("Time : " + timer / 1000);
+            scoreLabel.setText("Score : " + gameObjectData.getHero().getScore());
+        }
+        if(gameWonTest){
+            dl.show(displayPanel, "7");
             currentCard = 6;
 
             timeLabel.setText("Time : " + timer / 1000);
