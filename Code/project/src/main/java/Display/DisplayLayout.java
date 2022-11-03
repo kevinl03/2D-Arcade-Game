@@ -59,7 +59,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     private JButton gomenuButton;
 
     private JButton gameoverButton;
-    private int gameovertest;
+    private boolean gameovertest;
 
     private GridBagConstraints gbc;
     public int unpause = 0;
@@ -401,6 +401,7 @@ public class DisplayLayout extends JFrame implements Runnable{
             public void actionPerformed(ActionEvent arg0)
             {
                 playPanel.goMain = 1;
+                gameovertest = true;
                 unpause = 0;
                 kh.escape = false;
                 //Go back to main menu
@@ -431,7 +432,6 @@ public class DisplayLayout extends JFrame implements Runnable{
         // Game over screen, add menu button
         gameOver.add(gomenuButton);
 
-        // add main menu Button ActionListener
         gomenuButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0)
@@ -464,6 +464,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     @Override
     public void run() {   //   When starting thread, have thread use this run method
         playPanel.goMain = 0;
+        gameovertest = false;
         timer = 0;
 
         Objects[][] boardMap = board.getBoardData();
@@ -493,12 +494,14 @@ public class DisplayLayout extends JFrame implements Runnable{
         //reset the game
         playPanel.reset();
 
-        //Show game over
-        dl.show(displayPanel, "6");
-        currentCard = 6;
+        if(gameovertest) {
+            //Show game over
+            dl.show(displayPanel, "6");
+            currentCard = 6;
 
-        timeLabel.setText("Time : "+ timer/1000);
-        scoreLabel.setText("Score : ");
+            timeLabel.setText("Time : " + timer / 1000);
+            scoreLabel.setText("Score : ");
+        }
     }
 
     // Main Method
