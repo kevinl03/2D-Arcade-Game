@@ -36,6 +36,9 @@ public class myGame extends JPanel{
 
     private JPanel mp;
     public int goMain = 0;
+    private JLabel timeLabel;
+    Font font;
+    private int seconds;
 
     Objects[][] boardMap;
 
@@ -50,6 +53,10 @@ public class myGame extends JPanel{
         setPreferredSize(new Dimension(columns*pixelsize, rows*pixelsize));
         getImages();
         addKeyListener(kh);
+        this.setLayout(null);
+        timeLabel = new JLabel();
+        timeLabel.setText("Time");
+        font = new Font("Times New Roman", Font.BOLD, 30);
     }
 
     public void updates() throws InterruptedException {
@@ -58,7 +65,9 @@ public class myGame extends JPanel{
         //
         //
 //        boardMap = dl.board.getBoardData();
-        Thread.sleep(300);
+        dl.timer+=150;
+        seconds = dl.timer/1000;
+
         Hero hero = dl.gameObjectData.getHero();
 
         Position heroPos = new Position(hero.getX(), hero.getY());
@@ -84,7 +93,7 @@ public class myGame extends JPanel{
         }
 
         heroLogic.processPlayerMovement(heroPos, dl.gameObjectData);
-        enemyLogic.processEnemyMovement(dl.gameObjectData);
+        //enemyLogic.processEnemyMovement(dl.gameObjectData);
 
 
 //        //Cannot go through trees
@@ -270,8 +279,6 @@ public class myGame extends JPanel{
     protected void paintComponent(Graphics g){   //   Draw something on JPanel
         super.paintComponent(g);   //   Method already exists, so super is used to add additional lines
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
-        //g2.drawImage(squirrel_png, updatecolumns * 60, updaterows * 60, pixelsize, pixelsize, null);
-        //g2.drawRect(updatecolumns*60, updaterows*60, pixelsize,pixelsize);
         g.drawImage(board_png, 0, 0, 1500, 900, null);
 
         boardMap = dl.board.getBoardData();
@@ -299,7 +306,11 @@ public class myGame extends JPanel{
                 }
             }
         }
-
+        g2.setColor(Color.gray);
+        g2.fillRect(1300,0,150,30);
+        g2.setFont(font);
+        g2.setColor(Color.white);
+        g2.drawString(timeLabel.getText() + ": " + seconds, 1300, 25);
         g2.dispose();
     }
 }
