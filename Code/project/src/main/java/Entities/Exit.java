@@ -2,10 +2,19 @@ package Entities;
 
 import Board.Difficulty;
 
-public class Exit {
+public class Exit extends Position{
     private boolean closed = true;
     private int rewardCount = 0;
 
+
+    public Exit(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public Exit() {
+
+    }
 
     public void rewardCollected(Difficulty dif){
         rewardCount++;
@@ -18,4 +27,7 @@ public class Exit {
         }
     }
 
+    public boolean isClosed() {
+        return closed;
+    }
 }

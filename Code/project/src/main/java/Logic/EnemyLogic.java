@@ -27,15 +27,14 @@ public class EnemyLogic {
         int width = boardArr.length;
         int height = boardArr[0].length;
 
-        Objects[][] tempArr = new Objects[width][height];
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                tempArr[i][j] = boardArr[i][j];
-            }
-        }
-        System.out.println("\n\n");
         for (Enemy enemy : enemies) {
+            Objects[][] tempArr = new Objects[width][height];
+
+            for(int i = 0; i < width; i++){
+                for(int j = 0; j < height; j++){
+                    tempArr[i][j] = boardArr[i][j];
+                }
+            }
             Direction nextMove = findShortestPath(tempArr, enemy);
 
 //            System.out.println(nextMove);
@@ -123,12 +122,13 @@ public class EnemyLogic {
         List<Node> neighbours = new LinkedList<>();
         //check if there is a non tree tile in each direction (North, East, South, West), if so, add it to neighbours list
         //only change the initialDirection if it is the initial node from where the search started (the enemy)
-        if (head.initialDirection == Direction.NULL) {
-            neighbours.add(new Node(new Position(x + 1, y), Direction.EAST, head.pathLength + 1));
-        } else {
-            neighbours.add(new Node(new Position(x + 1, y), head.initialDirection, head.pathLength + 1));
+        if (x + 1 >= 0 && x + 1 < width && board[x + 1][y] != Objects.TREE) {
+            if (head.initialDirection == Direction.NULL) {
+                neighbours.add(new Node(new Position(x + 1, y), Direction.EAST, head.pathLength + 1));
+            } else {
+                neighbours.add(new Node(new Position(x + 1, y), head.initialDirection, head.pathLength + 1));
+            }
         }
-
 
         if (x - 1 >= 0 && x - 1 < width && board[x - 1][y] != Objects.TREE) {
             if (head.initialDirection == Direction.NULL) {

@@ -72,7 +72,7 @@ public class Main {
 //        testShortestPath();
 //        testStopwatch();
         for (int i = 0; i < 1000000; i++) {
-            System.out.println(i);
+//            System.out.println(i);
             testBoardGen();
         }
 

@@ -394,19 +394,19 @@ public class BoardData {
 
         switch(side){
             case(0):
-                 x = rand.nextInt(columns-1);
+                 x = rand.nextInt(columns-2)+1;
                  y = rows-1;
                 break;
             case(1):
-                y = rand.nextInt(rows-1);
+                y = rand.nextInt(rows-2)+1;
                 x = columns-1;
                 break;
             case(2):
-                x = rand.nextInt(columns-1);
+                x = rand.nextInt(columns-2)+1;
                 y = 0;
                 break;
             case(3):
-                y = rand.nextInt(rows-1) ;
+                y = rand.nextInt(rows-2)+1 ;
                 x = 0;
                 break;
         }
