@@ -76,7 +76,7 @@ public class ObjectData {
 
     public Enemy getEnemyAt(Position pos) {
         for (Enemy enemy : enemies) {
-            if (enemy == pos) {
+            if ( (enemy.getX() == pos.getX()) && (enemy.getY() == pos.getY()) ) {
                 return enemy;
             }
         }
@@ -89,7 +89,7 @@ public class ObjectData {
 
     public Trap getTrapAt(Position pos) {
         for (Trap trap : traps) {
-            if (trap == pos) {
+            if ( (trap.getX() == pos.getX()) && (trap.getY() == pos.getY())) {
                 return trap;
             }
         }
@@ -103,7 +103,7 @@ public class ObjectData {
 
     public RegularReward getRewardAt(Position pos) {
         for (RegularReward reward : rewards) {
-            if (reward == pos) {
+            if ( (reward.getX() == pos.getX()) && (reward.getY() == pos.getY())) {
                 return reward;
             }
         }
@@ -121,7 +121,7 @@ public class ObjectData {
 
     public Bonus getBonusAt(Position pos) {
         for (Bonus value : bonus) {
-            if (value == pos) {
+            if ( (value.getX() == pos.getX()) && (value.getY() == pos.getY()) ) {
                 return value;
             }
         }
