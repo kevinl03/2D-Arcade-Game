@@ -12,12 +12,14 @@ public class HeroLogic {
         BoardData board = gameObjectData.getBoard();
 
 
-        Objects tileType = board.getTypeAt(pos);
 
         Hero hero = gameObjectData.getHero();
 
+        Exit exit = gameObjectData.getExit();
+
         boolean heroMoved = true;
 
+        Objects tileType = board.getTypeAt(pos);
         switch (tileType){
             case TREE:
                 heroMoved = false;
@@ -29,13 +31,22 @@ public class HeroLogic {
                 activateTrap(pos, gameObjectData);
                 break;
             case ENEMY:
-            //    gameover();
+                gameObjectData.getGameStats().setGameOver(true);
                 break;
             case EMPTY:
                 break;
             case BONUS:
                 collectBonus(pos, gameObjectData);
+                break;
+            case EXIT:
+                if(!exit.isClosed()){
+                    gameObjectData.getGameStats().setGameWon(true);
+                }else{
+                    heroMoved = false;
+                }
         }
+
+
         if(heroMoved){
             board.setTypeAt(hero, Objects.EMPTY);
             hero.setPosition(pos);
@@ -62,8 +73,7 @@ public class HeroLogic {
 
         Exit exit = gameObjectData.getExit();
 
-        //TODO CHANGE DIFFICULTY TO GAME DIFFICULTY RATHER THAN HARD CODED
-        exit.rewardCollected(Difficulty.HARD);
+        exit.rewardCollected(gameObjectData.getDif());
     }
 
     private void collectBonus(Position pos, ObjectData gameObjectData){

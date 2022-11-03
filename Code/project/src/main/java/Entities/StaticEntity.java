@@ -9,7 +9,8 @@ public class StaticEntity extends Position {
     }
 
     public StaticEntity(int x, int y, int time) {
-        super(x,y);
+        this.x = x;
+        this.y = y;
         this.start_time = time;
     }
 

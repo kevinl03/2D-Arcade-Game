@@ -23,18 +23,21 @@ public class ObjectData {
 
     private HeroLogic heroLogic;
 
+    private Difficulty dif;
+
 
 
     public ObjectData(Difficulty dif){
+        this.dif = dif;
         hero = new Hero();
         board = new BoardData();
-        exit = new Exit();
         gameStats = new GameStats();
         enemyLogic = new EnemyLogic();
         heroLogic = new HeroLogic();
         enemies = new ArrayList<>();
         traps = new ArrayList<>();
         rewards = new ArrayList<>();
+        exit = new Exit();
 
         board.initialiseBoard(dif);
         int trapDamage = 50;
@@ -51,11 +54,14 @@ public class ObjectData {
 
                 Position currentTile = new Position(x,y);
 
+//                    System.out.println(board.getTypeAt(currentTile));
                 switch(board.getTypeAt(currentTile)){
                     case HERO -> hero.setPosition(currentTile);
                     case ENEMY -> enemies.add(new Enemy(x,y));
                     case TRAP -> traps.add(new Trap(x,y, 0,trapDamage));
                     case REWARD -> rewards.add(new RegularReward(x, y, 0, rewardPoints));
+                    case EXIT -> exit.setPosition(currentTile);
+
                 }
             }
         }
@@ -142,6 +148,10 @@ public class ObjectData {
 
     public EnemyLogic getEnemyLogic() {
         return enemyLogic;
+    }
+
+    public Difficulty getDif() {
+        return dif;
     }
 }
 
