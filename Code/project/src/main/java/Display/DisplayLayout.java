@@ -60,6 +60,14 @@ public class DisplayLayout extends JFrame implements Runnable{
     private JButton mainmenuButton;
     private JButton gomenuButton;
 
+    private JLabel soundLabel;
+
+    private JToggleButton muteButton;
+    private JToggleButton unmuteButton;
+    private ButtonGroup soundGroup;
+
+
+
     private JButton gameoverButton;
     private boolean gameovertest;
 
@@ -270,6 +278,22 @@ public class DisplayLayout extends JFrame implements Runnable{
                 currentCard = 1;
             }
         });
+        soundGroup = new ButtonGroup();
+        muteButton = new JToggleButton("Mute");
+        gbc.insets = new Insets(50,0,0,0);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        muteButton.setFocusable(false);
+        settPanel.add(muteButton,gbc);
+
+        unmuteButton = new JToggleButton("Unmute");
+        gbc.insets = new Insets(50,0,0,0);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        unmuteButton.setFocusable(false);
+        settPanel.add(unmuteButton,gbc);
+
+
         //-----------------------------------------------------------------------------------------------------
 
         //-----------------------------------Difficulty--------------------------------------------------------
