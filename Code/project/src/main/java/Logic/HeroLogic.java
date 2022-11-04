@@ -7,17 +7,19 @@ import Entities.*;
 import Game.ObjectData;
 
 public class HeroLogic {
-    private void processPlayerMovement(Position pos, ObjectData gameObjectData){
+    public void processPlayerMovement(Position pos, ObjectData gameObjectData){
 
         BoardData board = gameObjectData.getBoard();
 
 
-        Objects tileType = board.getTypeAt(pos);
 
         Hero hero = gameObjectData.getHero();
 
+        Exit exit = gameObjectData.getExit();
+
         boolean heroMoved = true;
 
+        Objects tileType = board.getTypeAt(pos);
         switch (tileType){
             case TREE:
                 heroMoved = false;
@@ -29,21 +31,26 @@ public class HeroLogic {
                 activateTrap(pos, gameObjectData);
                 break;
             case ENEMY:
-            //    gameover();
+                gameObjectData.getGameStats().setGameOver(true);
                 break;
             case EMPTY:
                 break;
             case BONUS:
                 collectBonus(pos, gameObjectData);
+                break;
+            case EXIT:
+                if(!exit.isClosed()){
+                    gameObjectData.getGameStats().setGameWon(true);
+                }else{
+                    heroMoved = false;
+                }
         }
-
-
 
 
         if(heroMoved){
             board.setTypeAt(hero, Objects.EMPTY);
-            board.setTypeAt(pos, Objects.HERO);
             hero.setPosition(pos);
+            board.setTypeAt(hero, Objects.HERO);
         }
 
 
@@ -66,8 +73,7 @@ public class HeroLogic {
 
         Exit exit = gameObjectData.getExit();
 
-        //TODO CHANGE DIFFICULTY TO GAME DIFFICULTY RATHER THAN HARD CODED
-        exit.rewardCollected(Difficulty.HARD);
+        exit.rewardCollected(gameObjectData.getDif());
     }
 
     private void collectBonus(Position pos, ObjectData gameObjectData){

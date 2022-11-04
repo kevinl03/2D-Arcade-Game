@@ -12,7 +12,7 @@ public class BoardData {
     private static Objects[][] ObjectMap = new Objects[columns][rows];
 
     //TODO REPLACE HARD CODE
-    private Difficulty dif = Difficulty.HARD;
+//    private Difficulty dif = Difficulty.HARD;
 
     private void replaceTMPTrees() {
         for (int i = 0; i < columns; i++) {
@@ -36,10 +36,6 @@ public class BoardData {
         }
     }
 
-
-    /**
-     *
-     */
     public void setOuterWalls() {
         for (int i = 0; i < rows; i++) {
             ObjectMap[0][i] = Objects.TREE;
@@ -95,9 +91,25 @@ public class BoardData {
 
         return isadjecent;
     }
+    private void setInnerWalls(Difficulty difficulty){
+        int wallsegments = 0;
+        switch(difficulty){
+            case EASY: wallsegments = 5;
+                break;
+            case MEDIUM: wallsegments = 10;
+                break;
+            case HARD:
+            case INFINITE: wallsegments = 15;
+                break;
+        }
 
+        for (int i = 1; i < wallsegments; i++) {
+            setSegment();
+        }
+
+    }
     //helper functions for generating map
-    private void setInnerWalls() {
+    private void setSegment() {
 
         Random rand = new Random(); //instance of random class
 
@@ -108,11 +120,15 @@ public class BoardData {
         int maxwallwidth = columns - 2;
         int minwallwidth = 2;
 
-        //int totalwalls = (int)Math.floor(Math.random()*(max-min+1)+min);
 
 
+        int attempts = 0;
         boolean createdwall = false;
         while (!createdwall) {
+            attempts++;
+            if (attempts > 100){
+
+            }
 
             int startx = (int) Math.floor(Math.random() * (maxwallwidth - minwallwidth + 1) + minwallwidth);
             int starty = (int) Math.floor(Math.random() * (maxwallheight - minwallheight + 1) + minwallheight);
@@ -124,7 +140,6 @@ public class BoardData {
 
             //if collision ever occurs, we go back to the top while to try again
             boolean failedgeneration = false;
-
 
             for (int wallnumber = 1; wallnumber <= totalwalls; wallnumber++) {
 
@@ -208,6 +223,12 @@ public class BoardData {
                 //get rid of unusable TMP trees which failed generation
                 removeTMPTrees();
             }
+            //this creates a check so that a wall segment doesn't get stuck endlessly
+            //in the while loop
+            attempts++;
+            if (attempts > 100){
+                createdwall = true;
+            }
 
         }
         //end of while loop
@@ -236,9 +257,10 @@ public class BoardData {
 
             if(ObjectMap[x][y] == Objects.EMPTY){
                 int[] loc = {x,y};
-                boolean test = checkValidRewardProximity(rewardLocations, loc, dif);
+                boolean valid = checkValidRewardProximity(rewardLocations, loc, dif);
 //                System.out.println(test);
-                if(test){
+//                    System.out.println(valid);
+                if(valid){
                     ObjectMap[x][y] = Objects.REWARD;
                     rewardLocations.add(loc);
                 }else{
@@ -251,7 +273,7 @@ public class BoardData {
     }
 
     private boolean checkValidRewardProximity(ArrayList<int[]> rewards, int[] newReward, Difficulty dif){
-        System.out.println(rewards.size());
+//        System.out.println(rewards.size());
 
         int minProximity = 0;
 
@@ -262,18 +284,18 @@ public class BoardData {
             int newY = newReward[1];
 
             switch(dif){
-                case EASY: minProximity = 6;
+                case EASY: minProximity = 5;
                     break;
-                case MEDIUM: minProximity = 4;
+                case MEDIUM: minProximity = 3;
                     break;
                 case HARD:
-                case INFINITE: minProximity = 3;
+                case INFINITE: minProximity = 0;
                     break;
             }
             //using pythagorean theorem to make sure reward is atleast minProximity away from all other rewards
-            if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
-                return false;
-            }
+//            if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
+//                return false;
+//            }
         }
         return true;
     }
@@ -283,44 +305,144 @@ public class BoardData {
 
     }
 
-    private void setEnemies() {
+    private void setEnemies(Difficulty dif) {
+        int enemyCount = 0;
+        switch(dif){
+            case EASY:
+                enemyCount = 1;
+                break;
+            case MEDIUM:
+                enemyCount = 2;
+                break;
+            case HARD:
+            case INFINITE:
+                enemyCount = 3;
+                break;
+        }
 
+        for(int i = 0; i < enemyCount; i++){
+            int[] xy = getRandomXY();
+            int x = xy[0];
+            int y = xy[1];
+            if(ObjectMap[x][y] == Objects.EMPTY) {
+                ObjectMap[x][y] = Objects.ENEMY;
+            }else{
+                i--;
+            }
+        }
     }
 
-    private void setTraps() {
+    public void generateTraps(int count){
+
+        for (int trapcount = 1; trapcount <= count; trapcount++){
+            boolean posfound = false;
+            while(!posfound){
+                int[] coords = getRandomXY();
+                //check to see if generation is a valid
+                if (ObjectMap[coords[0]][coords[1]] == Objects.EMPTY){
+
+                    ObjectMap[coords[0]][coords[1]] = Objects.TRAP;
+                    posfound = true;
+                }
+                //else case means we need a new XY so we go back to while loop
+                //and get another randomXY
+            }
+        }
+
+    }
+    private void setTraps(Difficulty dif) {
+        //does not matter if traps are in close to eachother
+        //so we don't check for proximity when generating
+        switch(dif){
+            case EASY:
+                generateTraps(4);
+            case MEDIUM:
+                generateTraps(7);
+            case HARD:
+                generateTraps(11);
+            case INFINITE:
+                generateTraps(11);
+        }
+
+
+
 
     }
 
     private void setHeroLocation() {
 
+        boolean heroNotSpawned = true;
+
+        while(heroNotSpawned){
+            int[] xy = getRandomXY();
+            int x = xy[0];
+            int y = xy[1];
+            if(ObjectMap[x][y] == Objects.EMPTY) {
+                ObjectMap[x][y] = Objects.HERO;
+                heroNotSpawned = false;
+            }
+        }
     }
 
-    //will be used for ending the game
     public void setDoor() {
+        Random rand = new Random(); //instance of random class
 
+        //0 = north, 1 = east, 2 = south, 3 = west;
+        int side = rand.nextInt(3);
+        int x = 0;
+        int y = 0;
+
+        switch(side){
+            case(0):
+                 x = rand.nextInt(columns-2)+1;
+                 y = rows-1;
+                break;
+            case(1):
+                y = rand.nextInt(rows-2)+1;
+                x = columns-1;
+                break;
+            case(2):
+                x = rand.nextInt(columns-2)+1;
+                y = 0;
+                break;
+            case(3):
+                y = rand.nextInt(rows-2)+1 ;
+                x = 0;
+                break;
+        }
+
+        ObjectMap[x][y] = Objects.EXIT;
     }
 
 
     //call initalise board at the begginning of every game
-    public void initialiseBoard() {
+    public void initialiseBoard(Difficulty dif) {
+
         //may need to change the ordering
         setEmptyTiles();
         setOuterWalls();
         //harder difficulty means more wall segments so user has less space to move around
-        int wallsegments = 6;
-        for (int i = 1; i < wallsegments; i++) {
-            setInnerWalls();
-        }
+        setInnerWalls(dif);
+
+//        System.out.println(-1);
+//
         setBonusRewards();
+//        System.out.println(1);
         setRegRewards(dif);
-        setTraps();
-        setEnemies();
+//        System.out.println(2);
+        setTraps(dif);
+//        System.out.println(3);
+        setEnemies(dif);
+//        System.out.println(4);
         setHeroLocation();
+//        System.out.println(5);
+        setDoor();
+//        System.out.println(6);
     }
 
     //following will be used in game logic
 
-    public Objects getString(int x, int y) {
+    public Objects getTypeAt(int x, int y) {
         return ObjectMap[x][y];
     }
 
