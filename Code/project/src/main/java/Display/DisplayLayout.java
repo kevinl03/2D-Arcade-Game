@@ -32,7 +32,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     // Declare CardLayout class objects.
     private CardLayout dl;
 
-    private JPanel displayPanel;
+    public JPanel displayPanel;
     private JPanel titlePanel;
     private myGame playPanel;
     private JPanel settPanel;
@@ -40,7 +40,6 @@ public class DisplayLayout extends JFrame implements Runnable{
     private JPanel gameOver;
     private JPanel gameWon;
     private JLabel titleLabel;
-    private JLabel settLabel;
     private JLabel diffLabel;
     private JLabel timeLabel;
     private JLabel scoreLabel;
@@ -49,7 +48,6 @@ public class DisplayLayout extends JFrame implements Runnable{
     private JButton settButton;
     private JButton diffButton;
     private JButton quitButton;
-    private JButton settbackButton;
     private ButtonGroup difGroup;
     private JToggleButton easyButton;
     private JToggleButton mediumButton;
@@ -62,12 +60,6 @@ public class DisplayLayout extends JFrame implements Runnable{
     private JButton gomenuButton;
 
     private JLabel soundLabel;
-
-    private JToggleButton muteButton;
-    private JToggleButton unmuteButton;
-    private ButtonGroup soundGroup;
-
-
 
     private JButton gameoverButton;
     private boolean gameovertest;
@@ -130,13 +122,11 @@ public class DisplayLayout extends JFrame implements Runnable{
         titlePanel.setBackground(Color.cyan);
 
         // Initialize Setting JPanel class
-        settPanel = new mySettings(this);
-        settPanel.setLayout(new GridBagLayout());
-
+        settPanel = new mySettings(this, dl);
 
         // Initialize Difficulty JPanel class
         //make one later
-        diffPanel = new mySettings(this);
+        diffPanel = new JPanel();
         diffPanel.setLayout(new GridBagLayout());
 
         // Initialize Pause JPanel class
@@ -162,17 +152,12 @@ public class DisplayLayout extends JFrame implements Runnable{
         titleLabel.setVerticalAlignment(JLabel.TOP);
 
 //        sound.startupMusic();
-        settLabel = new JLabel("Settings");
-        settLabel.setFont(headerText);
-        diffLabel = new JLabel("Difficulty");
-        diffLabel.setFont(headerText);
         pauseLabel = new JLabel("PAUSED");
         pauseLabel.setFont(titleText);
 
         // Adding labels onto the panels
         titlePanel.add(titleLabel);
-        settPanel.add(settLabel);
-        diffPanel.add(diffLabel);
+        //diffPanel.add(diffLabel);
         pausePanel.add(pauseLabel);
 
         // Adding the cardPanel into layout, constraints associates panel
@@ -271,66 +256,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         });
         //-----------------------------------------------------------------------------------------------------
 
-        //-----------------------------------Settings----------------------------------------------------------
-        soundGroup = new ButtonGroup();
-        muteButton = new JToggleButton("Mute");
-        gbc.insets = new Insets(200,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.ipadx = 200;
-        gbc.ipady = 50;
-        muteButton.setFocusable(false);
-        settPanel.add(muteButton,gbc);
-
-        unmuteButton = new JToggleButton("Unmute");
-        gbc.insets = new Insets(50,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        unmuteButton.setFocusable(false);
-        settPanel.add(unmuteButton,gbc);
-
-
-        settbackButton = new JButton("Back");
-        gbc.insets = new Insets(50,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        settbackButton.setFocusable(false);
-        settPanel.add(settbackButton,gbc);
-        settbackButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                // go back to title panel
-                dl.show(displayPanel, "1");
-
-                // current panel is difficulty Panel
-                currentCard = 1;
-            }
-        });
-
-        //toggle only mute or unmute
-        soundGroup.add(muteButton);
-        soundGroup.add(unmuteButton);
-
-        //mute btn action
-        muteButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                //disable the sound
-                sound.stopMusic();
-            }
-        });
-
-        //unmute btn action
-        unmuteButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                //enable the sound
-                sound.startupMusic();
-            }
-        });
-
-        //-----------------------------------------------------------------------------------------------------
+        //---------------------------------Settings in mySettings----------------------------------------------
 
         //-----------------------------------Difficulty--------------------------------------------------------
         // Initialize Toggle/Button objects and add to buttongroup and Difficulty Panel
@@ -565,8 +491,8 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         // used to get content pane
         //shows the display that we created above
-        // (chooses the first one added which happens to be tittle screen)
-        getContentPane().add(displayPanel, BorderLayout.NORTH);
+        // (chooses the first one added which happens to be title screen)
+        getContentPane().add(displayPanel);
     }
 
     public void startThread(){

@@ -30,6 +30,17 @@ public class mySettings extends JPanel {
 
     public BufferedImage testimage_png;
 
+    private JLabel settLabel;
+
+    private Font headerText;
+
+    private ButtonGroup soundGroup;
+    private JToggleButton muteButton;
+    private JToggleButton unmuteButton;
+    private GridBagConstraints gbc;
+    private JButton settbackButton;
+    private CardLayout cl;
+
 
     private void getHeroColors(){
         try {
@@ -58,7 +69,79 @@ public class mySettings extends JPanel {
         }
     }
 
-    public mySettings(DisplayLayout dl) {
+    public mySettings(DisplayLayout dl, CardLayout cl) {
+
+        this.cl = cl;
+        gbc = new GridBagConstraints();
+        gbc.anchor = gbc.CENTER;
+
+        // Setting up the settings panel
+        setLayout(new GridBagLayout());
+        settLabel = new JLabel("Settings");
+        headerText = new Font("Times New Roman", Font.BOLD, 30);
+        settLabel.setFont(headerText);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0,0,0,450);
+        this.add(settLabel,gbc);
+
+        soundGroup = new ButtonGroup();
+        muteButton = new JToggleButton(" Mute ");
+        gbc.insets = new Insets(100,0,0,450);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 200;
+        gbc.ipady = 50;
+        muteButton.setFocusable(false);
+        this.add(muteButton,gbc);
+
+        unmuteButton = new JToggleButton("Unmute");
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        unmuteButton.setFocusable(false);
+        this.add(unmuteButton,gbc);
+
+
+        settbackButton = new JButton(" Back ");
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        settbackButton.setFocusable(false);
+        this.add(settbackButton,gbc);
+
+        settbackButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                // go back to title panel
+                cl.show(dl.displayPanel, "1");
+
+                // current panel is difficulty Panel
+                dl.currentCard = 1;
+            }
+        });
+
+        //toggle only mute or unmute
+        soundGroup.add(muteButton);
+        soundGroup.add(unmuteButton);
+
+        //mute btn action
+        muteButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent arg0)
+            {
+                //disable the sound
+                dl.sound.stopMusic();
+            }
+        });
+
+        //unmute btn action
+        unmuteButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent arg0)
+            {
+                //enable the sound
+                dl.sound.startupMusic();
+            }
+        });
+
         try {
             getButtonPngs();
             getHeroColors();
@@ -66,10 +149,10 @@ public class mySettings extends JPanel {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         color = dl.heroColor;
 
-        leftScroll = iconButton(leftButtonPng, 625, 300, 40, 40);
+        leftScroll = iconButton(leftButtonPng, 40, 40);
+        leftScroll.setFocusable(false);
         leftScroll.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0)
@@ -81,9 +164,15 @@ public class mySettings extends JPanel {
                 repaint();
             }
         });
+        gbc.insets = new Insets(150,300,0,0);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.ipadx = 0;
+        gbc.ipady = 0;
+        this.add(leftScroll, gbc);
 
-
-        rightScroll = iconButton(rightButtonPng, 825, 300, 40, 40);
+        rightScroll = iconButton(rightButtonPng, 40, 40);
+        rightScroll.setFocusable(false);
         rightScroll.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0)
@@ -95,7 +184,10 @@ public class mySettings extends JPanel {
 
             }
         });
-
+        gbc.insets = new Insets(150,0,0,100);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        this.add(rightScroll, gbc);
 
     }
 
@@ -108,11 +200,10 @@ public class mySettings extends JPanel {
         skinSelection(g);
     }
 
-    private JButton iconButton(BufferedImage image, int x, int y, int width, int height) {
+    private JButton iconButton(BufferedImage image, int width, int height) {
         Image scaledImage = image.getScaledInstance( width, height,  java.awt.Image.SCALE_SMOOTH ) ;
         ImageIcon iconImage = new ImageIcon(scaledImage);
         JButton b = new JButton(iconImage);
-        b.setBounds(x, y, width, height);
         b.setOpaque(false);
         b.setContentAreaFilled(false);
         b.setBorderPainted(false);
@@ -122,14 +213,9 @@ public class mySettings extends JPanel {
 
     private void skinSelection(Graphics g) {
 
-
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
-
-        this.add(leftScroll);
-        this.add(rightScroll);
         BufferedImage hero = heroColorPngs.get(color);
-        g2.drawImage(hero, 700, 260, 80, 80, null);
-
+        g2.drawImage(hero, 670, 250, 80, 80, null);
 
     }
 }
