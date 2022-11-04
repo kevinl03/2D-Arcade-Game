@@ -92,6 +92,9 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     private Difficulty dif = Difficulty.EASY;
 
+    Sound sound = new Sound();
+
+
     // Set up display
     public DisplayLayout()
     {
@@ -153,6 +156,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         titleLabel.setOpaque(true);
         titleLabel.setVerticalAlignment(JLabel.TOP);
 
+        sound.startupMusic();
         settLabel = new JLabel("Settings");
         settLabel.setFont(headerText);
         diffLabel = new JLabel("Difficulty");
@@ -262,12 +266,28 @@ public class DisplayLayout extends JFrame implements Runnable{
         //-----------------------------------------------------------------------------------------------------
 
         //-----------------------------------Settings----------------------------------------------------------
-        settbackButton = new JButton("Back");
+        soundGroup = new ButtonGroup();
+        muteButton = new JToggleButton("Mute");
         gbc.insets = new Insets(200,0,0,0);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.ipadx = 200;
         gbc.ipady = 50;
+        muteButton.setFocusable(false);
+        settPanel.add(muteButton,gbc);
+
+        unmuteButton = new JToggleButton("Unmute");
+        gbc.insets = new Insets(50,0,0,0);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        unmuteButton.setFocusable(false);
+        settPanel.add(unmuteButton,gbc);
+
+
+        settbackButton = new JButton("Back");
+        gbc.insets = new Insets(50,0,0,0);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         settbackButton.setFocusable(false);
         settPanel.add(settbackButton,gbc);
         settbackButton.addActionListener(new ActionListener() {
@@ -279,21 +299,30 @@ public class DisplayLayout extends JFrame implements Runnable{
                 currentCard = 1;
             }
         });
-        soundGroup = new ButtonGroup();
-        muteButton = new JToggleButton("Mute");
-        gbc.insets = new Insets(50,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        muteButton.setFocusable(false);
-        settPanel.add(muteButton,gbc);
 
-        unmuteButton = new JToggleButton("Unmute");
-        gbc.insets = new Insets(50,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        unmuteButton.setFocusable(false);
-        settPanel.add(unmuteButton,gbc);
+        //toggle only mute or unmute
+        soundGroup.add(muteButton);
+        soundGroup.add(unmuteButton);
 
+        //mute btn action
+        muteButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent arg0)
+            {
+                //disable the sound
+                sound.stopMusic();
+            }
+        });
+
+        //unmute btn action
+        unmuteButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent arg0)
+            {
+                //enable the sound
+                sound.startupMusic();
+            }
+        });
 
         //-----------------------------------------------------------------------------------------------------
 

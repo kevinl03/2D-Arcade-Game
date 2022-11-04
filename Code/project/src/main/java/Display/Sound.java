@@ -13,13 +13,15 @@ public class Sound {
 
     public void Music() 	{
 
-        Musicpath[0] = getClass().getResource("/resources/Music_zapsplat.wav");
+        Musicpath[0] = getClass().getResource("/Music_zapsplat.wav");
+
     }
 
     public void setMusic(int choice) {
         // Get the music in selected file path and make it an object, create reference to clip, and open the audio
         try {
-            AudioInputStream musicstream = AudioSystem.getAudioInputStream(Musicpath[choice]);
+            //AudioInputStream musicstream = AudioSystem.getAudioInputStream(Musicpath[choice]);
+            AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResource("/Music_zapsplat.wav"));
             clip = AudioSystem.getClip();
             clip.open(musicstream);
         } catch(Exception e) {
@@ -48,5 +50,6 @@ public class Sound {
     public void startupMusic() {
         playMusic(0);
     }
+
 }
 
