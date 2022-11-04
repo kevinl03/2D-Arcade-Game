@@ -224,7 +224,7 @@ public class myGame extends JPanel{
     }
     public void getTrap(){
         try {
-            trap_png = ImageIO.read(getClass().getResource("/trap3.png"));
+            trap_png = ImageIO.read(getClass().getResource("/trap4.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -364,7 +364,6 @@ public class myGame extends JPanel{
                             Random rand = new Random();
                             treeTypeOrder.add(rand.nextInt(3));
                         }
-//                        System.out.println(treeTypeOrder.size());
 
                         g2.drawImage(tree_pngs[treeTypeOrder.get(currentTree)], col * 60, row * 60+60, pixelsize, pixelsize, null);
                         currentTree++;
@@ -373,13 +372,15 @@ public class myGame extends JPanel{
 
                     break;
                     case ENEMYANDTRAP:
+                    case TRAP:
+                        g2.drawImage(trap_png, col * 60+20, row * 60+60+20, pixelsize-40, pixelsize-40, null);
+                        break;
                     case ENEMYANDREWARD:
-                    break;
-                    case REWARD: g2.drawImage(peanuts_png, col * 60 + 15, row * 60+60 + 15, pixelsize-30, pixelsize - 30, null);
+                    case REWARD:
+                        g2.drawImage(peanuts_png, col * 60 + 15, row * 60+60 + 15, pixelsize-30, pixelsize - 30, null);
+
                     break;
                     case BONUS: g2.drawImage(acorn_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
-                    break;
-                    case TRAP: g2.drawImage(trap_png, col * 60+10, row * 60+60+10, pixelsize-20, pixelsize-20, null);
                     break;
                     //no exit image yet
                     case EXIT: g2.drawImage(exit_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
