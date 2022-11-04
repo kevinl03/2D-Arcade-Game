@@ -111,6 +111,10 @@ public class HeroLogic {
         Hero hero = gameObjectData.getHero();
 
         hero.deductScore(damage);
+
+        if(hero.getScore() < 0){
+            gameObjectData.getGameStats().setGameOver(true);
+        }
     }
 
 }
