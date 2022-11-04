@@ -3,6 +3,7 @@ package Game;
 import Board.BoardData;
 import Board.Difficulty;
 import Entities.*;
+import Helpers.HeroColor;
 import Logic.EnemyLogic;
 import Logic.HeroLogic;
 
@@ -27,7 +28,7 @@ public class ObjectData {
 
 
 
-    public ObjectData(Difficulty dif){
+    public ObjectData(Difficulty dif, HeroColor heroColor){
         this.dif = dif;
         hero = new Hero();
         board = new BoardData();
@@ -67,6 +68,7 @@ public class ObjectData {
                 }
             }
         }
+        hero.setHeroColor(heroColor);
 
 
     }

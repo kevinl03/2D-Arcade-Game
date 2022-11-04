@@ -9,10 +9,7 @@ import Helpers.Direction;
 import Helpers.Node;
 import Board.Objects;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class EnemyLogic {
 
@@ -37,7 +34,40 @@ public class EnemyLogic {
             }
             Direction nextMove = findShortestPath(tempArr, enemy);
 
-//            System.out.println(nextMove);
+
+            //get  random direction and make sure its not going into a tree or exit
+            if(nextMove == Direction.RANDOM){
+                Random rand = new Random();
+                boolean validDirection = false;
+                while(!validDirection){
+                    int dir = rand.nextInt(4);
+                    nextMove = Direction.values()[dir];
+                    Objects nextTile = Objects.TREE;
+                    switch(nextMove){
+                        case NORTH -> nextTile = board.getTypeAt(enemy.getX(), enemy.getY() -1);
+                        case EAST ->  nextTile = board.getTypeAt(enemy.getX() + 1, enemy.getY());
+                        case SOUTH -> nextTile = board.getTypeAt(enemy.getX(), enemy.getY() +1);
+                        case WEST ->  nextTile = board.getTypeAt(enemy.getX() - 1, enemy.getY());
+                    }
+
+                    if(nextTile!= Objects.TREE && nextTile != Objects.EXIT && nextTile != Objects.ENEMY){
+                        validDirection = true;
+                    }
+
+                }
+            }
+
+            //check for two enemies colliding, if so, don't move
+            Objects nextTile = Objects.TMP;
+            switch(nextMove){
+                case NORTH -> nextTile = board.getTypeAt(enemy.getX(), enemy.getY() -1);
+                case EAST ->  nextTile = board.getTypeAt(enemy.getX() + 1, enemy.getY());
+                case SOUTH -> nextTile = board.getTypeAt(enemy.getX(), enemy.getY() +1);
+                case WEST ->  nextTile = board.getTypeAt(enemy.getX() - 1, enemy.getY());
+            }
+            if(nextTile == Objects.ENEMY){
+                nextMove = Direction.NULL;
+            }
 
             if (nextMove != Direction.NULL) {
                 Objects currentTile = board.getTypeAt(enemy);
@@ -45,11 +75,9 @@ public class EnemyLogic {
                     board.setTypeAt(enemy, Objects.REWARD);
                 } else if (currentTile == Objects.ENEMYANDTRAP) {
                     board.setTypeAt(enemy, Objects.TRAP);
-                }
-                  else if (currentTile == Objects.ENEMYANDENEMY){
-
-                }
-                else {
+                } else if (currentTile == Objects.ENEMYANDBUSH){
+                    board.setTypeAt(enemy, Objects.BUSH);
+                } else {
                     board.setTypeAt(enemy, Objects.EMPTY);
                 }
             }
@@ -85,7 +113,9 @@ public class EnemyLogic {
                     board.setTypeAt(enemy, Objects.ENEMYANDREWARD);
                 } else if (currentTile == Objects.TRAP) {
                     board.setTypeAt(enemy, Objects.ENEMYANDTRAP);
-                } else if (currentTile == Objects.HERO) {
+                } else if (currentTile == Objects.BUSH){
+                    board.setTypeAt(enemy, Objects.ENEMYANDBUSH);
+                }else if (currentTile == Objects.HERO || currentTile == Objects.HEROHIDDEN) {
                     gameStats.setGameOver(true);
                 } else {
                     board.setTypeAt(enemy, Objects.ENEMY);
@@ -112,7 +142,16 @@ public class EnemyLogic {
             //'h' represents hero on the board
             if (board[head.getX()][head.getY()] == Objects.HERO) {
                 return head.initialDirection;
-            } else {
+            } else if (board[head.getX()][head.getY()] == Objects.HEROHIDDEN){
+                if (head.pathLength > 3){
+                    //squirrel is hidden so enemy moves randomly
+                    return Direction.RANDOM;
+                }else{
+                    return head.initialDirection;
+                }
+
+            }
+            else {
                 //Objects.TREE represents tree on the board, I swap a visited node to a tree
                 //so that the bfs knows not to search the head node again.
                 board[head.getX()][head.getY()] = Objects.TREE;
