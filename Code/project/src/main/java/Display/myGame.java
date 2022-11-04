@@ -51,6 +51,8 @@ public class myGame extends JPanel{
         this.dp = dp;
         this.mp = mp;
         this.kh = dl.kh;
+        //rows*pixelsize+60 we have +60 for putting the time and scores at the top
+        //instead of on top of trees
         setPreferredSize(new Dimension(columns*pixelsize, rows*pixelsize+60));
         getImages();
         addKeyListener(kh);
@@ -78,83 +80,30 @@ public class myGame extends JPanel{
         enemyLogic = dl.gameObjectData.getEnemyLogic();
         heroLogic = dl.gameObjectData.getHeroLogic();
 
-
-        if (kh.up && (updaterows != 0) ) {
+        //if two opposite keys are pressed then
+        //player movement remains the same
+        if (kh.up && !kh.down ) {
             heroPos.decrementY();
         }
 
-        else if (kh.down && (updaterows != 14)) {
+        else if (kh.down && !kh.up) {
             heroPos.incrementY();
         }
 
-        else if (kh.left && (updatecolumns != 0)) {
+        else if (kh.left && !kh.right) {
             heroPos.decrementX();
         }
 
-        else if (kh.right && (updatecolumns != 24)) {
+        else if (kh.right && !kh.left) {
             heroPos.incrementX();
         }
 
         heroLogic.processPlayerMovement(heroPos, dl.gameObjectData);
-        //enemyLogic.processEnemyMovement(dl.gameObjectData);
+        //enemy only moves every other game tick;
+        if (dl.timer % 300 == 0) {
+            enemyLogic.processEnemyMovement(dl.gameObjectData);
+        }
 
-
-//        //Cannot go through trees
-//        if (kh.up && (updaterows != 0) ) {
-//            if(boardMap[updatecolumns][updaterows-1]!= Objects.TREE && !kh.down) {
-//                updaterows--;
-//                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
-//                    System.out.println("Got reward");
-//                }
-//                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
-//                    System.out.println("Got trapped");
-//                }
-//                boardMap[updatecolumns][updaterows] = Objects.HERO;
-//                boardMap[updatecolumns][updaterows+1] = Objects.EMPTY;
-//            }
-//        }
-//
-//        else if (kh.down && (updaterows != 14)) {
-//            if(boardMap[updatecolumns][updaterows+1]!=Objects.TREE && !kh.up) {
-//                updaterows++;
-//                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
-//                    System.out.println("Got reward");
-//                }
-//                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
-//                    System.out.println("Got trapped");
-//                }
-//                boardMap[updatecolumns][updaterows] = Objects.HERO;
-//                boardMap[updatecolumns][updaterows-1] = Objects.EMPTY;
-//            }
-//        }
-//
-//        else if (kh.left && (updatecolumns != 0)) {
-//            if(boardMap[updatecolumns-1][updaterows]!=Objects.TREE && !kh.right) {
-//                updatecolumns--;
-//                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
-//                    System.out.println("Got reward");
-//                }
-//                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
-//                    System.out.println("Got trapped");
-//                }
-//                boardMap[updatecolumns][updaterows] = Objects.HERO;
-//                boardMap[updatecolumns+1][updaterows] = Objects.EMPTY;
-//            }
-//        }
-//
-//        else if (kh.right && (updatecolumns != 24)) {
-//            if(boardMap[updatecolumns+1][updaterows]!=Objects.TREE && !kh.left) {
-//                updatecolumns++;
-//                if(boardMap[updatecolumns][updaterows] == Objects.REWARD){
-//                    System.out.println("Got reward");
-//                }
-//                if(boardMap[updatecolumns][updaterows] == Objects.TRAP){
-//                    System.out.println("Got trapped");
-//                }
-//                boardMap[updatecolumns][updaterows] = Objects.HERO;
-//                boardMap[updatecolumns-1][updaterows] = Objects.EMPTY;
-//            }
-//        }
 
         //////////////////////////////////////////////////////////////////
         if (kh.escape) {
