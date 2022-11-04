@@ -25,7 +25,7 @@ public class myGame extends JPanel{
     private int pixelsize = 60;   //60x60 pixels
     private int columns = 25;
     private int rows = 15;
-    private HashMap<String, BufferedImage> squirrel_pngs;
+    protected HashMap<String, BufferedImage> squirrel_pngs;
     private BufferedImage acorn_png;
     private HashMap<String, BufferedImage> bear_pngs;
     private BufferedImage bush_png;
@@ -80,7 +80,7 @@ public class myGame extends JPanel{
 
     public void updates() throws InterruptedException {
 
-        dl.timer+=150;
+        dl.timer+=450;
         seconds = dl.timer/1000;
 
         Hero hero = dl.gameObjectData.getHero();
@@ -139,7 +139,6 @@ public class myGame extends JPanel{
             for(final File fileEntry : files){
                 if(fileEntry.isFile()){
                     String fileName = fileEntry.getName();
-                    System.out.println(fileName);
                     squirrel_pngs.put(fileName, ImageIO.read(getClass().getResource("/squirrels/" + fileName)));
                 }
             }
@@ -167,12 +166,9 @@ public class myGame extends JPanel{
             for(final File fileEntry : files){
                 if(fileEntry.isFile()){
                     String fileName = fileEntry.getName();
-                    System.out.println(fileName);
                     bear_pngs.put(fileName, ImageIO.read(getClass().getResource("/bears/" + fileName)));
                 }
             }
-            System.out.println(bear_pngs.size());
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (URISyntaxException e) {
@@ -267,8 +263,6 @@ public class myGame extends JPanel{
         int animationFrame = hero.getAnimationFrame();
         String dir = hero.getDir().toString();
         String color = hero.getHeroColor().toString();
-//        System.out.println("Squirrel" + color + dir + animationFrame + ".png");
-
         int movementProgress = 0;
         if(hero.isMoving()){
             switch(dl.frameCounter){
@@ -333,11 +327,8 @@ public class myGame extends JPanel{
 
             //if direction in the y-axis
             if(dir == "North" || dir == "South"){
-                System.out.println("going on the y axis");
                 g2.drawImage(bear_pngs.get("Bear"  + dir + animationFrame + ".png"), col * 60, row * 60+65 - movementProgress, pixelsize-10, pixelsize-10, null);
             }else{
-                System.out.println("going on the x axis");
-
                 g2.drawImage(bear_pngs.get("Bear"  + dir + animationFrame + ".png"), col * 60 - movementProgress, row * 60+65, pixelsize-10, pixelsize-10, null);
 
             }

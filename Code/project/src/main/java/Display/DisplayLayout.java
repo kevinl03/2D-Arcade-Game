@@ -4,6 +4,7 @@ import Board.Difficulty;
 import Board.Objects;
 import Entities.Hero;
 import Game.ObjectData;
+import Helpers.HeroColor;
 import Helpers.KeyHandler;
 
 import java.awt.*;
@@ -92,6 +93,8 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     private Difficulty dif = Difficulty.EASY;
 
+    HeroColor heroColor = HeroColor.BROWN;
+
     int frameCounter = 0;
 
     Sound sound = new Sound();
@@ -127,13 +130,13 @@ public class DisplayLayout extends JFrame implements Runnable{
         titlePanel.setBackground(Color.cyan);
 
         // Initialize Setting JPanel class
-        settPanel = new mySettings();
+        settPanel = new mySettings(this);
         settPanel.setLayout(new GridBagLayout());
 
 
         // Initialize Difficulty JPanel class
         //make one later
-        diffPanel = new mySettings();
+        diffPanel = new mySettings(this);
         diffPanel.setLayout(new GridBagLayout());
 
         // Initialize Pause JPanel class
@@ -158,7 +161,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         titleLabel.setOpaque(true);
         titleLabel.setVerticalAlignment(JLabel.TOP);
 
-        sound.startupMusic();
+//        sound.startupMusic();
         settLabel = new JLabel("Settings");
         settLabel.setFont(headerText);
         diffLabel = new JLabel("Difficulty");
@@ -222,7 +225,8 @@ public class DisplayLayout extends JFrame implements Runnable{
         playButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0) {
-                gameObjectData = new ObjectData(dif);
+                System.out.println("creating object data with color " + heroColor.toString());
+                gameObjectData = new ObjectData(dif, heroColor);
                 board = gameObjectData.getBoard();
 
                 // show associated play panel

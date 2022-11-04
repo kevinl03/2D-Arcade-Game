@@ -1,6 +1,8 @@
 package Helpers;
 
 public enum HeroColor {
+
+
     BROWN{
         public String toString() {
             return "Brown";
@@ -22,5 +24,15 @@ public enum HeroColor {
         public String toString() {
             return "White";
         }
+    };
+
+    private static HeroColor[] colors = values();
+
+    public HeroColor next(){
+        return colors[(this.ordinal() + 1) % colors.length];
     }
+    public HeroColor prev(){
+        return colors[(ordinal() - 1  + colors.length) % colors.length];
+    }
+
 }
