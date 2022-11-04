@@ -63,6 +63,8 @@ public class myGame extends JPanel{
         this.dp = dp;
         this.mp = mp;
         this.kh = dl.kh;
+        //rows*pixelsize+60 we have +60 for putting the time and scores at the top
+        //instead of on top of trees
         setPreferredSize(new Dimension(columns*pixelsize, rows*pixelsize+60));
         getImages();
         addKeyListener(kh);
@@ -88,27 +90,21 @@ public class myGame extends JPanel{
         enemyLogic = dl.gameObjectData.getEnemyLogic();
         heroLogic = dl.gameObjectData.getHeroLogic();
 
-
-        if (kh.up && (updaterows != 0) ) {
-            System.out.println(1);
+        //if two opposite keys are pressed then
+        //player movement remains the same
+        if (kh.up && !kh.down ) {
             heroPos.decrementY();
         }
 
-        else if (kh.down && (updaterows != 14)) {
-                        System.out.println(2);
-
+        else if (kh.down && !kh.up) {
             heroPos.incrementY();
         }
 
-        else if (kh.left && (updatecolumns != 0)) {
-                        System.out.println(3);
-
+        else if (kh.left && !kh.right) {
             heroPos.decrementX();
         }
 
-        else if (kh.right && (updatecolumns != 24)) {
-                        System.out.println(4);
-
+        else if (kh.right && !kh.left) {
             heroPos.incrementX();
         }
 
