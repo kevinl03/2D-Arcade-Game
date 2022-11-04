@@ -84,6 +84,8 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     private Difficulty dif = Difficulty.EASY;
 
+    int frameCounter = 0;
+
     // Set up display
     public DisplayLayout()
     {
@@ -530,7 +532,7 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         while ( playPanel.goMain == 0 ) {
             try {
-                if(unpause == 0) {
+                if(unpause == 0 && frameCounter == 0) {
                     playPanel.updates();
                 }
                 if( (playPanel.goMain == 0) && (unpause == 0) ) {
@@ -552,9 +554,13 @@ public class DisplayLayout extends JFrame implements Runnable{
                     System.out.println("Game has been won!!!");
                 }
 
-                Thread.sleep(150);
+                Thread.sleep(75);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
+            }
+            frameCounter++;
+            if(frameCounter > 6){
+                frameCounter = 0;
             }
         }
         System.out.println("Out of the game");
@@ -576,6 +582,8 @@ public class DisplayLayout extends JFrame implements Runnable{
             timeLabel.setText("Time : " + timer / 1000);
             scoreLabel.setText("Score : " + gameObjectData.getHero().getScore());
         }
+
+
     }
 
     // Main Method
