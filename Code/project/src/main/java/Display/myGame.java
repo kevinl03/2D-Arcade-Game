@@ -26,6 +26,7 @@ public class myGame extends JPanel{
     private int columns = 25;
     private int rows = 15;
     protected HashMap<String, BufferedImage> squirrel_pngs;
+    protected HashMap<String, BufferedImage> hidden_squirrel_pngs;
     private BufferedImage acorn_png;
     private HashMap<String, BufferedImage> bear_pngs;
     private BufferedImage bush_png;
@@ -143,12 +144,23 @@ public class myGame extends JPanel{
                 }
             }
 
+            hidden_squirrel_pngs = new HashMap<>();
+            File folder2 = new File(getClass().getResource("/hidingSquirrels").toURI());
+            File[] files2 = folder2.listFiles();
+            for(final File fileEntry : files2){
+                if(fileEntry.isFile()){
+                    String fileName = fileEntry.getName();
+                    hidden_squirrel_pngs.put(fileName, ImageIO.read(getClass().getResource("/hidingSquirrels/" + fileName)));
+                }
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 
     public void getAcorn(){
         try {
@@ -178,7 +190,7 @@ public class myGame extends JPanel{
 
     public void getBush(){
         try {
-            bush_png = ImageIO.read(getClass().getResource("/bush.png"));
+            bush_png = ImageIO.read(getClass().getResource("/bush1.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -260,6 +272,18 @@ public class myGame extends JPanel{
         Hero hero = dl.gameObjectData.getHero();
         int col = hero.getX();
         int row = hero.getY();
+
+        if(hero.isHidden()){
+            if(dl.frameCounter == 6){
+                hero.setAtBush(true);
+            }
+            if(hero.isAtBush()){
+                g2.drawImage(hidden_squirrel_pngs.get("SquirrelHiding" + hero.getHeroColor().toString() + ".png"), col * 60 + 10, row * 60+60 + 10, pixelsize-20, pixelsize-20, null);
+                return;
+            }
+        }
+        hero.setAtBush(false);
+
         int animationFrame = hero.getAnimationFrame();
         String dir = hero.getDir().toString();
         String color = hero.getHeroColor().toString();
@@ -342,7 +366,7 @@ public class myGame extends JPanel{
         super.paintComponent(g);   //   Method already exists, so super is used to add additional lines
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
         g.drawImage(board_png, 0, 0, 1500, 960, null);
-
+        Hero hero = dl.gameObjectData.getHero();
         boardMap = dl.board.getBoardData();
 
         int currentTree = 0;
@@ -359,9 +383,15 @@ public class myGame extends JPanel{
                         g2.drawImage(tree_pngs[treeTypeOrder.get(currentTree)], col * 60, row * 60+60, pixelsize, pixelsize, null);
                         currentTree++;
                     break;
-                    case HERO:
-
-                    break;
+                    case HEROHIDDEN:
+                        if(!hero.isAtBush()){
+                            g2.drawImage(bush_png, col * 60 + 10, row * 60+60 + 10, pixelsize - 20, pixelsize - 20, null);
+                        }
+                        break;
+                    case ENEMYANDBUSH:
+                    case BUSH:
+                            g2.drawImage(bush_png, col * 60 + 10, row * 60+60 + 10, pixelsize - 20, pixelsize - 20, null);
+                        break;
                     case ENEMYANDTRAP:
                     case TRAP:
                         g2.drawImage(trap_png, col * 60+20, row * 60+60+20, pixelsize-40, pixelsize-40, null);
@@ -376,6 +406,7 @@ public class myGame extends JPanel{
                     //no exit image yet
                     case EXIT: g2.drawImage(exit_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
                     break;
+
                 }
             }
         }
