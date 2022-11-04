@@ -52,16 +52,23 @@ public class EnemyLogic {
 
             switch (nextMove) {
                 case NORTH:
-                    enemy.incrementY();
+                    enemy.decrementY();
+                    enemy.setDir(Direction.NORTH);
                     break;
                 case EAST:
                     enemy.incrementX();
+                    enemy.setDir(Direction.EAST);
+
                     break;
                 case SOUTH:
-                    enemy.decrementY();
+                    enemy.incrementY();
+                    enemy.setDir(Direction.SOUTH);
+
                     break;
                 case WEST:
                     enemy.decrementX();
+                    enemy.setDir(Direction.WEST);
+
                     break;
                 case NULL:
                     break;
@@ -140,7 +147,7 @@ public class EnemyLogic {
 
         if (y + 1 >= 0 && y + 1 < height && board[x][y + 1] != Objects.TREE) {
             if (head.initialDirection == Direction.NULL) {
-                neighbours.add(new Node(new Position(x, y + 1), Direction.NORTH, head.pathLength + 1));
+                neighbours.add(new Node(new Position(x, y + 1), Direction.SOUTH, head.pathLength + 1));
             } else {
                 neighbours.add(new Node(new Position(x, y + 1), head.initialDirection, head.pathLength + 1));
             }
@@ -148,7 +155,7 @@ public class EnemyLogic {
 
         if (y - 1 >= 0 && y - 1 < height && board[x][y - 1] != Objects.TREE) {
             if (head.initialDirection == Direction.NULL) {
-                neighbours.add(new Node(new Position(x, y - 1), Direction.SOUTH, head.pathLength + 1));
+                neighbours.add(new Node(new Position(x, y - 1), Direction.NORTH, head.pathLength + 1));
             } else {
                 neighbours.add(new Node(new Position(x, y - 1), head.initialDirection, head.pathLength + 1));
             }

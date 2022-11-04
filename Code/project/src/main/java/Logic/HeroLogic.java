@@ -14,8 +14,9 @@ public class HeroLogic {
 
 
         Hero hero = gameObjectData.getHero();
-
-        Exit exit = gameObjectData.getExit();
+        if(pos.getX() == hero.getX() && pos.getY() == hero.getY()){
+            return;
+        }
 
         boolean heroMoved = true;
 
@@ -39,6 +40,8 @@ public class HeroLogic {
                 collectBonus(pos, gameObjectData);
                 break;
             case EXIT:
+                Exit exit = gameObjectData.getExit();
+
                 if(!exit.isClosed()){
                     gameObjectData.getGameStats().setGameWon(true);
                 }else{
@@ -48,6 +51,8 @@ public class HeroLogic {
 
 
         if(heroMoved){
+            hero.setMoving(true);
+            hero.setDir(hero.getDirection(hero, pos));
             board.setTypeAt(hero, Objects.EMPTY);
             hero.setPosition(pos);
             board.setTypeAt(hero, Objects.HERO);
