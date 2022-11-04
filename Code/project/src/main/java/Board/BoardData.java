@@ -1,5 +1,6 @@
 package Board;
 
+import Entities.Hero;
 import Entities.Position;
 
 import java.util.ArrayList;
@@ -293,9 +294,34 @@ public class BoardData {
                     break;
             }
             //using pythagorean theorem to make sure reward is atleast minProximity away from all other rewards
-//            if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
-//                return false;
-//            }
+            if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkValidEnemyProximity(int[] hero, int[] newEnemy, Difficulty dif){
+
+        int minProximity = 0;
+
+
+        int x = hero[0];
+        int y = hero[1];
+        int newX = newEnemy[0];
+        int newY = newEnemy[1];
+
+        switch(dif){
+            case EASY: minProximity = 10;
+            break;
+            case MEDIUM: minProximity = 7;
+            break;
+            case HARD: case INFINITE: minProximity = 5;
+            break;
+        }
+//            using pythagorean theorem to make sure reward is atleast minProximity away from all other rewards
+        if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
+            return false;
         }
         return true;
     }
@@ -305,7 +331,7 @@ public class BoardData {
 
     }
 
-    private void setEnemies(Difficulty dif) {
+    private void setEnemies(int[] heroLoc, Difficulty dif) {
         int enemyCount = 0;
         switch(dif){
             case EASY:
@@ -324,8 +350,23 @@ public class BoardData {
             int[] xy = getRandomXY();
             int x = xy[0];
             int y = xy[1];
-            if(ObjectMap[x][y] == Objects.EMPTY) {
+            if(!checkValidEnemyProximity(heroLoc, xy, dif) || ObjectMap[x][y] != Objects.EMPTY){
+                i--;
+            }else{
                 ObjectMap[x][y] = Objects.ENEMY;
+            }
+
+        }
+    }
+
+    private void setBushes() {
+        int bushCount = 5;
+        for(int i = 0; i < bushCount; i++){
+            int[] xy = getRandomXY();
+            int x = xy[0];
+            int y = xy[1];
+            if(ObjectMap[x][y] == Objects.EMPTY) {
+                ObjectMap[x][y] = Objects.BUSH;
             }else{
                 i--;
             }
@@ -368,7 +409,7 @@ public class BoardData {
         }
     }
 
-    private void setHeroLocation() {
+    private int[] setHeroLocation() {
 
         boolean heroNotSpawned = true;
 
@@ -379,8 +420,12 @@ public class BoardData {
             if(ObjectMap[x][y] == Objects.EMPTY) {
                 ObjectMap[x][y] = Objects.HERO;
                 heroNotSpawned = false;
+                int heroLoc[] = {x,y};
+                return heroLoc;
             }
         }
+        //case will never hit
+        return null;
     }
 
     public void setDoor() {
@@ -417,26 +462,20 @@ public class BoardData {
     //call initalise board at the begginning of every game
     public void initialiseBoard(Difficulty dif) {
 
+        int heroLoc[];
+
         //may need to change the ordering
         setEmptyTiles();
         setOuterWalls();
         //harder difficulty means more wall segments so user has less space to move around
         setInnerWalls(dif);
-
-//        System.out.println(-1);
-//
         setBonusRewards();
-//        System.out.println(1);
         setRegRewards(dif);
-//        System.out.println(2);
         setTraps(dif);
-//        System.out.println(3);
-        setEnemies(dif);
-//        System.out.println(4);
-        setHeroLocation();
-//        System.out.println(5);
+        heroLoc = setHeroLocation();
+        setEnemies(heroLoc, dif);
         setDoor();
-//        System.out.println(6);
+        setBushes();
     }
 
     //following will be used in game logic

@@ -18,6 +18,7 @@ public class HeroLogic {
             return;
         }
 
+        hero.setHidden(false);
         boolean heroMoved = true;
 
         Objects tileType = board.getTypeAt(pos);
@@ -39,6 +40,9 @@ public class HeroLogic {
             case BONUS:
                 collectBonus(pos, gameObjectData);
                 break;
+            case BUSH:
+                hero.setHidden(true);
+                break;
             case EXIT:
                 Exit exit = gameObjectData.getExit();
 
@@ -53,9 +57,17 @@ public class HeroLogic {
         if(heroMoved){
             hero.setMoving(true);
             hero.setDir(hero.getDirection(hero, pos));
-            board.setTypeAt(hero, Objects.EMPTY);
+            if(board.getTypeAt(hero) == Objects.HEROHIDDEN){
+                board.setTypeAt(hero, Objects.BUSH);
+            }else{
+                board.setTypeAt(hero, Objects.EMPTY);
+            }
             hero.setPosition(pos);
-            board.setTypeAt(hero, Objects.HERO);
+            if(board.getTypeAt(hero) == Objects.BUSH){
+                board.setTypeAt(hero, Objects.HEROHIDDEN);
+            }else{
+                board.setTypeAt(hero, Objects.HERO);
+            }
         }
 
 
