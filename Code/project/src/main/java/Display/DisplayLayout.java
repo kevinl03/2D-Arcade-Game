@@ -159,6 +159,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         pausePanel.add(pauseLabel);
 
         // Adding the cardPanel into layout, constraints associates panel
+        //always shows First panel
         displayPanel.add(titlePanel, "1");
         displayPanel.add(playPanel, "2");
         displayPanel.add(settPanel, "3");
@@ -414,7 +415,7 @@ public class DisplayLayout extends JFrame implements Runnable{
             public void actionPerformed(ActionEvent arg0)
             {
                 playPanel.goMain = 1;
-                 gameWonTest= true;
+                gameWonTest= true;
                 unpause = 0;
                 kh.escape = false;
                 //Go back to main menu
@@ -504,6 +505,8 @@ public class DisplayLayout extends JFrame implements Runnable{
         //------------------------------------------------------------------------------------------------------
 
         // used to get content pane
+        //shows the display that we created above
+        // (chooses the first one added which happens to be tittle screen)
         getContentPane().add(displayPanel, BorderLayout.NORTH);
     }
 
@@ -512,23 +515,15 @@ public class DisplayLayout extends JFrame implements Runnable{
         gameThread.start();
     }
 
+    //the bulk of the game code runs here
     @Override
     public void run() {   //   When starting thread, have thread use this run method
         playPanel.goMain = 0;
         gameovertest = false;
         gameWonTest = false;
         timer = 0;
-        Objects[][] boardMap = board.getBoardData();
-        for(int col = 0; col < board.getboardwidth(); col++){
-            for(int row = 0; row < board.getboardheight(); row++){
-                if(boardMap[col][row] == Objects.HERO){
-                    playPanel.updaterows = row;
-                    playPanel.updatecolumns = col;
-                }
-            }
-        }
 
-        while ( playPanel.goMain == 0 ) {
+        while (playPanel.goMain == 0 ) {
             try {
                 if(unpause == 0) {
                     playPanel.updates();
@@ -551,7 +546,7 @@ public class DisplayLayout extends JFrame implements Runnable{
                     kh.escape = false;
                     System.out.println("Game has been won!!!");
                 }
-
+                //choosing how long every thread lasts
                 Thread.sleep(150);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
