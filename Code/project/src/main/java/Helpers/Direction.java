@@ -21,5 +21,5 @@ public enum Direction {
         public String toString() {
             return "West";
         }
-    }, NULL
+    }, NULL, RANDOM
 }
