@@ -37,6 +37,7 @@ public class ObjectData {
         enemies = new ArrayList<>();
         traps = new ArrayList<>();
         rewards = new ArrayList<>();
+        bonus = new ArrayList<>();
         exit = new Exit();
 
         board.initialiseBoard(dif);
@@ -61,6 +62,7 @@ public class ObjectData {
                     case TRAP -> traps.add(new Trap(x,y, 0,trapDamage));
                     case REWARD -> rewards.add(new RegularReward(x, y, 0, rewardPoints));
                     case EXIT -> exit.setPosition(currentTile);
+                    case BONUS -> bonus.add(new Bonus (x,y,0,rewardPoints*2));
 
                 }
             }

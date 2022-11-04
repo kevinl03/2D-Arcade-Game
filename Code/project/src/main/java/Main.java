@@ -66,16 +66,17 @@ public class Main {
 
     }
 
-    public static void main (String[] args) throws InterruptedException {
+    //public static void main (String[] args) throws InterruptedException {
 
 
-//        testShortestPath();
+/*       testShortestPath();
 //        testStopwatch();
         for (int i = 0; i < 1000000; i++) {
 //            System.out.println(i);
             testBoardGen();
         }
+        */
 
 
-    }
+    //}
 }

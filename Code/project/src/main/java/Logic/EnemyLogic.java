@@ -45,7 +45,11 @@ public class EnemyLogic {
                     board.setTypeAt(enemy, Objects.REWARD);
                 } else if (currentTile == Objects.ENEMYANDTRAP) {
                     board.setTypeAt(enemy, Objects.TRAP);
-                } else {
+                }
+                  else if (currentTile == Objects.ENEMYANDENEMY){
+
+                }
+                else {
                     board.setTypeAt(enemy, Objects.EMPTY);
                 }
             }

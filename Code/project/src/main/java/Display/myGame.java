@@ -91,7 +91,7 @@ public class myGame extends JPanel{
         heroLogic = dl.gameObjectData.getHeroLogic();
 
         //if two opposite keys are pressed then
-        //player movement remains the same
+        //player remains stationary
         if (kh.up && !kh.down ) {
             heroPos.decrementY();
         }
@@ -371,6 +371,7 @@ public class myGame extends JPanel{
                     case HERO:
 
                     break;
+                    //used for logic when enemy steps over a trap
                     case ENEMYANDTRAP:
                     case TRAP:
                         g2.drawImage(trap_png, col * 60+20, row * 60+60+20, pixelsize-40, pixelsize-40, null);

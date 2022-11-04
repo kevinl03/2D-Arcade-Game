@@ -300,7 +300,35 @@ public class BoardData {
         return true;
     }
 
-    private void setBonusRewards() {
+    private void generateBonusRewards(int count){
+        for (int bonusrewards = 1; bonusrewards <= count; bonusrewards++){
+            boolean posfound = false;
+            while(!posfound){
+                int[] coords = getRandomXY();
+                //check to see if generation is a valid
+                if (ObjectMap[coords[0]][coords[1]] == Objects.EMPTY){
+
+                    ObjectMap[coords[0]][coords[1]] = Objects.BONUS;
+                    posfound = true;
+                }
+                //else case means we need a new XY so we go back to while loop
+                //and get another randomXY
+            }
+        }
+    }
+    private void setBonusRewards(Difficulty dif) {
+        switch (dif){
+            case EASY:
+                generateBonusRewards(3);
+                break;
+            case MEDIUM:
+                generateBonusRewards(2);
+                break;
+            case HARD:
+            case INFINITE:
+                generateBonusRewards(1);
+                break;
+        }
 
 
     }
@@ -309,7 +337,7 @@ public class BoardData {
         int enemyCount = 0;
         switch(dif){
             case EASY:
-                enemyCount = 1;
+                enemyCount = 3;
                 break;
             case MEDIUM:
                 enemyCount = 2;
@@ -425,7 +453,7 @@ public class BoardData {
 
 //        System.out.println(-1);
 //
-        setBonusRewards();
+        setBonusRewards(dif);
 //        System.out.println(1);
         setRegRewards(dif);
 //        System.out.println(2);
