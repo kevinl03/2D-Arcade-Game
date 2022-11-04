@@ -51,6 +51,8 @@ public class myGame extends JPanel{
         this.dp = dp;
         this.mp = mp;
         this.kh = dl.kh;
+        //rows*pixelsize+60 we have +60 for putting the time and scores at the top
+        //instead of on top of trees
         setPreferredSize(new Dimension(columns*pixelsize, rows*pixelsize+60));
         getImages();
         addKeyListener(kh);
@@ -97,7 +99,10 @@ public class myGame extends JPanel{
         }
 
         heroLogic.processPlayerMovement(heroPos, dl.gameObjectData);
-        //enemyLogic.processEnemyMovement(dl.gameObjectData);
+        //enemy only moves every other game tick;
+        if (dl.timer % 300 == 0) {
+            enemyLogic.processEnemyMovement(dl.gameObjectData);
+        }
 
 
         //////////////////////////////////////////////////////////////////

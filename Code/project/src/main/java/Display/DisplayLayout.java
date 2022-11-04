@@ -559,6 +559,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         if(gameovertest) {
             //Show game over
             dl.show(displayPanel, "6");
+            //always need to update currentCard
             currentCard = 6;
 
             timeLabel.setText("Time : " + timer / 1000);
