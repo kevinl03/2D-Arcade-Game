@@ -1,5 +1,7 @@
 package Entities;
 
+import Helpers.Direction;
+
 public class Position {
     protected int x, y;
 
@@ -32,5 +34,22 @@ public class Position {
     public void setPosition(Position pos){
         this.y = pos.y;
         this.x = pos.x;
+    }
+
+    public Direction getDirection(Position before, Position after){
+        if(before.getY() > after.getY()){
+            return Direction.NORTH;
+        } else if (before.getY() < after.getY()) {
+            return Direction.SOUTH;
+
+        }else if (before.getX() < after.getX()) {
+            return Direction.EAST;
+
+        }else if(before.getX() > after.getX()){
+            return Direction.WEST;
+
+        }else{
+            return Direction.NULL;
+        }
     }
 }
