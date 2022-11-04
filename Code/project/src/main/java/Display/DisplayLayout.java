@@ -55,7 +55,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     private JButton gomenuButton;
 
     private JLabel soundLabel;
-    
+
     private boolean gameovertest;
 
     public boolean gameWonTest;

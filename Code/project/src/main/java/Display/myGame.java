@@ -369,6 +369,8 @@ public class myGame extends JPanel{
 
         int currentTree = 0;
 
+
+
         for(int col = 0; col < 25; col++){
             for(int row = 0; row < 15; row++){
                 switch (boardMap[col][row]) {
@@ -377,7 +379,9 @@ public class myGame extends JPanel{
                             Random rand = new Random();
                             treeTypeOrder.add(rand.nextInt(3));
                         }
-
+                        if(row == 0) {
+                            g2.drawImage(tree_pngs[(treeTypeOrder.get(currentTree)+1)%3], col * 60, 0, pixelsize, pixelsize, null);
+                        }
                         g2.drawImage(tree_pngs[treeTypeOrder.get(currentTree)], col * 60, row * 60+60, pixelsize, pixelsize, null);
                         currentTree++;
                     break;
