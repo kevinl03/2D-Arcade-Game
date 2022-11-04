@@ -1,8 +1,11 @@
 package Display;
 
 import Board.Objects;
+import Entities.Enemy;
 import Entities.Hero;
 import Entities.Position;
+import Helpers.Direction;
+import Helpers.HeroColor;
 import Helpers.KeyHandler;
 import Logic.EnemyLogic;
 import Logic.HeroLogic;
@@ -11,19 +14,24 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class myGame extends JPanel{
     private int pixelsize = 60;   //60x60 pixels
     private int columns = 25;
     private int rows = 15;
-    private BufferedImage squirrel_png;
+    private HashMap<String, BufferedImage> squirrel_pngs;
     private BufferedImage acorn_png;
-    private BufferedImage bear_png;
+    private HashMap<String, BufferedImage> bear_pngs;
     private BufferedImage bush_png;
     private BufferedImage hunter_png;
     private BufferedImage peanuts_png;
-    private BufferedImage tree_png;
+    private BufferedImage[] tree_pngs;
     private BufferedImage board_png;
     private BufferedImage exit_png;
     private BufferedImage trap_png;
@@ -45,6 +53,10 @@ public class myGame extends JPanel{
 
     EnemyLogic enemyLogic;
     HeroLogic heroLogic;
+
+    boolean firstRender;
+
+    ArrayList<Integer> treeTypeOrder;
     public myGame(CardLayout cl, DisplayLayout dl, JPanel dp, JPanel mp){
         this.cl = cl;
         this.dl = dl;
@@ -62,14 +74,12 @@ public class myGame extends JPanel{
         scoreLabel = new JLabel();
         scoreLabel.setText("Score");
         font = new Font("Times New Roman", Font.BOLD, 30);
+        firstRender = true;
+        treeTypeOrder = new ArrayList<Integer>();
     }
 
     public void updates() throws InterruptedException {
-        //----------------GAME LOGIC LATER-----------------------
-        //
-        //
-        //
-//        boardMap = dl.board.getBoardData();
+
         dl.timer+=150;
         seconds = dl.timer/1000;
 
@@ -99,13 +109,8 @@ public class myGame extends JPanel{
         }
 
         heroLogic.processPlayerMovement(heroPos, dl.gameObjectData);
-        //enemy only moves every other game tick;
-        if (dl.timer % 300 == 0) {
-            enemyLogic.processEnemyMovement(dl.gameObjectData);
-        }
+        enemyLogic.processEnemyMovement(dl.gameObjectData);
 
-
-        //////////////////////////////////////////////////////////////////
         if (kh.escape) {
             if(dl.unpause == 0) {
                 System.out.println("Paused");
@@ -128,8 +133,20 @@ public class myGame extends JPanel{
 
     public void getSquirrel(){
         try {
-            squirrel_png = ImageIO.read(getClass().getResource("/squirrel.png"));
+            squirrel_pngs = new HashMap<>();
+            File folder = new File(getClass().getResource("/squirrels").toURI());
+            File[] files = folder.listFiles();
+            for(final File fileEntry : files){
+                if(fileEntry.isFile()){
+                    String fileName = fileEntry.getName();
+                    System.out.println(fileName);
+                    squirrel_pngs.put(fileName, ImageIO.read(getClass().getResource("/squirrels/" + fileName)));
+                }
+            }
+
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -144,8 +161,21 @@ public class myGame extends JPanel{
 
     public void getBear(){
         try {
-            bear_png = ImageIO.read(getClass().getResource("/bear.png"));
+            bear_pngs = new HashMap<>();
+            File folder = new File(getClass().getResource("/bears").toURI());
+            File[] files = folder.listFiles();
+            for(final File fileEntry : files){
+                if(fileEntry.isFile()){
+                    String fileName = fileEntry.getName();
+                    System.out.println(fileName);
+                    bear_pngs.put(fileName, ImageIO.read(getClass().getResource("/bears/" + fileName)));
+                }
+            }
+            System.out.println(bear_pngs.size());
+
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -168,15 +198,18 @@ public class myGame extends JPanel{
 
     public void getPeanuts(){
         try {
-            peanuts_png = ImageIO.read(getClass().getResource("/peanuts.png"));
+            peanuts_png = ImageIO.read(getClass().getResource("/acorn.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void getTree(){
+    public void getTrees(){
         try {
-            tree_png = ImageIO.read(getClass().getResource("/tree.png"));
+            tree_pngs = new BufferedImage[3];
+            for(int i = 1; i < 4; i++){
+                tree_pngs[i-1] = ImageIO.read(getClass().getResource("/tree" + i + ".png"));
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -191,7 +224,7 @@ public class myGame extends JPanel{
     }
     public void getTrap(){
         try {
-            trap_png = ImageIO.read(getClass().getResource("/trap.png"));
+            trap_png = ImageIO.read(getClass().getResource("/trap4.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -199,7 +232,7 @@ public class myGame extends JPanel{
 
     public void getField(){
         try {
-            board_png = ImageIO.read(getClass().getResource("/board.png"));
+            board_png = ImageIO.read(getClass().getResource("/board2.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -212,7 +245,7 @@ public class myGame extends JPanel{
         getBush();
         getHunter();
         getPeanuts();
-        getTree();
+        getTrees();
         getField();
         getExit();
         getTrap();
@@ -227,6 +260,92 @@ public class myGame extends JPanel{
         updatecolumns = 12;
     }
 
+    private void drawHero(Graphics2D g2){
+        Hero hero = dl.gameObjectData.getHero();
+        int col = hero.getX();
+        int row = hero.getY();
+        int animationFrame = hero.getAnimationFrame();
+        String dir = hero.getDir().toString();
+        String color = hero.getHeroColor().toString();
+//        System.out.println("Squirrel" + color + dir + animationFrame + ".png");
+
+        int movementProgress = 0;
+        if(hero.isMoving()){
+            switch(dl.frameCounter){
+                case 0 -> movementProgress = 52;
+                case 1 -> movementProgress = 43;
+                case 2 -> movementProgress = 35;
+                case 3 -> movementProgress = 24;
+                case 4 -> movementProgress = 16;
+                case 5 -> movementProgress = 7;
+
+            }
+
+            if(dir == "North" || dir == "West"){
+                movementProgress = movementProgress * -1;
+            }
+            //if direction in the y-axis
+            if(dir == "North" || dir == "South"){
+                g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + animationFrame + ".png"), col * 60, row * 60+65 - movementProgress, pixelsize-10, pixelsize-10, null);
+            }else{
+                g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + animationFrame + ".png"), col * 60 - movementProgress, row * 60+65, pixelsize-10, pixelsize-10, null);
+
+            }
+        }else{
+            g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + "1.png"), col * 60, row * 60+65, pixelsize-10, pixelsize-10, null);
+
+        }
+
+        if(dl.frameCounter == 6){
+            hero.setMoving(false);
+
+        }
+
+
+        hero.incrementAnimationFrame();
+
+
+    }
+
+    private void drawEnemies(Graphics2D g2){
+        ArrayList<Enemy> enemies = dl.gameObjectData.getEnemies();
+        for(Enemy enemy : enemies){
+
+            int col = enemy.getX();
+            int row = enemy.getY();
+            int animationFrame = enemy.getAnimationFrame();
+            String dir = enemy.getDir().toString();
+
+            int movementProgress = 0;
+            switch(dl.frameCounter){
+                case 0 -> movementProgress = 52;
+                case 1 -> movementProgress = 43;
+                case 2 -> movementProgress = 35;
+                case 3 -> movementProgress = 24;
+                case 4 -> movementProgress = 16;
+                case 5 -> movementProgress = 7;
+
+            }
+
+            if(dir == "North" || dir == "West"){
+                movementProgress = movementProgress * -1;
+            }
+
+            //if direction in the y-axis
+            if(dir == "North" || dir == "South"){
+                System.out.println("going on the y axis");
+                g2.drawImage(bear_pngs.get("Bear"  + dir + animationFrame + ".png"), col * 60, row * 60+65 - movementProgress, pixelsize-10, pixelsize-10, null);
+            }else{
+                System.out.println("going on the x axis");
+
+                g2.drawImage(bear_pngs.get("Bear"  + dir + animationFrame + ".png"), col * 60 - movementProgress, row * 60+65, pixelsize-10, pixelsize-10, null);
+
+            }
+            enemy.incrementAnimationFrame();
+        }
+
+
+    }
     @Override
     protected void paintComponent(Graphics g){   //   Draw something on JPanel
         super.paintComponent(g);   //   Method already exists, so super is used to add additional lines
@@ -235,22 +354,33 @@ public class myGame extends JPanel{
 
         boardMap = dl.board.getBoardData();
 
+        int currentTree = 0;
+
         for(int col = 0; col < 25; col++){
             for(int row = 0; row < 15; row++){
                 switch (boardMap[col][row]) {
-                    case TREE: g2.drawImage(tree_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
+                    case TREE:
+                        if(firstRender) {
+                            Random rand = new Random();
+                            treeTypeOrder.add(rand.nextInt(3));
+                        }
+
+                        g2.drawImage(tree_pngs[treeTypeOrder.get(currentTree)], col * 60, row * 60+60, pixelsize, pixelsize, null);
+                        currentTree++;
                     break;
-                    case HERO: g2.drawImage(squirrel_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
+                    case HERO:
+
                     break;
                     case ENEMYANDTRAP:
+                    case TRAP:
+                        g2.drawImage(trap_png, col * 60+20, row * 60+60+20, pixelsize-40, pixelsize-40, null);
+                        break;
                     case ENEMYANDREWARD:
-                    case ENEMY: g2.drawImage(bear_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
-                    break;
-                    case REWARD: g2.drawImage(peanuts_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
+                    case REWARD:
+                        g2.drawImage(peanuts_png, col * 60 + 15, row * 60+60 + 15, pixelsize-30, pixelsize - 30, null);
+
                     break;
                     case BONUS: g2.drawImage(acorn_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
-                    break;
-                    case TRAP: g2.drawImage(trap_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
                     break;
                     //no exit image yet
                     case EXIT: g2.drawImage(exit_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
@@ -258,6 +388,12 @@ public class myGame extends JPanel{
                 }
             }
         }
+
+        drawHero(g2);
+        drawEnemies(g2);
+
+        firstRender = false;
+
         g2.setColor(Color.gray);
         g2.fillRect(700,0,150,30);
         g2.setFont(font);

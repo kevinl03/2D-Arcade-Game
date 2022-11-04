@@ -94,9 +94,9 @@ public class BoardData {
     private void setInnerWalls(Difficulty difficulty){
         int wallsegments = 0;
         switch(difficulty){
-            case EASY: wallsegments = 5;
+            case EASY: wallsegments = 15;
                 break;
-            case MEDIUM: wallsegments = 10;
+            case MEDIUM: wallsegments = 15;
                 break;
             case HARD:
             case INFINITE: wallsegments = 15;
@@ -334,6 +334,7 @@ public class BoardData {
 
     public void generateTraps(int count){
 
+
         for (int trapcount = 1; trapcount <= count; trapcount++){
             boolean posfound = false;
             while(!posfound){
@@ -351,22 +352,20 @@ public class BoardData {
 
     }
     private void setTraps(Difficulty dif) {
-        //does not matter if traps are in close to eachother
-        //so we don't check for proximity when generating
         switch(dif){
             case EASY:
                 generateTraps(4);
+                break;
             case MEDIUM:
                 generateTraps(7);
+                break;
             case HARD:
                 generateTraps(11);
+                break;
             case INFINITE:
                 generateTraps(11);
+                break;
         }
-
-
-
-
     }
 
     private void setHeroLocation() {

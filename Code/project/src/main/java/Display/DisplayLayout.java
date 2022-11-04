@@ -92,6 +92,8 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     private Difficulty dif = Difficulty.EASY;
 
+    int frameCounter = 0;
+
     Sound sound = new Sound();
 
 
@@ -578,7 +580,7 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         while (playPanel.goMain == 0 ) {
             try {
-                if(unpause == 0) {
+                if(unpause == 0 && frameCounter == 0) {
                     playPanel.updates();
                 }
                 if( (playPanel.goMain == 0) && (unpause == 0) ) {
@@ -591,6 +593,7 @@ public class DisplayLayout extends JFrame implements Runnable{
                     kh.escape = false;
                     //Go back to main menu
                     System.out.println("Game is over");
+                    playPanel.firstRender = true;
                 }
                 if(gameObjectData.getGameStats().isGameWon()){
                     playPanel.goMain = 1;
@@ -599,10 +602,15 @@ public class DisplayLayout extends JFrame implements Runnable{
                     kh.escape = false;
                     System.out.println("Game has been won!!!");
                 }
+
                 //choosing how long every thread lasts
-                Thread.sleep(150);
+                Thread.sleep(75);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
+            }
+            frameCounter++;
+            if(frameCounter > 6){
+                frameCounter = 0;
             }
         }
         System.out.println("Out of the game");
