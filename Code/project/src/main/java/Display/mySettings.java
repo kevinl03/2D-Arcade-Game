@@ -18,7 +18,6 @@ import java.util.HashMap;
 public class mySettings extends JPanel {
     private int pixelsize = 60;   //60x60 pixels
     private HashMap<HeroColor, BufferedImage> heroColorPngs;
-
     private BufferedImage leftButtonPng;
     private BufferedImage rightButtonPng;
 
@@ -40,6 +39,7 @@ public class mySettings extends JPanel {
     private GridBagConstraints gbc;
     private JButton settbackButton;
     private CardLayout cl;
+    private DisplayLayout dl;
 
 
     private void getHeroColors(){

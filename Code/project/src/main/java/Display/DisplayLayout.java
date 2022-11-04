@@ -1,8 +1,6 @@
 package Display;
 
 import Board.Difficulty;
-import Board.Objects;
-import Entities.Hero;
 import Game.ObjectData;
 import Helpers.HeroColor;
 import Helpers.KeyHandler;
@@ -34,7 +32,7 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     public JPanel displayPanel;
     private JPanel titlePanel;
-    private myGame playPanel;
+    public myGame playPanel;
     private JPanel settPanel;
     private JPanel diffPanel;
     private JPanel gameOver;
@@ -54,21 +52,17 @@ public class DisplayLayout extends JFrame implements Runnable{
     private JToggleButton hardButton;
     private JButton difbackButton;
     private JPanel pausePanel;
-    private JLabel pauseLabel;
-    private JButton unpauseButton;
-    private JButton mainmenuButton;
     private JButton gomenuButton;
 
     private JLabel soundLabel;
-
-    private JButton gameoverButton;
+    
     private boolean gameovertest;
 
-    private boolean gameWonTest;
+    public boolean gameWonTest;
 
 
     private GridBagConstraints gbc;
-    public int unpause = 0;
+    public int pause = 0;
     Font titleText;
     Font headerText;
 
@@ -130,8 +124,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         diffPanel.setLayout(new GridBagLayout());
 
         // Initialize Pause JPanel class
-        pausePanel = new myPause(this);
-        pausePanel.setLayout(new GridBagLayout());
+        pausePanel = new myPause(this, dl);
 
         // Initialize Play JPanel class
         playPanel = new myGame(dl, this, displayPanel, pausePanel);
@@ -152,13 +145,10 @@ public class DisplayLayout extends JFrame implements Runnable{
         titleLabel.setVerticalAlignment(JLabel.TOP);
 
 //        sound.startupMusic();
-        pauseLabel = new JLabel("PAUSED");
-        pauseLabel.setFont(titleText);
 
         // Adding labels onto the panels
         titlePanel.add(titleLabel);
         //diffPanel.add(diffLabel);
-        pausePanel.add(pauseLabel);
 
         // Adding the cardPanel into layout, constraints associates panel
         //always shows First panel
@@ -254,6 +244,7 @@ public class DisplayLayout extends JFrame implements Runnable{
                 System.exit(0);
             }
         });
+
         //-----------------------------------------------------------------------------------------------------
 
         //---------------------------------Settings in mySettings----------------------------------------------
@@ -335,79 +326,7 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         //-----------------------------------------------------------------------------------------------------
 
-        //--------------------------------------------PAUSE----------------------------------------------------
-        unpauseButton = new JButton("Resume");
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        unpauseButton.setFocusable(false);
-        pausePanel.add(unpauseButton, gbc);
-
-        mainmenuButton = new JButton("Main Menu");
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        mainmenuButton.setFocusable(false);
-        pausePanel.add(mainmenuButton, gbc);
-
-        gameoverButton = new JButton("Test game over");
-        gbc.gridx=0;
-        gbc.gridy=6;
-        gameoverButton.setFocusable(false);
-        pausePanel.add(gameoverButton, gbc);
-
-        // add unpause Button ActionListener
-        unpauseButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                //Change difficulty to easy
-                System.out.println("Unpause");
-                unpause = 0;
-                kh.escape = false;
-                // Out of pause
-                // show associated play panel
-                dl.show(displayPanel, "2");
-
-                // current panel is play Panel
-                currentCard = 2;
-                playPanel.setFocusable(true);
-                playPanel.requestFocus();
-            }
-        });
-
-        // add main menu Button ActionListener
-        mainmenuButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                playPanel.goMain = 1;
-                unpause = 0;
-                kh.escape = false;
-                //Go back to main menu
-                System.out.println("Going Back");
-
-                // show associated difficulty panel
-                dl.show(displayPanel, "1");
-
-                // current panel is difficulty Panel
-                currentCard = 1;
-
-            }
-        });
-
-        // add main menu Button ActionListener
-        gameoverButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                playPanel.goMain = 1;
-                gameWonTest= true;
-                unpause = 0;
-                kh.escape = false;
-                //Go back to main menu
-                System.out.println("Game is over");
-
-            }
-        });
+        //-------------------------------------PAUSE in myPause------------------------------------------------
 
         //-----------------------------------------------------------------------------------------------------
 
@@ -436,7 +355,7 @@ public class DisplayLayout extends JFrame implements Runnable{
             public void actionPerformed(ActionEvent arg0)
             {
                 playPanel.goMain = 1;
-                unpause = 0;
+                pause = 0;
                 kh.escape = false;
                 //Go back to main menu
                 System.out.println("Going Back");
@@ -474,7 +393,7 @@ public class DisplayLayout extends JFrame implements Runnable{
             public void actionPerformed(ActionEvent arg0)
             {
                 playPanel.goMain = 1;
-                unpause = 0;
+                pause = 0;
                 kh.escape = false;
                 //Go back to main menu
                 System.out.println("Going Back");
@@ -510,16 +429,16 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         while (playPanel.goMain == 0 ) {
             try {
-                if(unpause == 0 && frameCounter == 0) {
+                if(pause == 0 && frameCounter == 0) {
                     playPanel.updates();
                 }
-                if( (playPanel.goMain == 0) && (unpause == 0) ) {
+                if( (playPanel.goMain == 0) && (pause == 0) ) {
                     playPanel.repaint();
                 }
                 if(gameObjectData.getGameStats().getGameOver()){
                     playPanel.goMain = 1;
                     gameovertest = true;
-                    unpause = 0;
+                    pause = 0;
                     kh.escape = false;
                     //Go back to main menu
                     System.out.println("Game is over");
@@ -528,7 +447,7 @@ public class DisplayLayout extends JFrame implements Runnable{
                 if(gameObjectData.getGameStats().isGameWon()){
                     playPanel.goMain = 1;
                     gameWonTest = true;
-                    unpause = 0;
+                    pause = 0;
                     kh.escape = false;
                     System.out.println("Game has been won!!!");
                 }

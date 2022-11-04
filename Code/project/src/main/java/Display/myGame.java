@@ -4,8 +4,6 @@ import Board.Objects;
 import Entities.Enemy;
 import Entities.Hero;
 import Entities.Position;
-import Helpers.Direction;
-import Helpers.HeroColor;
 import Helpers.KeyHandler;
 import Logic.EnemyLogic;
 import Logic.HeroLogic;
@@ -112,9 +110,9 @@ public class myGame extends JPanel{
         enemyLogic.processEnemyMovement(dl.gameObjectData);
 
         if (kh.escape) {
-            if(dl.unpause == 0) {
+            if(dl.pause == 0) {
                 System.out.println("Paused");
-                dl.unpause = 1;
+                dl.pause = 1;
 
                 //if panel is not open, pop out panel
                 if (dl.currentCard != 5) {
