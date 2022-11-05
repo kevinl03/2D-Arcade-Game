@@ -27,7 +27,7 @@ public class mySettings extends JPanel {
     private JButton rightScroll;
 
 
-    public BufferedImage testimage_png;
+    private BufferedImage testimage_png;
 
     private JLabel settLabel;
 

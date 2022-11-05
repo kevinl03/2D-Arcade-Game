@@ -36,8 +36,6 @@ public class myGame extends JPanel{
     private BufferedImage exit_png;
     private BufferedImage trap_png;
     KeyHandler kh;
-    public int updaterows;
-    public int updatecolumns;
     private CardLayout cl;
     private DisplayLayout dl;
     private JPanel dp;
@@ -82,7 +80,7 @@ public class myGame extends JPanel{
 
     public void updates() throws InterruptedException {
 
-        dl.timer+=450;
+        dl.timer+=525;
         seconds = dl.timer/1000;
 
         Hero hero = dl.gameObjectData.getHero();
@@ -267,8 +265,6 @@ public class myGame extends JPanel{
         kh.left = false;
         kh.down = false;
         kh.right = false;
-        updaterows = 7;
-        updatecolumns = 12;
     }
 
     private void drawHero(Graphics2D g2){

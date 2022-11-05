@@ -33,10 +33,10 @@ public class DisplayLayout extends JFrame implements Runnable{
     public JPanel displayPanel;
     private JPanel titlePanel;
     public myGame playPanel;
-    private JPanel settPanel;
-    private JPanel diffPanel;
-    private JPanel gameOver;
-    private JPanel gameWon;
+    private mySettings settPanel;
+    private myDifficulty diffPanel;
+    private myGameOver gameOver;
+    private myGameWon gameWon;
     private JLabel titleLabel;
     private JLabel diffLabel;
     private JLabel timeLabel;
@@ -77,7 +77,7 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     public int timer;
 
-    private Difficulty dif = Difficulty.EASY;
+    public Difficulty dif = Difficulty.EASY;
 
     HeroColor heroColor = HeroColor.BROWN;
 
@@ -107,7 +107,6 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         // set the layout
         displayPanel.setLayout(dl);
-
         gbc = new GridBagConstraints();   //   Helps position buttons
 
         // Initialize Title JPanel class
@@ -119,9 +118,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         settPanel = new mySettings(this, dl);
 
         // Initialize Difficulty JPanel class
-        //make one later
-        diffPanel = new JPanel();
-        diffPanel.setLayout(new GridBagLayout());
+        diffPanel = new myDifficulty(this,dl);
 
         // Initialize Pause JPanel class
         pausePanel = new myPause(this, dl);
@@ -130,12 +127,10 @@ public class DisplayLayout extends JFrame implements Runnable{
         playPanel = new myGame(dl, this, displayPanel, pausePanel);
 
         // Initialize GameOver
-        gameOver = new myGameOver();
-        gameOver.setLayout(null);
+        gameOver = new myGameOver(this, dl);
 
         //Initialize GameWon
-        gameWon = new myGameWon();
-        gameWon.setLayout(null);
+        gameWon = new myGameWon(this, dl);
 
         // Initialize labels for each JPanel
         titleLabel = new JLabel("Hidden Squirrel: Peanuts and Acorns");
@@ -148,7 +143,6 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         // Adding labels onto the panels
         titlePanel.add(titleLabel);
-        //diffPanel.add(diffLabel);
 
         // Adding the cardPanel into layout, constraints associates panel
         //always shows First panel
@@ -246,167 +240,12 @@ public class DisplayLayout extends JFrame implements Runnable{
         });
 
         //-----------------------------------------------------------------------------------------------------
-
         //---------------------------------Settings in mySettings----------------------------------------------
-
-        //-----------------------------------Difficulty--------------------------------------------------------
-        // Initialize Toggle/Button objects and add to buttongroup and Difficulty Panel
-        difGroup = new ButtonGroup();
-        easyButton = new JToggleButton(" Easy ", true);
-        gbc.insets = new Insets(200,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.ipadx = 200;
-        gbc.ipady = 50;
-        easyButton.setFocusable(false);
-        diffPanel.add(easyButton, gbc);
-
-        mediumButton = new JToggleButton("Medium");
-        gbc.insets = new Insets(50,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        mediumButton.setFocusable(false);
-        diffPanel.add(mediumButton, gbc);
-
-        hardButton = new JToggleButton(" Hard ");
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        hardButton.setFocusable(false);
-        diffPanel.add(hardButton, gbc);
-
-        difbackButton = new JButton(" Back ");
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        difbackButton.setFocusable(false);
-        diffPanel.add(difbackButton, gbc);
-
-        // Toggles only 1 button
-        difGroup.add(easyButton);
-        difGroup.add(mediumButton);
-        difGroup.add(hardButton);
-
-        // add Easy Button ActionListener
-        easyButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                //Change difficulty to easy
-                dif = Difficulty.EASY;
-            }
-        });
-
-        // add Medium Button ActionListener
-        mediumButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                //Change difficulty to medium
-                dif = Difficulty.MEDIUM;
-            }
-        });
-
-        // add Difficulty Button ActionListener
-        hardButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                //Change difficulty to hard
-                dif = Difficulty.HARD;
-            }
-        });
-
-        // add back Button ActionListener
-        difbackButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                // show associated difficulty panel
-                dl.show(displayPanel, "1");
-
-                // current panel is difficulty Panel
-                currentCard = 1;
-            }
-        });
-
-        //-----------------------------------------------------------------------------------------------------
-
+        //-----------------------------------Difficulty in myDifficulty----------------------------------------
         //-------------------------------------PAUSE in myPause------------------------------------------------
-
+        //-----------------------------------GAME OVER in myGameOver-------------------------------------------
+        //-----------------------------------GAME WON in myGameWon---------------------------------------------
         //-----------------------------------------------------------------------------------------------------
-
-        //-----------------------------------GAME OVER---------------------------------------------------------
-        gameLabel = new JLabel("GAME OVER");
-        gameLabel.setFont(titleText);
-        gameLabel.setBounds(600, 0, 400, 100);
-        timeLabel = new JLabel();
-        timeLabel.setFont(headerText);
-        timeLabel.setBounds(700, 100, 800, 100);
-        scoreLabel = new JLabel();
-        scoreLabel.setFont(headerText);
-        scoreLabel.setBounds(700, 200, 800, 100);
-        gameOver.add(gameLabel);
-        gameOver.add(timeLabel);
-        gameOver.add(scoreLabel);
-
-        gomenuButton = new JButton("Main Menu");
-        gomenuButton.setFocusable(false);
-        gomenuButton.setBounds(650, 400, 200, 100);
-        // Game over screen, add menu button
-        gameOver.add(gomenuButton);
-
-        gomenuButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                playPanel.goMain = 1;
-                pause = 0;
-                kh.escape = false;
-                //Go back to main menu
-                System.out.println("Going Back");
-
-                // show associated difficulty panel
-                dl.show(displayPanel, "1");
-
-                // current panel is difficulty Panel
-                currentCard = 1;
-
-            }
-        });
-        //-----------------------------------GAME WON---------------------------------------------------------
-        gameLabel = new JLabel("CONGRATULATIONS");
-        gameLabel.setFont(titleText);
-        gameLabel.setBounds(500, 0, 550, 100);
-        timeLabel = new JLabel();
-        timeLabel.setFont(headerText);
-        timeLabel.setBounds(700, 100, 800, 100);
-        scoreLabel = new JLabel();
-        scoreLabel.setFont(headerText);
-        scoreLabel.setBounds(700, 200, 800, 100);
-        gameWon.add(gameLabel);
-        gameWon.add(timeLabel);
-        gameWon.add(scoreLabel);
-
-        gomenuButton = new JButton("Main Menu");
-        gomenuButton.setFocusable(false);
-        gomenuButton.setBounds(650, 400, 200, 100);
-        // Game over screen, add menu button
-        gameWon.add(gomenuButton);
-
-        gomenuButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                playPanel.goMain = 1;
-                pause = 0;
-                kh.escape = false;
-                //Go back to main menu
-                System.out.println("Going Back");
-
-                // show associated difficulty panel
-                dl.show(displayPanel, "1");
-
-                // current panel is difficulty Panel
-                currentCard = 1;
-
-            }
-        });
-        //------------------------------------------------------------------------------------------------------
 
         // used to get content pane
         //shows the display that we created above
@@ -427,6 +266,15 @@ public class DisplayLayout extends JFrame implements Runnable{
         gameWonTest = false;
         timer = 0;
 
+        //Game starts when pressed
+        playPanel.repaint();
+        while(!kh.up && !kh.down && !kh.left && !kh.right && !kh.escape){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         while (playPanel.goMain == 0 ) {
             try {
                 if(pause == 0 && frameCounter == 0) {
@@ -471,18 +319,15 @@ public class DisplayLayout extends JFrame implements Runnable{
             dl.show(displayPanel, "6");
             //always need to update currentCard
             currentCard = 6;
-
-            timeLabel.setText("Time : " + timer / 1000);
-            scoreLabel.setText("Score : " + gameObjectData.getHero().getScore());
+            gameOver.setValues(timer / 1000, gameObjectData.getHero().getScore());
         }
         if(gameWonTest){
             dl.show(displayPanel, "7");
             currentCard = 6;
-
-            timeLabel.setText("Time : " + timer / 1000);
-            scoreLabel.setText("Score : " + gameObjectData.getHero().getScore());
+            gameWon.setValues(timer/1000, gameObjectData.getHero().getScore());
         }
     }
+
 
     // Main Method
     public static void main(String[] args)
