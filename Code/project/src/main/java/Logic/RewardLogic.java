@@ -40,6 +40,9 @@ public class RewardLogic {
                         break;
 
                     default:
+                        //do not worry if the position is not a bonus reward
+                        //cases for if bear ontop of Bonus will simply despawn
+                        //when enemy moves from object
                         System.out.printf("bonusObj despawning");
                         break;
                 }

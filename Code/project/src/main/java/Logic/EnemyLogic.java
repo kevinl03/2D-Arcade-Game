@@ -77,6 +77,8 @@ public class EnemyLogic {
                     board.setTypeAt(enemy, Objects.TRAP);
                 } else if (currentTile == Objects.ENEMYANDBUSH){
                     board.setTypeAt(enemy, Objects.BUSH);
+                } else if (currentTile == Objects.ENEMYANDBONUS){
+                    board.setTypeAt(enemy, Objects.BONUS);
                 } else {
                     board.setTypeAt(enemy, Objects.EMPTY);
                 }
@@ -115,7 +117,9 @@ public class EnemyLogic {
                     board.setTypeAt(enemy, Objects.ENEMYANDTRAP);
                 } else if (currentTile == Objects.BUSH){
                     board.setTypeAt(enemy, Objects.ENEMYANDBUSH);
-                }else if (currentTile == Objects.HERO || currentTile == Objects.HEROHIDDEN) {
+                } else if (currentTile == Objects.BONUS){
+                    board.setTypeAt(enemy, Objects.ENEMYANDBONUS);
+                } else if (currentTile == Objects.HERO || currentTile == Objects.HEROHIDDEN) {
                     gameStats.setGameOver(true);
                 } else {
                     board.setTypeAt(enemy, Objects.ENEMY);
