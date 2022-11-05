@@ -12,9 +12,15 @@ public class RewardLogic {
     public void updateRewards(ObjectData gameobjectData, int ticks){
         BoardData boardData = gameobjectData.getBoard();
         ArrayList<Bonus> bonuses = gameobjectData.getBonus();
-        int lifetime = 10000;
+        Random rand = new Random(); //instance of random class
+
         Objects[][] objectMap = boardData.getBoardData();
         for (Bonus bonusObj : bonuses){
+            //randomize despawns
+            int max = 15000; //15 seconds
+            int min = 8000; //8 seconds
+
+            int lifetime = rand.nextInt(max-min+1) + min;
             if (ticks - bonusObj.getStartTime() > lifetime){
 
                 switch(objectMap[bonusObj.getX()][bonusObj.getY()]){
