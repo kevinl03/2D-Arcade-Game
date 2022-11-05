@@ -34,7 +34,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     private JPanel titlePanel;
     public myGame playPanel;
     private mySettings settPanel;
-    private JPanel diffPanel;
+    private myDifficulty diffPanel;
     private myGameOver gameOver;
     private myGameWon gameWon;
     private JLabel titleLabel;
@@ -77,7 +77,7 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     public int timer;
 
-    private Difficulty dif = Difficulty.EASY;
+    public Difficulty dif = Difficulty.EASY;
 
     HeroColor heroColor = HeroColor.BROWN;
 
@@ -107,7 +107,6 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         // set the layout
         displayPanel.setLayout(dl);
-
         gbc = new GridBagConstraints();   //   Helps position buttons
 
         // Initialize Title JPanel class
@@ -119,9 +118,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         settPanel = new mySettings(this, dl);
 
         // Initialize Difficulty JPanel class
-        //make one later
-        diffPanel = new JPanel();
-        diffPanel.setLayout(new GridBagLayout());
+        diffPanel = new myDifficulty(this,dl);
 
         // Initialize Pause JPanel class
         pausePanel = new myPause(this, dl);
@@ -146,7 +143,6 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         // Adding labels onto the panels
         titlePanel.add(titleLabel);
-        //diffPanel.add(diffLabel);
 
         // Adding the cardPanel into layout, constraints associates panel
         //always shows First panel
@@ -244,88 +240,9 @@ public class DisplayLayout extends JFrame implements Runnable{
         });
 
         //-----------------------------------------------------------------------------------------------------
-
         //---------------------------------Settings in mySettings----------------------------------------------
-
-        //-----------------------------------Difficulty--------------------------------------------------------
-        // Initialize Toggle/Button objects and add to buttongroup and Difficulty Panel
-        difGroup = new ButtonGroup();
-        easyButton = new JToggleButton(" Easy ", true);
-        gbc.insets = new Insets(200,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.ipadx = 200;
-        gbc.ipady = 50;
-        easyButton.setFocusable(false);
-        diffPanel.add(easyButton, gbc);
-
-        mediumButton = new JToggleButton("Medium");
-        gbc.insets = new Insets(50,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        mediumButton.setFocusable(false);
-        diffPanel.add(mediumButton, gbc);
-
-        hardButton = new JToggleButton(" Hard ");
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        hardButton.setFocusable(false);
-        diffPanel.add(hardButton, gbc);
-
-        difbackButton = new JButton(" Back ");
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        difbackButton.setFocusable(false);
-        diffPanel.add(difbackButton, gbc);
-
-        // Toggles only 1 button
-        difGroup.add(easyButton);
-        difGroup.add(mediumButton);
-        difGroup.add(hardButton);
-
-        // add Easy Button ActionListener
-        easyButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                //Change difficulty to easy
-                dif = Difficulty.EASY;
-            }
-        });
-
-        // add Medium Button ActionListener
-        mediumButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                //Change difficulty to medium
-                dif = Difficulty.MEDIUM;
-            }
-        });
-
-        // add Difficulty Button ActionListener
-        hardButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                //Change difficulty to hard
-                dif = Difficulty.HARD;
-            }
-        });
-
-        // add back Button ActionListener
-        difbackButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                // show associated difficulty panel
-                dl.show(displayPanel, "1");
-
-                // current panel is difficulty Panel
-                currentCard = 1;
-            }
-        });
-
-        //-----------------------------------------------------------------------------------------------------
-
+        //-----------------------------------Difficulty in myDifficulty----------------------------------------
         //-------------------------------------PAUSE in myPause------------------------------------------------
-
         //-----------------------------------GAME OVER in myGameOver-------------------------------------------
         //-----------------------------------GAME WON in myGameWon---------------------------------------------
         //-----------------------------------------------------------------------------------------------------
