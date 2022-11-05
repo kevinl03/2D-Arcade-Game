@@ -33,10 +33,10 @@ public class DisplayLayout extends JFrame implements Runnable{
     public JPanel displayPanel;
     private JPanel titlePanel;
     public myGame playPanel;
-    private JPanel settPanel;
+    private mySettings settPanel;
     private JPanel diffPanel;
-    private JPanel gameOver;
-    private JPanel gameWon;
+    private myGameOver gameOver;
+    private myGameWon gameWon;
     private JLabel titleLabel;
     private JLabel diffLabel;
     private JLabel timeLabel;
@@ -130,12 +130,10 @@ public class DisplayLayout extends JFrame implements Runnable{
         playPanel = new myGame(dl, this, displayPanel, pausePanel);
 
         // Initialize GameOver
-        gameOver = new myGameOver();
-        gameOver.setLayout(null);
+        gameOver = new myGameOver(this, dl);
 
         //Initialize GameWon
-        gameWon = new myGameWon();
-        gameWon.setLayout(null);
+        gameWon = new myGameWon(this, dl);
 
         // Initialize labels for each JPanel
         titleLabel = new JLabel("Hidden Squirrel: Peanuts and Acorns");
@@ -328,85 +326,9 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         //-------------------------------------PAUSE in myPause------------------------------------------------
 
+        //-----------------------------------GAME OVER in myGameOver-------------------------------------------
+        //-----------------------------------GAME WON in myGameWon---------------------------------------------
         //-----------------------------------------------------------------------------------------------------
-
-        //-----------------------------------GAME OVER---------------------------------------------------------
-        gameLabel = new JLabel("GAME OVER");
-        gameLabel.setFont(titleText);
-        gameLabel.setBounds(600, 0, 400, 100);
-        timeLabel = new JLabel();
-        timeLabel.setFont(headerText);
-        timeLabel.setBounds(700, 100, 800, 100);
-        scoreLabel = new JLabel();
-        scoreLabel.setFont(headerText);
-        scoreLabel.setBounds(700, 200, 800, 100);
-        gameOver.add(gameLabel);
-        gameOver.add(timeLabel);
-        gameOver.add(scoreLabel);
-
-        gomenuButton = new JButton("Main Menu");
-        gomenuButton.setFocusable(false);
-        gomenuButton.setBounds(650, 400, 200, 100);
-        // Game over screen, add menu button
-        gameOver.add(gomenuButton);
-
-        gomenuButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                playPanel.goMain = 1;
-                pause = 0;
-                kh.escape = false;
-                //Go back to main menu
-                System.out.println("Going Back");
-
-                // show associated difficulty panel
-                dl.show(displayPanel, "1");
-
-                // current panel is difficulty Panel
-                currentCard = 1;
-
-            }
-        });
-        //-----------------------------------GAME WON---------------------------------------------------------
-        gameLabel = new JLabel("CONGRATULATIONS");
-        gameLabel.setFont(titleText);
-        gameLabel.setBounds(500, 0, 550, 100);
-        timeLabel = new JLabel();
-        timeLabel.setFont(headerText);
-        timeLabel.setBounds(700, 100, 800, 100);
-        scoreLabel = new JLabel();
-        scoreLabel.setFont(headerText);
-        scoreLabel.setBounds(700, 200, 800, 100);
-        gameWon.add(gameLabel);
-        gameWon.add(timeLabel);
-        gameWon.add(scoreLabel);
-
-        gomenuButton = new JButton("Main Menu");
-        gomenuButton.setFocusable(false);
-        gomenuButton.setBounds(650, 400, 200, 100);
-        // Game over screen, add menu button
-        gameWon.add(gomenuButton);
-
-        gomenuButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                playPanel.goMain = 1;
-                pause = 0;
-                kh.escape = false;
-                //Go back to main menu
-                System.out.println("Going Back");
-
-                // show associated difficulty panel
-                dl.show(displayPanel, "1");
-
-                // current panel is difficulty Panel
-                currentCard = 1;
-
-            }
-        });
-        //------------------------------------------------------------------------------------------------------
 
         // used to get content pane
         //shows the display that we created above
@@ -427,6 +349,15 @@ public class DisplayLayout extends JFrame implements Runnable{
         gameWonTest = false;
         timer = 0;
 
+        //Game starts when pressed
+        playPanel.repaint();
+        while(!kh.up && !kh.down && !kh.left && !kh.right && !kh.escape){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         while (playPanel.goMain == 0 ) {
             try {
                 if(pause == 0 && frameCounter == 0) {
@@ -471,18 +402,15 @@ public class DisplayLayout extends JFrame implements Runnable{
             dl.show(displayPanel, "6");
             //always need to update currentCard
             currentCard = 6;
-
-            timeLabel.setText("Time : " + timer / 1000);
-            scoreLabel.setText("Score : " + gameObjectData.getHero().getScore());
+            gameOver.setValues(timer / 1000, gameObjectData.getHero().getScore());
         }
         if(gameWonTest){
             dl.show(displayPanel, "7");
             currentCard = 6;
-
-            timeLabel.setText("Time : " + timer / 1000);
-            scoreLabel.setText("Score : " + gameObjectData.getHero().getScore());
+            gameWon.setValues(timer/1000, gameObjectData.getHero().getScore());
         }
     }
+
 
     // Main Method
     public static void main(String[] args)
