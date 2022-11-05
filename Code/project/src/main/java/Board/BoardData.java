@@ -326,9 +326,35 @@ public class BoardData {
         return true;
     }
 
-    private void setBonusRewards() {
+    public void generateBonusrewards(int count){
+        for (int BonusCnt = 1; BonusCnt <= count; BonusCnt++){
+            boolean posfound = false;
+            while(!posfound){
+                int[] coords = getRandomXY();
+                //check to see if generation is a valid
+                if (ObjectMap[coords[0]][coords[1]] == Objects.EMPTY){
 
+                    ObjectMap[coords[0]][coords[1]] = Objects.BONUS;
+                    posfound = true;
+                }
+                //else case means we need a new XY so we go back to while loop
+                //and get another randomXY
+            }
+        }
 
+    }
+    private void setBonusRewards(Difficulty dif) {
+        switch (dif){
+            case EASY:
+                generateBonusrewards(3);
+                break;
+            case MEDIUM:
+                generateBonusrewards(2);
+                break;
+            case HARD:
+                generateBonusrewards(3);
+                break;
+        }
     }
 
     private void setEnemies(int[] heroLoc, Difficulty dif) {
@@ -469,7 +495,7 @@ public class BoardData {
         setOuterWalls();
         //harder difficulty means more wall segments so user has less space to move around
         setInnerWalls(dif);
-        setBonusRewards();
+        setBonusRewards(dif);
         setRegRewards(dif);
         setTraps(dif);
         heroLoc = setHeroLocation();

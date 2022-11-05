@@ -6,6 +6,7 @@ import Entities.*;
 import Helpers.HeroColor;
 import Logic.EnemyLogic;
 import Logic.HeroLogic;
+import Logic.RewardLogic;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,8 @@ public class ObjectData {
 
     private HeroLogic heroLogic;
 
+    private RewardLogic rewardLogic;
+
     private Difficulty dif;
 
 
@@ -35,6 +38,7 @@ public class ObjectData {
         gameStats = new GameStats();
         enemyLogic = new EnemyLogic();
         heroLogic = new HeroLogic();
+        rewardLogic = new RewardLogic();
         enemies = new ArrayList<>();
         traps = new ArrayList<>();
         rewards = new ArrayList<>();
@@ -157,5 +161,7 @@ public class ObjectData {
     public Difficulty getDif() {
         return dif;
     }
+
+    public RewardLogic getRewardLogic() { return rewardLogic; }
 }
 

@@ -7,6 +7,7 @@ import Entities.Position;
 import Helpers.KeyHandler;
 import Logic.EnemyLogic;
 import Logic.HeroLogic;
+import Logic.RewardLogic;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -53,6 +54,8 @@ public class myGame extends JPanel{
     EnemyLogic enemyLogic;
     HeroLogic heroLogic;
 
+    RewardLogic rewardLogic;
+
     boolean firstRender;
 
     ArrayList<Integer> treeTypeOrder;
@@ -88,6 +91,7 @@ public class myGame extends JPanel{
 
         enemyLogic = dl.gameObjectData.getEnemyLogic();
         heroLogic = dl.gameObjectData.getHeroLogic();
+        rewardLogic = dl.gameObjectData.getRewardLogic();
 
         //if two opposite keys are pressed then
         //player movement remains the same
@@ -109,6 +113,7 @@ public class myGame extends JPanel{
 
         heroLogic.processPlayerMovement(heroPos, dl.gameObjectData);
         enemyLogic.processEnemyMovement(dl.gameObjectData);
+        rewardLogic.updateRewards(dl.gameObjectData, dl.timer);
 
         if (kh.escape) {
             if(dl.pause == 0) {
