@@ -70,9 +70,7 @@ public class myGameWon extends JPanel {
             public void actionPerformed(ActionEvent arg0)
             {
                 dl.sound.playClick();
-                dl.playPanel.goMain = 1;
-                dl.pause = 0;
-                dl.kh.escape = false;
+
                 //Go back to main menu
                 System.out.println("Going Back");
 
