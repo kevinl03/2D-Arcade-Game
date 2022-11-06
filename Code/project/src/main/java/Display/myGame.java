@@ -401,7 +401,7 @@ public class myGame extends JPanel{
                         g2.drawImage(peanuts_png, col * 60 + 15, row * 60+60 + 15, pixelsize-30, pixelsize - 30, null);
 
                     break;
-                    case BONUS: g2.drawImage(chocolate_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
+                    case BONUS: g2.drawImage(chocolate_png, col * 60, row * 60+60, pixelsize-30, pixelsize-30, null);
                     break;
                     //no exit image yet
                     case EXIT: g2.drawImage(exit_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
