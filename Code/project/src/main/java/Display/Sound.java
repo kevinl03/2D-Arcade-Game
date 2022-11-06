@@ -10,6 +10,9 @@ public class Sound {
 
     static Clip clip;
     static Clip btnSound;
+    static Clip winSound;
+    static Clip heroSound;
+    static  Clip lostSound;
 
     URL Musicpath[] = new URL[40];
 
@@ -32,6 +35,38 @@ public class Sound {
             System.out.println("Failed\n");
         }
         btnSound.start();
+    }
+    public void lostSound(){
+        try {
+            AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResource("/fail.wav"));
+            lostSound = AudioSystem.getClip();
+            lostSound.open(musicstream);
+        } catch(Exception e) {
+            System.out.println("Failed\n");
+        }
+        lostSound.start();
+    }
+
+    public void heroWalkSound(){
+        try {
+            //AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResource("/walk.mp3"));
+            heroSound = AudioSystem.getClip();
+            //heroSound.open(musicstream);
+        } catch(Exception e) {
+            System.out.println("Failed\n");
+        }
+        heroSound.start();
+    }
+
+    public void winSound(){
+        try {
+            //AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResource("/win.mp3"));
+            winSound = AudioSystem.getClip();
+            //winSound.open(musicstream);
+        } catch(Exception e) {
+            System.out.println("Failed\n");
+        }
+        winSound.start();
     }
 
     public void play() {

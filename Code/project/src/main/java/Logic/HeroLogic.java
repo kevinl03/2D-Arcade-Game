@@ -3,6 +3,7 @@ package Logic;
 import Board.Difficulty;
 import Board.Objects;
 import Board.BoardData;
+import Display.Sound;
 import Entities.*;
 import Game.ObjectData;
 
@@ -31,6 +32,7 @@ public class HeroLogic {
         boolean heroMoved = true;
 
         Objects tileType = board.getTypeAt(pos);
+        Sound sound = new Sound();
 
         switch (tileType){
             case TREE:
@@ -40,9 +42,11 @@ public class HeroLogic {
                 collectReward(pos, gameObjectData);
                 break;
             case TRAP:
+                sound.lostSound();
                 activateTrap(pos, gameObjectData);
                 break;
             case ENEMY:
+                sound.lostSound();
                 gameObjectData.getGameStats().setGameOver(true);
                 break;
             case EMPTY:
@@ -90,6 +94,8 @@ public class HeroLogic {
      * @param gameObjectData Object data
      */
     private void collectReward(Position pos, ObjectData gameObjectData){
+        Sound sound = new Sound();
+        sound.playClick();
         RegularReward reward = gameObjectData.getRewardAt(pos);
         int score;
 
@@ -115,9 +121,10 @@ public class HeroLogic {
      * @param gameObjectData game data
      */
     private void collectBonus(Position pos, ObjectData gameObjectData){
+        Sound sound = new Sound();
+        sound.playClick();
         Bonus bonus = gameObjectData.getBonusAt(pos);
         int score;
-
         //if reward does not exist don't add score
         if(bonus != null){
             score = bonus.getPoint();
