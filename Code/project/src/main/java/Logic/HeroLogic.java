@@ -6,12 +6,21 @@ import Board.BoardData;
 import Entities.*;
 import Game.ObjectData;
 
+
+/**
+ * Handles all logic regarding the hero's movement
+ */
 public class HeroLogic {
+
+    /**
+     * Handles the players movement to a new position, various cases based on
+     * what type of tile the hero moves to (reward, exit, enemy etc...)
+     * @param pos the new {@link Position}
+     * @param gameObjectData all game objects data, board and hero are used {@link ObjectData}
+     */
     public void processPlayerMovement(Position pos, ObjectData gameObjectData){
 
         BoardData board = gameObjectData.getBoard();
-
-
 
         Hero hero = gameObjectData.getHero();
         if(pos.getX() == hero.getX() && pos.getY() == hero.getY()){
@@ -22,6 +31,7 @@ public class HeroLogic {
         boolean heroMoved = true;
 
         Objects tileType = board.getTypeAt(pos);
+
         switch (tileType){
             case TREE:
                 heroMoved = false;
@@ -73,6 +83,12 @@ public class HeroLogic {
 
     }
 
+    /**
+     * Handles hero collecting a reward at pos, score from the reward is added
+     * to heros score and {@link Exit#rewardCollected(Difficulty) RewardCollected} is called
+     * @param pos position of reward
+     * @param gameObjectData Object data
+     */
     private void collectReward(Position pos, ObjectData gameObjectData){
         RegularReward reward = gameObjectData.getRewardAt(pos);
         int score;
@@ -93,6 +109,11 @@ public class HeroLogic {
         exit.rewardCollected(gameObjectData.getDif());
     }
 
+    /**
+     * Adds the points form bonus reward to heros score
+     * @param pos position of the bonus reward
+     * @param gameObjectData game data
+     */
     private void collectBonus(Position pos, ObjectData gameObjectData){
         Bonus bonus = gameObjectData.getBonusAt(pos);
         int score;
@@ -109,6 +130,11 @@ public class HeroLogic {
         hero.addScore(score);
     }
 
+    /**
+     * deducts the trap damage from the heros score. if the score turns negative game over
+     * @param pos position of trap
+     * @param gameObjectData game data
+     */
     private void activateTrap(Position pos, ObjectData gameObjectData){
         Trap trap = gameObjectData.getTrapAt(pos);
         int damage;
