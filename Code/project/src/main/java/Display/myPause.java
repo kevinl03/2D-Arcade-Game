@@ -60,6 +60,7 @@ private GridBagConstraints gbc;
             public void actionPerformed(ActionEvent arg0)
             {
                 //Resume
+                dl.sound.playClick();
                 System.out.println("Unpause");
                 dl.pause = 0;
                 dl.kh.escape = false;
@@ -79,6 +80,7 @@ private GridBagConstraints gbc;
         {
             public void actionPerformed(ActionEvent arg0)
             {
+                dl.sound.playClick();
                 dl.playPanel.goMain = 1;
                 dl.pause = 0;
                 dl.kh.escape = false;
@@ -99,6 +101,7 @@ private GridBagConstraints gbc;
         {
             public void actionPerformed(ActionEvent arg0)
             {
+                dl.sound.playClick();
                 dl.playPanel.goMain = 1;
                 dl.gameWonTest= true;
                 dl.pause = 0;

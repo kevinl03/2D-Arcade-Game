@@ -76,6 +76,7 @@ public class myDifficulty extends JPanel {
         {
             public void actionPerformed(ActionEvent arg0)
             {
+                dl.sound.playClick();
                 //Change difficulty to easy
                 dl.dif = Difficulty.EASY;
             }
@@ -86,6 +87,7 @@ public class myDifficulty extends JPanel {
         {
             public void actionPerformed(ActionEvent arg0)
             {
+                dl.sound.playClick();
                 //Change difficulty to medium
                 dl.dif = Difficulty.MEDIUM;
             }
@@ -94,6 +96,7 @@ public class myDifficulty extends JPanel {
         // add Difficulty Button ActionListener
         hardButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+                dl.sound.playClick();
                 //Change difficulty to hard
                 dl.dif = Difficulty.HARD;
             }
@@ -102,9 +105,9 @@ public class myDifficulty extends JPanel {
         // add back Button ActionListener
         difbackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+                dl.sound.playClick();
                 // show associated difficulty panel
                 cl.show(dl.displayPanel, "1");
-
                 // current panel is difficulty Panel
                 dl.currentCard = 1;
             }
