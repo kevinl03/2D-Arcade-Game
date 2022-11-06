@@ -1,20 +1,27 @@
 package Board;
 
-import Entities.Hero;
 import Entities.Position;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class BoardData {
+
+    //if ever need to change map size, this is the location
     private static int columns = 25;
     private static int rows = 15;
 
+    //2Darray of objects containing all of the information to be processed from
+    //during the game runtime
     private static Objects[][] ObjectMap = new Objects[columns][rows];
 
-    //TODO REPLACE HARD CODE
+
 //    private Difficulty dif = Difficulty.HARD;
 
+    /**
+     * Used for replacing a TMP object wall segments with real TREE objects
+     * for succesful segment generations
+     */
     private void replaceTMPTrees() {
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
@@ -26,6 +33,10 @@ public class BoardData {
         }
     }
 
+    /**
+     * helper function for removing TMP tree objects
+     * during for innerWall generation
+     */
     private void removeTMPTrees() {
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
@@ -37,6 +48,9 @@ public class BoardData {
         }
     }
 
+    /**
+     * set the perimiter of the map to TREE objects
+     */
     public void setOuterWalls() {
         for (int i = 0; i < rows; i++) {
             ObjectMap[0][i] = Objects.TREE;
@@ -52,6 +66,9 @@ public class BoardData {
         }
     }
 
+    /**
+     * used for initilazing board to all EMPTY object tiles
+     */
     static void setEmptyTiles() {
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
@@ -61,6 +78,15 @@ public class BoardData {
     }
 
     //helper function
+
+    /**
+     * helper function for checking if any adjencent tiles to given coordinate contains a TREE
+     *
+     * @param xcoord
+     * @param ycoord
+     * @return boolean
+     *
+     */
     static boolean foundAdjacentTrees(int xcoord, int ycoord) {
         boolean isadjecent = false;
         //check north west east west
@@ -76,7 +102,7 @@ public class BoardData {
         if (ObjectMap[xcoord + 1][ycoord - 1] == Objects.TREE) {
             isadjecent = true;
         }
-        //check diagonals because those can cause loops too
+        //check diagonals because those can cause closed off sections
         if (ObjectMap[xcoord + 1][ycoord + 1] == Objects.TREE) {
             isadjecent = true;
         }
@@ -92,6 +118,12 @@ public class BoardData {
 
         return isadjecent;
     }
+
+    /**
+     *
+     * @param difficulty calls {@link #setSegment()} 15 times regardless of the difficulty
+     *                   to create 15 individual wall segments
+     */
     private void setInnerWalls(Difficulty difficulty){
         int wallsegments = 0;
         switch(difficulty){
@@ -109,7 +141,12 @@ public class BoardData {
         }
 
     }
-    //helper functions for generating map
+
+    /**
+     * Helper function for generating WallSegments
+     *generate shapes of either 1,2, or 3 lines with changing directions
+     *going north/south -> west/east -> north/south all of varying lenghts
+     */
     private void setSegment() {
 
         Random rand = new Random(); //instance of random class
@@ -122,20 +159,20 @@ public class BoardData {
         int minwallwidth = 2;
 
 
-
+        //variable holder used for if a wallsegment fails to generate
+        //a certain number of times
         int attempts = 0;
+        //keep looping if wall segment is created or not
         boolean createdwall = false;
         while (!createdwall) {
-            attempts++;
-            if (attempts > 100){
 
-            }
-
+            //start position for the wall segment
             int startx = (int) Math.floor(Math.random() * (maxwallwidth - minwallwidth + 1) + minwallwidth);
             int starty = (int) Math.floor(Math.random() * (maxwallheight - minwallheight + 1) + minwallheight);
 
-            //how many walls we make 
-
+            //how many walls lines we make
+            //can be either 1, or 3
+            //so a zigzag or straight line
             int totalwalls = (int) Math.floor(Math.random() * (3 - 1 + 1) + 1);
 
 
@@ -164,25 +201,33 @@ public class BoardData {
                             failedgeneration = true;
                         }
                         //generate tmp tree which we will replace only if full generation succeeds
+                        //when if edge cases pass
                         else {
                             ObjectMap[startx][starty + j * (int) (Math.pow(-1, north))] = Objects.TMP;
                         }
                         //
-
+                        //exist loop
                         if (failedgeneration) {
                             break;
                         }
 
                     }
-                    //readjust starty after loop comples
+                    //readjust starty after loop completes
+                    //will start drawing from new y position
                     starty += walllenght * (int) (Math.pow(-1, north));
 
                 }
                 //check if we got any errors in order to restart loop
                 if (failedgeneration) {
                     break;
-                } else {
-                    int west = rand.nextInt(2);   //from line, we east or west. Walls will be L shapes
+                }
+                //case for drawing horizontal lines wall segments
+                else {
+                    //check if we got any errors in order to restart loop
+
+                    //used to generate 1 or -1 so that we can raise -1 to power of it
+                    //to indicate west or east
+                    int west = rand.nextInt(2);   //from line,  east or west. Walls will be L shapes
                     for (int j = 0; j <= walllenght; j++) {
                         //out of bounds up 
                         if (startx + j * (int) (Math.pow(-1, west)) > maxwallwidth) {
@@ -204,9 +249,11 @@ public class BoardData {
                             break;
                         }
                     }
+                    //start position will now be the x coord
                     startx += walllenght * (int) (Math.pow(-1, west));
 
                 }
+                //exit loop
                 if (failedgeneration) {
                     break;
                 }
@@ -236,6 +283,12 @@ public class BoardData {
 
     }
 
+    /**
+     *
+     * @param dif
+     * exact same functionility as {@link #setEnemies(int[],Difficulty)} except for generating REWARD objects
+     *
+     */
     private void setRegRewards(Difficulty dif) {
         int rewardCount = 0;
         ArrayList<int[]> rewardLocations = new ArrayList<>();
@@ -273,8 +326,18 @@ public class BoardData {
         }
     }
 
+    /**
+     *
+     * @param rewards
+     * @param newReward
+     * @param dif
+     * @return true if a reward generation is atleast atleast a certain distance
+     *         away from the hero position
+     *         else return false
+     *
+     */
     private boolean checkValidRewardProximity(ArrayList<int[]> rewards, int[] newReward, Difficulty dif){
-//        System.out.println(rewards.size());
+//
 
         int minProximity = 0;
 
@@ -301,11 +364,19 @@ public class BoardData {
         return true;
     }
 
+    /**
+     *
+     * @param hero
+     * @param newEnemy
+     * @param dif
+     * @return true if an enemy position is too close to a player
+     *              else return false
+     */
     private boolean checkValidEnemyProximity(int[] hero, int[] newEnemy, Difficulty dif){
 
         int minProximity = 0;
 
-
+        //variables holders
         int x = hero[0];
         int y = hero[1];
         int newX = newEnemy[0];
@@ -326,10 +397,20 @@ public class BoardData {
         return true;
     }
 
+    /**
+     * sets count number of BONUSREWARDS into the ObjectMap at randomly placed positions
+     * @param count the number of BONUS objects to be randomly generated
+     *
+     *
+     */
     public void generateBonusrewards(int count){
+        //how many rewards
         for (int BonusCnt = 1; BonusCnt <= count; BonusCnt++){
+            //need to stay in while loop while randomXY finds a position
+            //that has an empty tile
             boolean posfound = false;
             while(!posfound){
+                //generate an array {x,y} where both variables are within bounds of map
                 int[] coords = getRandomXY();
                 //check to see if generation is a valid
                 if (ObjectMap[coords[0]][coords[1]] == Objects.EMPTY){
@@ -343,6 +424,13 @@ public class BoardData {
         }
 
     }
+
+    /**
+     *
+     * based on the difficulty, calls helper function {@link #generateBonusrewards(int)} method. See definition
+     * @param dif Difficulty of the game
+     *
+     */
     private void setBonusRewards(Difficulty dif) {
         switch (dif){
             case EASY:
@@ -352,12 +440,20 @@ public class BoardData {
                 generateBonusrewards(2);
                 break;
             case HARD:
-                generateBonusrewards(3);
+                generateBonusrewards(1);
                 break;
         }
     }
 
+    /**
+     * based on the difficulty, calls helper function {@link #generateBonusrewards(int)} method. See definition
+     * @param heroLoc heroes locations. See {@link #setHeroLocation()}
+     * @param dif game difficulty
+     *
+     *
+     */
     private void setEnemies(int[] heroLoc, Difficulty dif) {
+        //initialize variable to hold
         int enemyCount = 0;
         switch(dif){
             case EASY:
@@ -371,36 +467,53 @@ public class BoardData {
                 enemyCount = 3;
                 break;
         }
-
+        //loop for the number of enemies
         for(int i = 0; i < enemyCount; i++){
             int[] xy = getRandomXY();
             int x = xy[0];
             int y = xy[1];
-            if(!checkValidEnemyProximity(heroLoc, xy, dif) || ObjectMap[x][y] != Objects.EMPTY){
+            //must pass
+            //1)checkValidEnemy Proximity
+            //2)be on empty tile
+            //3)tile below cannot be a tree (creates bug when generating bear initially
+            if(!checkValidEnemyProximity(heroLoc, xy, dif) || ObjectMap[x][y] != Objects.EMPTY || ObjectMap[x][y+1] != Objects.TREE){
+                //the loop did create a succesful generation so decrement by one
                 i--;
             }else{
+                //checkValidEnemyProximity return true
                 ObjectMap[x][y] = Objects.ENEMY;
             }
 
         }
     }
 
+    /**
+     * Generate 5 randomly located BUSH objects on ObjectMap
+     */
     private void setBushes() {
         int bushCount = 5;
         for(int i = 0; i < bushCount; i++){
+            //get random xy coordinate
             int[] xy = getRandomXY();
             int x = xy[0];
             int y = xy[1];
+            //must be an empty tile
             if(ObjectMap[x][y] == Objects.EMPTY) {
                 ObjectMap[x][y] = Objects.BUSH;
             }else{
+                //generation did not succesful place a bush
+                //so decrement i for one more iteration of loop
                 i--;
             }
         }
     }
 
+    /**
+     * Generate count number of randomly placed traps on ObjectMap
+     * @param count number of traps
+     *
+     */
     public void generateTraps(int count){
-
 
         for (int trapcount = 1; trapcount <= count; trapcount++){
             boolean posfound = false;
@@ -418,7 +531,16 @@ public class BoardData {
         }
 
     }
+
+    /**
+     *
+     * @param dif based on the difficulty, call {@link #generateTraps(int)} method()
+     *            with a different number of traps to generate
+     *
+     */
     private void setTraps(Difficulty dif) {
+        //does not matter if traps are in close to eachother
+        //so we don't check for proximity when generating
         switch(dif){
             case EASY:
                 generateTraps(4);
@@ -433,6 +555,10 @@ public class BoardData {
                 generateTraps(11);
                 break;
         }
+
+
+
+
     }
 
     private int[] setHeroLocation() {
@@ -454,84 +580,154 @@ public class BoardData {
         return null;
     }
 
+    /**
+     * Randomly generate the door on the perimeter of the map for the player to exit
+     *
+     */
     public void setDoor() {
         Random rand = new Random(); //instance of random class
 
         //0 = north, 1 = east, 2 = south, 3 = west;
+        //generate number between 0 and 3
         int side = rand.nextInt(3);
         int x = 0;
         int y = 0;
 
         switch(side){
             case(0):
+                 //Somewhere on the south wall
                  x = rand.nextInt(columns-2)+1;
                  y = rows-1;
                 break;
             case(1):
+                //Somewhere on the WEST wall
                 y = rand.nextInt(rows-2)+1;
                 x = columns-1;
                 break;
             case(2):
+                //North wall
                 x = rand.nextInt(columns-2)+1;
                 y = 0;
                 break;
             case(3):
+                //EAST wall
                 y = rand.nextInt(rows-2)+1 ;
                 x = 0;
                 break;
         }
-
+        //place EXIT object in generated location
         ObjectMap[x][y] = Objects.EXIT;
     }
 
 
-    //call initalise board at the begginning of every game
+    /**
+     *
+     * @param dif
+     * Generates a new, unique, random map
+     * based on the difficulty argument provided.
+     * see following function descriptions for the methods used in this method
+     * {@link #setEmptyTiles()}
+     * {@link #setOuterWalls()}
+     * {@link #setInnerWalls(Difficulty)}
+     * {@link #setBonusRewards(Difficulty)}
+     * {@link #setBonusRewards(Difficulty)}
+     * {@link #setRegRewards(Difficulty)}
+     * {@link #setTraps(Difficulty)}
+     * {@link #setEnemies(int[], Difficulty)}
+     * {@link #setDoor()}
+     * {@link #setBushes()}
+     */
     public void initialiseBoard(Difficulty dif) {
 
         int heroLoc[];
 
-        //may need to change the ordering
+        //empty tiles to show to which positions will be available
         setEmptyTiles();
+        //walls
         setOuterWalls();
-        //harder difficulty means more wall segments so user has less space to move around
         setInnerWalls(dif);
+
+        //static entities generations
         setBonusRewards(dif);
         setRegRewards(dif);
         setTraps(dif);
+
+        //moving entities
         heroLoc = setHeroLocation();
         setEnemies(heroLoc, dif);
+
+        //miscelanous generation
         setDoor();
         setBushes();
     }
 
     //following will be used in game logic
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return ObjectMap[x][y]
+     * compatible with seperate x and y coordinates
+     */
     public Objects getTypeAt(int x, int y) {
         return ObjectMap[x][y];
     }
 
 
-    //currently throwing error until array type is switched to Object instead of string
+    /**
+     *
+     * @param pos
+     * @return ObjectMap[pos.getX()][pos.getY()]
+     * compatible with Position class parameter
+     * see {@link Position#getX()}  and  {@link Position#getY()}
+     */
     public Objects getTypeAt(Position pos) {
         return ObjectMap[pos.getX()][pos.getY()];
     }
 
+    /**
+     *
+     * @param pos
+     * @param type
+     * set index at pos.getX() and pos.getY() to type
+     * see {@link Position#getX()}  and  {@link Position#getY()}
+     */
     public void setTypeAt(Position pos, Objects type) {
         ObjectMap[pos.getX()][pos.getY()] = type;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param data
+     * compatible with x and y coordinates, see {@link #setTypeAt(Position, Objects)}
+     */
     public void updateBoard(int x, int y, Objects data) {
         ObjectMap[x][y] = data;
     }
 
+    /**
+     *
+     * @return how many rows
+     */
     public int getboardheight() {
         return rows;
     }
 
+    /**
+     *
+     * @return how many columns
+     */
     public int getboardwidth() {
         return columns;
     }
 
+    /**
+     *
+     * @return an array of ints where array[0] = x
+     */
     private int[] getRandomXY() {
 
         Random rand = new Random(); //instance of random class
@@ -539,20 +735,22 @@ public class BoardData {
         //-2 + 1 in order to not consider the border
         int x = rand.nextInt(columns-2) + 1;
         int y = rand.nextInt(rows-2) + 1;
-
+        //store inside of array
         int[] xy = {x,y};
 
         return xy;
     }
 
-    // might be redunant
+    /**
+     *
+     * @return ObjectMap variable
+     */
     public Objects[][] getBoardData(){
         return ObjectMap;
     }
 
 
-
-
+}
 
     /* might be redunant
     public String[][] getBoardData(){
@@ -560,4 +758,3 @@ public class BoardData {
     }
     */
 
-}

@@ -10,27 +10,77 @@ import Logic.RewardLogic;
 
 import java.util.ArrayList;
 
+/**
+ * Container for instantiations of all game objects
+ */
 public class ObjectData {
-    private Hero hero;
-    private ArrayList<Enemy> enemies;
-    private ArrayList<Trap> traps;
-    private ArrayList<RegularReward> rewards;
-    private BoardData board;
-    private ArrayList<Bonus> bonus;
-    private Exit exit;
+    /**
+     * {@link Hero} object
+     */
+    private final Hero hero;
 
-    private GameStats gameStats;
+    /**
+     * ArrayList of all {@link Enemy} objects
+     */
+    private final ArrayList<Enemy> enemies;
 
-    private EnemyLogic enemyLogic;
+    /**
+     * ArrayList of all {@link Trap} objects
+     */
+    private final ArrayList<Trap> traps;
 
-    private HeroLogic heroLogic;
+    /**
+     * ArrayList of all {@link RegularReward} objects
+     */
+    private final ArrayList<RegularReward> rewards;
 
-    private RewardLogic rewardLogic;
+    /**
+     * {@link BoardData} object
+     */
+    private final BoardData board;
 
-    private Difficulty dif;
+    /**
+     * ArrayList of all {@link Bonus} objects
+     */
+    private final ArrayList<Bonus> bonus;
+
+    /**
+     * Exit Object {@link Exit}
+     */
+    private final Exit exit;
+
+    /**
+     * GameStats Object {@link GameStats}
+     */
+
+    private final GameStats gameStats;
+
+    /**
+     * EnemyLogic Object {@link EnemyLogic}
+     */
+    private final EnemyLogic enemyLogic;
+
+    /**
+     * {@link HeroColor} Object
+     */
+    private final HeroLogic heroLogic;
+
+    /**
+     * {@link RewardLogic} Object
+     */
+    private final RewardLogic rewardLogic;
+
+    /**
+     * {@link Difficulty} Object
+     */
+    private final Difficulty dif;
 
 
-
+    /**
+     * Constructor for object data with difficulty and color
+     * @param dif game difficulty
+     * @param heroColor color
+     */
     public ObjectData(Difficulty dif, HeroColor heroColor){
         this.dif = dif;
         hero = new Hero();
@@ -50,17 +100,15 @@ public class ObjectData {
         int rewardPoints = 50;
 
         switch(dif){
-            case EASY -> trapDamage = 50;
             case MEDIUM ->  trapDamage = 100;
             case HARD, INFINITE -> trapDamage = 200;
         }
 
+        //iterate through board to create objects
         for(int x = 0; x < board.getboardwidth() - 1; x++){
             for(int y = 0; y < board.getboardheight() - 1; y++){
 
                 Position currentTile = new Position(x,y);
-
-//                    System.out.println(board.getTypeAt(currentTile));
                 switch(board.getTypeAt(currentTile)){
                     case HERO -> hero.setPosition(currentTile);
                     case ENEMY -> enemies.add(new Enemy(x,y));
@@ -73,34 +121,30 @@ public class ObjectData {
             }
         }
         hero.setHeroColor(heroColor);
-
-
     }
 
 
-    //getters
-
+    /**
+     * gets Hero
+     * @return hero
+     */
     public Hero getHero() {
         return hero;
     }
 
+    /**
+     * gets arrayList of enemies
+     * @return enemies
+     */
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
 
-    public Enemy getEnemyAt(Position pos) {
-        for (Enemy enemy : enemies) {
-            if ( (enemy.getX() == pos.getX()) && (enemy.getY() == pos.getY()) ) {
-                return enemy;
-            }
-        }
-        return null;
-    }
-
-    public ArrayList<Trap> getTraps() {
-        return traps;
-    }
-
+    /**
+     * returns Trap at position
+     * @param pos Trap position
+     * @return Trap at position
+     */
     public Trap getTrapAt(Position pos) {
         for (Trap trap : traps) {
             if ( (trap.getX() == pos.getX()) && (trap.getY() == pos.getY())) {
@@ -110,11 +154,11 @@ public class ObjectData {
         return null;
     }
 
-
-    public ArrayList<RegularReward> getRewards() {
-        return rewards;
-    }
-
+    /**
+     * returns RegularReward at position
+     * @param pos RegularReward position
+     * @return RegularReward at position
+     */
     public RegularReward getRewardAt(Position pos) {
         for (RegularReward reward : rewards) {
             if ( (reward.getX() == pos.getX()) && (reward.getY() == pos.getY())) {
@@ -124,15 +168,27 @@ public class ObjectData {
         return null;
     }
 
-
+    /**
+     * returns board
+     * @return board
+     */
     public BoardData getBoard() {
         return board;
     }
 
+    /**
+     * returns arraylist of bonus's
+     * @return all bonus's
+     */
     public ArrayList<Bonus> getBonus() {
         return bonus;
     }
 
+    /**
+     * returns Bonus at position
+     * @param pos Bonus position
+     * @return Bonus at position
+     */
     public Bonus getBonusAt(Position pos) {
         for (Bonus value : bonus) {
             if ( (value.getX() == pos.getX()) && (value.getY() == pos.getY()) ) {
@@ -142,26 +198,50 @@ public class ObjectData {
         return null;
     }
 
+    /**
+     * gets exit
+     * @return exit
+     */
     public Exit getExit() {
         return exit;
     }
 
+    /**
+     * gets game statistics
+     * @return gamestats
+     */
     public GameStats getGameStats() {
         return gameStats;
     }
 
+    /**
+     * gets the game logic
+     * @return gameLogic
+     */
     public HeroLogic getHeroLogic() {
         return heroLogic;
     }
 
+    /**
+     * Gets the enemy logic
+     * @return EnemyLogic
+     */
     public EnemyLogic getEnemyLogic() {
         return enemyLogic;
     }
 
+    /**
+     * Gets the difficulty
+     *@return dif
+     */
     public Difficulty getDif() {
         return dif;
     }
 
+    /**
+     * Gets the reward logic
+     * @return rewardLogic
+     */
     public RewardLogic getRewardLogic() { return rewardLogic; }
 }
 

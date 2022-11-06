@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -31,31 +32,14 @@ public class DisplayLayout extends JFrame implements Runnable{
     private CardLayout dl;
 
     public JPanel displayPanel;
-    private JPanel titlePanel;
+    private myTitle titlePanel;
     public myGame playPanel;
     private mySettings settPanel;
     private myDifficulty diffPanel;
     private myGameOver gameOver;
     private myGameWon gameWon;
-    private JLabel titleLabel;
-    private JLabel diffLabel;
-    private JLabel timeLabel;
-    private JLabel scoreLabel;
-    private JLabel gameLabel;
-    private JButton playButton;
-    private JButton settButton;
-    private JButton diffButton;
-    private JButton quitButton;
-    private ButtonGroup difGroup;
-    private JToggleButton easyButton;
-    private JToggleButton mediumButton;
-    private JToggleButton hardButton;
-    private JButton difbackButton;
     private JPanel pausePanel;
-    private JButton gomenuButton;
-
     private JLabel soundLabel;
-
     private boolean gameovertest;
 
     public boolean gameWonTest;
@@ -110,9 +94,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         gbc = new GridBagConstraints();   //   Helps position buttons
 
         // Initialize Title JPanel class
-        titlePanel = new myTitle();
-        titlePanel.setLayout(new GridBagLayout());
-        titlePanel.setBackground(Color.cyan);
+        titlePanel = new myTitle(this,dl);
 
         // Initialize Setting JPanel class
         settPanel = new mySettings(this, dl);
@@ -132,17 +114,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         //Initialize GameWon
         gameWon = new myGameWon(this, dl);
 
-        // Initialize labels for each JPanel
-        titleLabel = new JLabel("Hidden Squirrel: Peanuts and Acorns");
-        titleLabel.setFont(titleText);
-        titleLabel.setBackground(Color.GRAY);
-        titleLabel.setOpaque(true);
-        titleLabel.setVerticalAlignment(JLabel.TOP);
-
 //        sound.startupMusic();
-
-        // Adding labels onto the panels
-        titlePanel.add(titleLabel);
 
         // Adding the cardPanel into layout, constraints associates panel
         //always shows First panel
@@ -156,89 +128,6 @@ public class DisplayLayout extends JFrame implements Runnable{
 
 
         //---------------------------------------TITLE-----------------------------------------------------------
-        // Initialize JButton objects and add to title Panel
-        playButton = new JButton("   Play   ");
-        try {
-            buttonIcon = ImageIO.read(getClass().getResource("/acorn.png"));
-            playButton.setIcon(new ImageIcon(buttonIcon));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        gbc.insets = new Insets(100,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.ipadx = 200;
-        gbc.ipady = 50;
-        playButton.setFocusable(false);
-        titlePanel.add(playButton, gbc);
-
-        settButton = new JButton(" Settings ");
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        settButton.setFocusable(false);
-        titlePanel.add(settButton, gbc);
-
-        diffButton = new JButton("Difficulty");
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        diffButton.setFocusable(false);
-        titlePanel.add(diffButton, gbc);
-
-        quitButton = new JButton("   Quit   ");
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        quitButton.setFocusable(false);
-        titlePanel.add(quitButton, gbc);
-
-        // add Play Button ActionListener
-        playButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0) {
-                System.out.println("creating object data with color " + heroColor.toString());
-                gameObjectData = new ObjectData(dif, heroColor);
-                board = gameObjectData.getBoard();
-
-                // show associated play panel
-                dl.show(displayPanel, "2");
-                // current panel is play Panel
-                currentCard = 2;
-                playPanel.setFocusable(true);
-                playPanel.requestFocus();
-                startThread();
-            }
-        });
-
-        // add Settings Button ActionListener
-        settButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                // show associated setting panel
-                dl.show(displayPanel, "3");
-
-                // current panel is settings Panel
-                currentCard = 3;
-            }
-        });
-
-        // add Difficulty Button ActionListener
-        diffButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                // show associated difficulty panel
-                dl.show(displayPanel, "4");
-
-                // current panel is difficulty Panel
-                currentCard = 4;
-            }
-        });
-
-        // add Quit Button ActionListener
-        quitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                System.exit(0);
-            }
-        });
-
         //-----------------------------------------------------------------------------------------------------
         //---------------------------------Settings in mySettings----------------------------------------------
         //-----------------------------------Difficulty in myDifficulty----------------------------------------
@@ -265,6 +154,8 @@ public class DisplayLayout extends JFrame implements Runnable{
         gameovertest = false;
         gameWonTest = false;
         timer = 0;
+        playPanel.firstRender = true;
+        playPanel.treeTypeOrder = new ArrayList<Integer>();
 
         //Game starts when pressed
         playPanel.repaint();
