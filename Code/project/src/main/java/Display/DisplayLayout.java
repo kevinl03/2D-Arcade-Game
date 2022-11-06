@@ -115,8 +115,6 @@ public class DisplayLayout extends JFrame implements Runnable{
         //Initialize GameWon
         gameWon = new myGameWon(this, dl);
 
-        sound.startupMusic();
-
         // Adding the cardPanel into layout, constraints associates panel
         //always shows First panel
         displayPanel.add(titlePanel, "1");

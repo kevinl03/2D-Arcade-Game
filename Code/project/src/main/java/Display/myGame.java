@@ -125,7 +125,6 @@ public class myGame extends JPanel{
 
         if (kh.escape) {
             if(dl.pause == 0) {
-                System.out.println("Paused");
                 dl.pause = 1;
 
                 //if panel is not open, pop out panel
