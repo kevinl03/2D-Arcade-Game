@@ -1,8 +1,6 @@
 package Display;
 
-import Board.BoardData;
 import Game.ObjectData;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * Creates this JPanel to represent the Title screen
+ */
 public class myTitle extends JPanel {
 
     private BufferedImage title_png;
@@ -25,6 +26,13 @@ public class myTitle extends JPanel {
     private Image buttonIcon;
 
 
+    /**
+     * Constructor creates the title screen.
+     * This constructor makes JButtons for Play, Settings,
+     * Difficulty, and Quit.
+     * @param dl the JFrame object used to access the different JPanels
+     * @param cl the CardLayout object to use its methods
+     */
     public myTitle(DisplayLayout dl, CardLayout cl){
         try {
             title_png = ImageIO.read(getClass().getResource("/title_pic.png"));
@@ -78,9 +86,16 @@ public class myTitle extends JPanel {
         quitButton.setFocusable(false);
         this.add(quitButton, gbc);
 
-        // add Play Button ActionListener
         playButton.addActionListener(new ActionListener()
         {
+            /**
+             * When users press Play button, initiates new board data and goes to the Game screen.
+             * This method sets a new randomized board of characters to a ObjectData variable in
+             * DisplayLayout, then uses the CardLayout show method to change current Title JPanel
+             * to Game JPanel. It sets the currentCard variable in DisplayLayout object to match the
+             * Game JPanel's reference number. Then it starts the game initialization and game loop.
+             * @param arg0 the event to be processed
+             */
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("creating object data with color " + dl.heroColor.toString());
                 dl.gameObjectData = new ObjectData(dl.dif, dl.heroColor);
@@ -96,9 +111,16 @@ public class myTitle extends JPanel {
             }
         });
 
-        // add Settings Button ActionListener
         settButton.addActionListener(new ActionListener()
         {
+            /**
+             * When user presses Settings button, goes to Settings screen.
+             * This method uses the CardLayout show method to change
+             * current Title JPanel to Settings JPanel, and sets the
+             * currentCard variable in DisplayLayout object to match the
+             * Settings JPanel's reference number.
+             * @param arg0 the event to be processed
+             */
             public void actionPerformed(ActionEvent arg0)
             {
                 // show associated setting panel
@@ -109,8 +131,15 @@ public class myTitle extends JPanel {
             }
         });
 
-        // add Difficulty Button ActionListener
         diffButton.addActionListener(new ActionListener() {
+            /**
+             * When user presses Difficulty button, goes to Difficulty screen.
+             * This method uses the CardLayout show method to change
+             * current Title JPanel to Difficulty JPanel, and sets the
+             * currentCard variable in DisplayLayout object to match the
+             * Difficulty JPanel's reference number.
+             * @param arg0 the event to be processed
+             */
             public void actionPerformed(ActionEvent arg0) {
                 // show associated difficulty panel
                 cl.show(dl.displayPanel, "4");
@@ -120,8 +149,11 @@ public class myTitle extends JPanel {
             }
         });
 
-        // add Quit Button ActionListener
         quitButton.addActionListener(new ActionListener() {
+            /**
+             * When user presses Quit button, exits the executable.
+             * @param arg0 the event to be processed
+             */
             public void actionPerformed(ActionEvent arg0) {
                 System.exit(0);
             }
@@ -129,6 +161,10 @@ public class myTitle extends JPanel {
 
     }
 
+    /**
+     * Draws a background image and a squirrel image to this JPanel.
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);

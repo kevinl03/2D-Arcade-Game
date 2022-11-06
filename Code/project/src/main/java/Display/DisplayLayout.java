@@ -14,6 +14,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import Board.BoardData;
+
+/**
+ * Creates a JFrame with multiple JPanels for different screens of the game.
+ */
 public class DisplayLayout extends JFrame implements Runnable{
     KeyHandler kh = new KeyHandler(this);
 
@@ -24,8 +28,6 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     private int displaywidth = pixelsize * columns;
     private int displayheight = pixelsize * rows;
-
-    // Initialize value of current panel is 1=title, 2=play, 3=settings, 4=difficulty
     public int currentCard = 1;
 
     // Declare CardLayout class objects.
@@ -38,10 +40,8 @@ public class DisplayLayout extends JFrame implements Runnable{
     private myDifficulty diffPanel;
     private myGameOver gameOver;
     private myGameWon gameWon;
-    private JPanel pausePanel;
-    private JLabel soundLabel;
+    public JPanel pausePanel;
     private boolean gameovertest;
-
     public boolean gameWonTest;
 
 
@@ -49,12 +49,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     public int pause = 0;
     Font titleText;
     Font headerText;
-
-    //gameplay
     Thread gameThread;
-    private int whileexit = 0;
-    Image buttonIcon;
-
     BoardData board;
 
     ObjectData gameObjectData;
@@ -70,7 +65,13 @@ public class DisplayLayout extends JFrame implements Runnable{
     Sound sound = new Sound();
 
 
-    // Set up display
+    /**
+     * Constructor creates and shows this JFrame and displays the title screen first.
+     * This frame contains one JPanel uses a CardLayout manager, indexing the 7
+     * other JPanels that represents the screens. The different JPanels are for
+     * the screens of title, gameplay, settings, difficulty, pause, game over,
+     * and game won.
+     */
     public DisplayLayout()
     {
         setResizable(false);
@@ -106,7 +107,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         pausePanel = new myPause(this, dl);
 
         // Initialize Play JPanel class
-        playPanel = new myGame(dl, this, displayPanel, pausePanel);
+        playPanel = new myGame(this, dl);
 
         // Initialize GameOver
         gameOver = new myGameOver(this, dl);
@@ -114,7 +115,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         //Initialize GameWon
         gameWon = new myGameWon(this, dl);
 
-//        sound.startupMusic();
+        sound.startupMusic();
 
         // Adding the cardPanel into layout, constraints associates panel
         //always shows First panel
@@ -127,14 +128,13 @@ public class DisplayLayout extends JFrame implements Runnable{
         displayPanel.add(gameWon, "7");
 
 
-        //---------------------------------------TITLE-----------------------------------------------------------
-        //-----------------------------------------------------------------------------------------------------
-        //---------------------------------Settings in mySettings----------------------------------------------
-        //-----------------------------------Difficulty in myDifficulty----------------------------------------
-        //-------------------------------------PAUSE in myPause------------------------------------------------
-        //-----------------------------------GAME OVER in myGameOver-------------------------------------------
-        //-----------------------------------GAME WON in myGameWon---------------------------------------------
-        //-----------------------------------------------------------------------------------------------------
+        //----------------------------------Title in myTitle-------------------------------------------------
+        //----------------------------------Play in myGame---------------------------------------------------
+        //----------------------------------Settings in mySettings-------------------------------------------
+        //----------------------------------Difficulty in myDifficulty---------------------------------------
+        //----------------------------------PAUSE in myPause-------------------------------------------------
+        //----------------------------------GAME OVER in myGameOver------------------------------------------
+        //----------------------------------GAME WON in myGameWon--------------------------------------------
 
         // used to get content pane
         //shows the display that we created above
@@ -142,12 +142,27 @@ public class DisplayLayout extends JFrame implements Runnable{
         getContentPane().add(displayPanel);
     }
 
+    /**
+     * Starts a new thread and executes the Override run method.
+     */
     public void startThread(){
-        gameThread = new Thread(this);   //   When thread is created, use current object's run method
+        gameThread = new Thread(this);
         gameThread.start();
     }
 
     //the bulk of the game code runs here
+
+    /**
+     * Main game loop.
+     * This method first sets up initial conditions, then waits for user
+     * to press the W,A,S,D, or ESC key before running the game loop. While
+     * the user is playing, the game loop will update the logic once and call
+     * the repaint method 7 times to simulate sprite animations. The end of
+     * the game loop has a thread.sleep() method to imitate Frames per Second.
+     * If the user presses the ESC key, the updates and repaints will skip.
+     * This method's game loop will exit once the user presses the Main Menu
+     * button on the pause screen, or when user wins or loses in the game.
+     */
     @Override
     public void run() {   //   When starting thread, have thread use this run method
         playPanel.goMain = 0;
@@ -221,6 +236,13 @@ public class DisplayLayout extends JFrame implements Runnable{
 
 
     // Main Method
+
+    /**
+     * This is the main method to create and display the game.
+     * Creates this JFrame object that holds all the JPanels and
+     * displays them on executable window.
+     * @param args Command line arguments
+     */
     public static void main(String[] args)
     {
         // Creating Object of CardLayoutDemo class.

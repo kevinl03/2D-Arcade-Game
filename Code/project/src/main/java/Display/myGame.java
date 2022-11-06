@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Creates this JPanel to represent the Game screen
+ */
 public class myGame extends JPanel{
     private int pixelsize = 60;   //60x60 pixels
     private int columns = 25;
@@ -38,9 +41,6 @@ public class myGame extends JPanel{
     KeyHandler kh;
     private CardLayout cl;
     private DisplayLayout dl;
-    private JPanel dp;
-
-    private JPanel mp;
     public int goMain = 0;
     private JLabel timeLabel;
     private JLabel scoreLabel;
@@ -57,14 +57,21 @@ public class myGame extends JPanel{
     public boolean firstRender;
 
     public ArrayList<Integer> treeTypeOrder;
-    public myGame(CardLayout cl, DisplayLayout dl, JPanel dp, JPanel mp){
+
+    /**
+     * Constructor creates the game screen.
+     * Waits for when play button in Main Menu gets pressed, then
+     * game screen will update and repaint until player chooses to
+     * go back to main menu, loses, or wins.
+     * @param dl the JFrame object used to access the different JPanels
+     * @param cl the CardLayout object to use its methods
+     */
+    public myGame(DisplayLayout dl, CardLayout cl){
         this.cl = cl;
         this.dl = dl;
-        this.dp = dp;
-        this.mp = mp;
         this.kh = dl.kh;
-        //rows*pixelsize+60 we have +60 for putting the time and scores at the top
-        //instead of on top of trees
+        //rows*pixelsize+60 we have +60 for putting the time and scores at the top of
+        //and additional row of trees
         setPreferredSize(new Dimension(columns*pixelsize, rows*pixelsize+60));
         getImages();
         addKeyListener(kh);
@@ -76,6 +83,12 @@ public class myGame extends JPanel{
         font = new Font("Times New Roman", Font.BOLD, 30);
     }
 
+    /**
+     * Increments the time and the character position based on key pressed.
+     * Using the board data for this game, after detecting the user's key press,
+     * the movement is processed and the characters are updated in the board data.
+     * @throws InterruptedException if this thread is interrupted
+     */
     public void updates() throws InterruptedException {
 
         dl.timer+=525;
@@ -119,18 +132,22 @@ public class myGame extends JPanel{
                 //if panel is not open, pop out panel
                 if (dl.currentCard != 5) {
                     // show associated pause panel
-                    cl.show(dp, "5");
+                    cl.show(dl.displayPanel, "5");
 
                     // current panel is pause Panel
                     dl.currentCard = 5;
 
-                    mp.setFocusable(true);
-                    mp.requestFocus();
+                    dl.pausePanel.setFocusable(true);
+                    dl.pausePanel.requestFocus();
                 }
             }
         }
     }
 
+    /**
+     * Sets a hashmap of Image objects that can then be painted on the screen.
+     * A hashmap of squirrel images are used to simulate sprite animation.
+     */
     public void getSquirrel(){
         try {
             squirrel_pngs = new HashMap<>();
@@ -160,7 +177,9 @@ public class myGame extends JPanel{
     }
 
 
-
+    /**
+     * Sets an Image object that can then be painted on the screen.
+     */
     public void getAcorn(){
         try {
             acorn_png = ImageIO.read(getClass().getResource("/acorn.png"));
@@ -169,6 +188,9 @@ public class myGame extends JPanel{
         }
     }
 
+    /**
+     * Sets an Image object that can then be painted on the screen.
+     */
     public void getBear(){
         try {
             bear_pngs = new HashMap<>();
@@ -187,6 +209,9 @@ public class myGame extends JPanel{
         }
     }
 
+    /**
+     * Sets an Image object that can then be painted on the screen.
+     */
     public void getBush(){
         try {
             bush_png = ImageIO.read(getClass().getResource("/bush1.png"));
@@ -195,6 +220,9 @@ public class myGame extends JPanel{
         }
     }
 
+    /**
+     * Sets an Image object that can then be painted on the screen.
+     */
     public void getHunter(){
         try {
             hunter_png = ImageIO.read(getClass().getResource("/hunter.png"));
@@ -203,6 +231,9 @@ public class myGame extends JPanel{
         }
     }
 
+    /**
+     * Sets an Image object that can then be painted on the screen.
+     */
     public void getPeanuts(){
         try {
             peanuts_png = ImageIO.read(getClass().getResource("/acorn.png"));
@@ -211,6 +242,9 @@ public class myGame extends JPanel{
         }
     }
 
+    /**
+     * Sets an Image object that can then be painted on the screen.
+     */
     public void getTrees(){
         try {
             tree_pngs = new BufferedImage[3];
@@ -222,6 +256,9 @@ public class myGame extends JPanel{
         }
     }
 
+    /**
+     * Sets an Image object that can then be painted on the screen.
+     */
     public void getExit(){
         try {
             exit_png = ImageIO.read(getClass().getResource("/exit.png"));
@@ -229,6 +266,10 @@ public class myGame extends JPanel{
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Sets an Image object that can then be painted on the screen.
+     */
     public void getTrap(){
         try {
             trap_png = ImageIO.read(getClass().getResource("/trap4.png"));
@@ -237,6 +278,9 @@ public class myGame extends JPanel{
         }
     }
 
+    /**
+     * Sets an Image object that can then be painted on the screen.
+     */
     public void getField(){
         try {
             board_png = ImageIO.read(getClass().getResource("/board2.png"));
@@ -245,6 +289,9 @@ public class myGame extends JPanel{
         }
     }
 
+    /**
+     * Calls all the methods to set the Image objects.
+     */
     public void getImages(){
         getSquirrel();
         getAcorn();
@@ -258,6 +305,9 @@ public class myGame extends JPanel{
         getTrap();
     }
 
+    /**
+     * This method de-presses the keys after game loop is over.
+     */
     public void reset(){
         kh.up = false;
         kh.left = false;
@@ -265,6 +315,10 @@ public class myGame extends JPanel{
         kh.right = false;
     }
 
+    /**
+     * This method draws the squirrel sprite animation based on direction.
+     * @param g2 the Graphics class object to put onto JPanel
+     */
     private void drawHero(Graphics2D g2){
         Hero hero = dl.gameObjectData.getHero();
         int col = hero.getX();
@@ -293,7 +347,6 @@ public class myGame extends JPanel{
                 case 3 -> movementProgress = 24;
                 case 4 -> movementProgress = 16;
                 case 5 -> movementProgress = 7;
-
             }
 
             if(dir == "North" || dir == "West"){
@@ -304,24 +357,22 @@ public class myGame extends JPanel{
                 g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + animationFrame + ".png"), col * 60, row * 60+65 - movementProgress, pixelsize-10, pixelsize-10, null);
             }else{
                 g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + animationFrame + ".png"), col * 60 - movementProgress, row * 60+65, pixelsize-10, pixelsize-10, null);
-
             }
         }else{
             g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + "1.png"), col * 60, row * 60+65, pixelsize-10, pixelsize-10, null);
-
         }
 
-        if(dl.frameCounter == 6){
+        if(dl.frameCounter == 6) {
             hero.setMoving(false);
-
         }
-
 
         hero.incrementAnimationFrame();
-
-
     }
 
+    /**
+     * This method draws the enemies sprite animation based on direction.
+     * @param g2 the Graphics class object to put onto JPanel
+     */
     private void drawEnemies(Graphics2D g2){
         ArrayList<Enemy> enemies = dl.gameObjectData.getEnemies();
         for(Enemy enemy : enemies){
@@ -358,6 +409,13 @@ public class myGame extends JPanel{
 
 
     }
+
+    /**
+     * Draws the board, characters, time, and score on the Game screen.
+     * This method is called whenever repaint() is called in the game loop.
+     * Uses the board data to determine which image to draw.
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     protected void paintComponent(Graphics g){   //   Draw something on JPanel
         super.paintComponent(g);   //   Method already exists, so super is used to add additional lines

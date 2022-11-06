@@ -15,24 +15,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Creates this JPanel to represent the Settings screen.
+ * Users are able to select squirrel skin colours and
+ * audio mute/un-mute option.
+ */
 public class mySettings extends JPanel {
-    private int pixelsize = 60;   //60x60 pixels
     private HashMap<HeroColor, BufferedImage> heroColorPngs;
     private BufferedImage leftButtonPng;
     private BufferedImage rightButtonPng;
-
     private HeroColor color;
-
     private JButton leftScroll;
     private JButton rightScroll;
-
-
     private BufferedImage testimage_png;
-
     private JLabel settLabel;
-
     private Font headerText;
-
     private ButtonGroup soundGroup;
     private JToggleButton muteButton;
     private JToggleButton unmuteButton;
@@ -41,7 +38,11 @@ public class mySettings extends JPanel {
     private CardLayout cl;
     private DisplayLayout dl;
 
-
+    /**
+     * Sets up the available squirrel colours to select.
+     * This method creates a hashmap containing all the
+     * images of available squirrel colours.
+     */
     private void getHeroColors(){
         try {
             heroColorPngs = new HashMap<>();
@@ -49,16 +50,14 @@ public class mySettings extends JPanel {
                 BufferedImage img = ImageIO.read(getClass().getResource("/squirrels/Squirrel" + color.toString() + "East2.png"));
                 heroColorPngs.put(color, img);
             }
-
-
-            leftButtonPng = ImageIO.read(getClass().getResource("/scrollButtonLeft.png"));
-            rightButtonPng = ImageIO.read(getClass().getResource("/scrollButtonRight.png"));
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Sets variables to have triangular wooden images.
+     */
     private void getButtonPngs() {
         try {
             leftButtonPng = ImageIO.read(getClass().getResource("/scrollButtonLeft.png"));
@@ -69,6 +68,15 @@ public class mySettings extends JPanel {
         }
     }
 
+    /**
+     * Constructor creates this Settings screen.
+     * This constructor makes buttons to mute and un-mute sound, and
+     * go back to the Title screen. The shown squirrel image is the
+     * colour the user plays with, and the wooden left and right arrow
+     * buttons switches these colours.
+     * @param dl the JFrame object used to access the different JPanels
+     * @param cl the CardLayout object to use its methods
+     */
     public mySettings(DisplayLayout dl, CardLayout cl) {
 
         this.cl = cl;
@@ -95,7 +103,7 @@ public class mySettings extends JPanel {
         muteButton.setFocusable(false);
         this.add(muteButton,gbc);
 
-        unmuteButton = new JToggleButton("Unmute");
+        unmuteButton = new JToggleButton("Unmute", true);
         gbc.gridx = 1;
         gbc.gridy = 3;
         unmuteButton.setFocusable(false);
@@ -109,6 +117,14 @@ public class mySettings extends JPanel {
         this.add(settbackButton,gbc);
 
         settbackButton.addActionListener(new ActionListener() {
+            /**
+             * When user presses Main Menu button, goes to Title screen.
+             * This method uses the CardLayout show method to change
+             * current Game Over JPanel to Title JPanel, and sets the
+             * currentCard variable in DisplayLayout object to match the
+             * Title JPanel's reference number.
+             * @param arg0 the event to be processed
+             */
             public void actionPerformed(ActionEvent arg0) {
                 // go back to title panel
                 cl.show(dl.displayPanel, "1");
@@ -122,22 +138,27 @@ public class mySettings extends JPanel {
         soundGroup.add(muteButton);
         soundGroup.add(unmuteButton);
 
-        //mute btn action
         muteButton.addActionListener(new ActionListener()
         {
+            /**
+             * When user presses Mute button, stops the music.
+             * @param arg0 the event to be processed
+             */
             public void actionPerformed(ActionEvent arg0)
             {
-                //disable the sound
                 dl.sound.stopMusic();
             }
         });
 
-        //unmute btn action
         unmuteButton.addActionListener(new ActionListener()
         {
+            /**
+             * When user presses un-mute button, starts the music.
+             * Sound is initially played when DisplayLayout object is made.
+             * @param arg0 the event to be processed
+             */
             public void actionPerformed(ActionEvent arg0)
             {
-                //enable the sound
                 dl.sound.startupMusic();
             }
         });
@@ -155,6 +176,10 @@ public class mySettings extends JPanel {
         leftScroll.setFocusable(false);
         leftScroll.addActionListener(new ActionListener()
         {
+            /**
+             * Shows the next squirrel colour when right arrow button pressed.
+             * @param arg0 the event to be processed
+             */
             public void actionPerformed(ActionEvent arg0)
             {
                 dl.heroColor = dl.heroColor.next();
@@ -175,6 +200,10 @@ public class mySettings extends JPanel {
         rightScroll.setFocusable(false);
         rightScroll.addActionListener(new ActionListener()
         {
+            /**
+             * Shows the previous squirrel colour when left arrow button pressed.
+             * @param arg0 the event to be processed
+             */
             public void actionPerformed(ActionEvent arg0)
             {
                 dl.heroColor = dl.heroColor.prev();
@@ -191,6 +220,12 @@ public class mySettings extends JPanel {
 
     }
 
+    /**
+     * Draws a background image of forest onto this JPanel.
+     * This Override method draws from the top-left corner
+     * of the JPanel the PNG image starting from its top-left corner.
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -200,6 +235,13 @@ public class mySettings extends JPanel {
         skinSelection(g);
     }
 
+    /**
+     * Changes default JButton image to the parameter's image.
+     * @param image the Image with an accessible buffer of image data
+     * @param width the amount of horizontal pixels in one row
+     * @param height the amount of vertical pixels in one column
+     * @return the JButton with default rectangle button changed to the parameter image
+     */
     private JButton iconButton(BufferedImage image, int width, int height) {
         Image scaledImage = image.getScaledInstance( width, height,  java.awt.Image.SCALE_SMOOTH ) ;
         ImageIcon iconImage = new ImageIcon(scaledImage);
@@ -211,6 +253,10 @@ public class mySettings extends JPanel {
     }
 
 
+    /**
+     * Draws the squirrel image onto this JPanel.
+     * @param g the Graphics class object to put onto JPanel
+     */
     private void skinSelection(Graphics g) {
 
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
