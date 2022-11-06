@@ -127,9 +127,9 @@ public class BoardData {
     private void setInnerWalls(Difficulty difficulty){
         int wallsegments = 0;
         switch(difficulty){
-            case EASY: wallsegments = 5;
+            case EASY: wallsegments = 15;
                 break;
-            case MEDIUM: wallsegments = 10;
+            case MEDIUM: wallsegments = 15;
                 break;
             case HARD:
             case INFINITE: wallsegments = 15;
