@@ -121,6 +121,7 @@ public class HeroLogic {
         //if reward does not exist don't add score
         if(bonus != null){
             score = bonus.getPoint();
+            bonus.setisSpawned(false);
         }else{
             score = 0;
         }
