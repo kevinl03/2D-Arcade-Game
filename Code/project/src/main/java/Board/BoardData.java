@@ -541,12 +541,16 @@ public class BoardData {
         switch(dif){
             case EASY:
                 generateTraps(4);
+                break;
             case MEDIUM:
                 generateTraps(7);
+                break;
             case HARD:
                 generateTraps(11);
+                break;
             case INFINITE:
                 generateTraps(11);
+                break;
         }
 
 

@@ -2,12 +2,18 @@ package Logic;
 
 import Board.*;
 import Display.DisplayLayout;
+import Display.myGame;
+import Entities.Position;
 import Game.ObjectData;
 import Entities.Bonus;
 import java.util.ArrayList;
 import java.util.Random;
 
-
+/**
+ * Moves Bonus rewards to new locations after a certain amount of ticks
+ * Is called after {@link HeroLogic#processPlayerMovement(Position, ObjectData)} so that rewards that are picked up
+ * do not need to be updated inside of {@link myGame#updates()}
+ */
 public class RewardLogic {
     public void updateRewards(ObjectData gameobjectData, int ticks){
         BoardData boardData = gameobjectData.getBoard();
@@ -20,11 +26,13 @@ public class RewardLogic {
             int max = 15000; //15 seconds
             int min = 8000; //8 seconds
 
+            //choose a random int between max and min so that the object despawns
             int lifetime = rand.nextInt(max-min+1) + min;
             if (ticks - bonusObj.getStartTime() > lifetime){
 
                 switch(objectMap[bonusObj.getX()][bonusObj.getY()]){
                     case BONUS:
+                        //chooses a new empty tile
                         int[] newpos = getRandomXY(boardData);
                         int x = newpos[0];
                         int y = newpos[1];
@@ -34,16 +42,16 @@ public class RewardLogic {
                         //set object position
                         bonusObj.setX(x);
                         bonusObj.setY(y);
+
+                        //replace objects and set new positions
                         objectMap[x][y] = Objects.BONUS;
                         objectMap[oldX][oldY] = Objects.EMPTY;
                         bonusObj.setStartTime(ticks);
                         break;
 
                     default:
-                        //do not worry if the position is not a bonus reward
-                        //cases for if bear ontop of Bonus will simply despawn
-                        //when enemy moves from object
-                        System.out.printf("bonusObj despawning");
+                        //cases for when bear ontop of REWARD do not despawn the object. Will
+                        //instead wait for other ticks
                         break;
                 }
 
@@ -55,6 +63,11 @@ public class RewardLogic {
 
     }
 
+    /**
+     *
+     * @param boardData 2D array of Objects, see {@link BoardData}
+     * @return int[]   a random position on the board that satisfied the position BoardData[int[0]][int[1]] == EMPTY
+     */
     private int[] getRandomXY(BoardData boardData) {
 
         Random rand = new Random(); //instance of random class
