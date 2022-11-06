@@ -2,7 +2,7 @@ import Board.BoardData;
 import Board.Difficulty;
 import Game.GameStats;
 import Game.ObjectData;
-import Helpers.Stopwatch;
+
 import Logic.EnemyLogic;
 import Entities.Position;
 import Helpers.Direction;
@@ -32,7 +32,7 @@ public class Main {
 
         System.out.println(dir);
     }
-
+/*
     public static void testStopwatch() throws InterruptedException {
         GameStats stats = new GameStats();
 
@@ -50,6 +50,8 @@ public class Main {
             }
         }
     }
+    /*
+ */
 
     public static void testBoardGen(){
 
