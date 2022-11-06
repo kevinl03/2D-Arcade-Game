@@ -140,6 +140,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         //shows the display that we created above
         // (chooses the first one added which happens to be title screen)
         getContentPane().add(displayPanel);
+        sound.startupMusic();
     }
 
     /**

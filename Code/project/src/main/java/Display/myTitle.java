@@ -97,6 +97,7 @@ public class myTitle extends JPanel {
              * @param arg0 the event to be processed
              */
             public void actionPerformed(ActionEvent arg0) {
+                dl.sound.playClick();
                 System.out.println("creating object data with color " + dl.heroColor.toString());
                 dl.gameObjectData = new ObjectData(dl.dif, dl.heroColor);
                 dl.board = dl.gameObjectData.getBoard();
@@ -125,7 +126,7 @@ public class myTitle extends JPanel {
             {
                 // show associated setting panel
                 cl.show(dl.displayPanel, "3");
-
+                dl.sound.playClick();
                 // current panel is settings Panel
                 dl.currentCard = 3;
             }
@@ -143,6 +144,7 @@ public class myTitle extends JPanel {
             public void actionPerformed(ActionEvent arg0) {
                 // show associated difficulty panel
                 cl.show(dl.displayPanel, "4");
+                dl.sound.playClick();
 
                 // current panel is difficulty Panel
                 dl.currentCard = 4;
@@ -155,6 +157,7 @@ public class myTitle extends JPanel {
              * @param arg0 the event to be processed
              */
             public void actionPerformed(ActionEvent arg0) {
+                dl.sound.playClick();
                 System.exit(0);
             }
         });

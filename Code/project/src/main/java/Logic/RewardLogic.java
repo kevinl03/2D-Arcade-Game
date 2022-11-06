@@ -20,42 +20,84 @@ public class RewardLogic {
         ArrayList<Bonus> bonuses = gameobjectData.getBonus();
         Random rand = new Random(); //instance of random class
 
+
+
         Objects[][] objectMap = boardData.getBoardData();
         for (Bonus bonusObj : bonuses){
-            //randomize despawns
-            int max = 15000; //15 seconds
-            int min = 8000; //8 seconds
 
-            //choose a random int between max and min so that the object despawns
-            int lifetime = rand.nextInt(max-min+1) + min;
-            if (ticks - bonusObj.getStartTime() > lifetime){
+            //if the object is spawned, we must know to despawn it here
+            if (bonusObj.getisSpawned()) {
 
-                switch(objectMap[bonusObj.getX()][bonusObj.getY()]){
-                    case BONUS:
-                        //chooses a new empty tile
-                        int[] newpos = getRandomXY(boardData);
-                        int x = newpos[0];
-                        int y = newpos[1];
 
-                        int oldX = bonusObj.getX();
-                        int oldY = bonusObj.getY();
-                        //set object position
-                        bonusObj.setX(x);
-                        bonusObj.setY(y);
+                //randomize despawns
+                int max = 100000; //15 seconds
+                int min = 5000; //8 seconds
 
-                        //replace objects and set new positions
-                        objectMap[x][y] = Objects.BONUS;
-                        objectMap[oldX][oldY] = Objects.EMPTY;
-                        bonusObj.setStartTime(ticks);
-                        break;
+                //choose a random int between max and min so that the object despawns
+                int lifetime = rand.nextInt(max - min + 1) + min;
+                //if its been spawned for long enough
+                if (ticks - bonusObj.getStartTime() > lifetime) {
 
-                    default:
-                        //cases for when bear ontop of REWARD do not despawn the object. Will
-                        //instead wait for other ticks
-                        break;
+                    //if the tile is just a reward
+
+                    switch (objectMap[bonusObj.getX()][bonusObj.getY()]) {
+                        case BONUS:
+                            //chooses a new empty tile
+
+
+                            int X = bonusObj.getX();
+                            int Y = bonusObj.getY();
+                            //set object position
+
+                            //replace objects and set new positions
+                            objectMap[X][Y] = Objects.EMPTY;
+                            bonusObj.setdespawnedTime(ticks);
+                            bonusObj.setisSpawned(false);
+                            break;
+
+                        default:
+                            //cases for when bear ontop of REWARD do not despawn the object. Will
+                            //instead wait for other ticks
+                            break;
+                    }
+
+
                 }
+            }
+            //if the object is despawned, we must know if we have to respawn it here
+            else {
+                int [] newcoords = getRandomXY(boardData);
 
+                Position newpos = new Position(newcoords[0], newcoords[1]);
 
+                //if its been between 5 - 10 seconds then we can respawn the object
+                int respawntime = rand.nextInt(100000-5000+1) +5000;
+                if (ticks - bonusObj.getdespawnTime() > respawntime){
+
+                    //show the object on the map again only if the tile is empty
+                    if (boardData.getTypeAt(newpos) == Objects.EMPTY){
+                        boardData.setTypeAt(newpos, Objects.BONUS);
+
+                        //set new coordinates for the object
+                        bonusObj.setX(newpos.getX());
+                        bonusObj.setY(newpos.getY());
+
+                        bonusObj.setisSpawned(true);
+                        bonusObj.setStartTime(ticks);
+                        bonusObj.setdespawnedTime(ticks);
+                    }
+                }
+                //used to hide object if the map just generated when game is early
+                if (ticks < 6000) {
+                    //System.out.printf("Setting");
+                    Position curcoords = new Position(bonusObj.getX(), bonusObj.getY());
+
+                    if (boardData.getTypeAt(curcoords) == Objects.BONUS){
+                        boardData.setTypeAt(curcoords, Objects.EMPTY);
+                        //set the position to false just in case
+                        bonusObj.setisSpawned(false);
+                    }
+                }
             }
         }
 
