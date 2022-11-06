@@ -26,7 +26,7 @@ public class myGame extends JPanel{
     private int rows = 15;
     protected HashMap<String, BufferedImage> squirrel_pngs;
     protected HashMap<String, BufferedImage> hidden_squirrel_pngs;
-    private BufferedImage acorn_png;
+    private BufferedImage chocolate_png;
     private HashMap<String, BufferedImage> bear_pngs;
     private BufferedImage bush_png;
     private BufferedImage hunter_png;
@@ -106,10 +106,9 @@ public class myGame extends JPanel{
         else if (kh.right && !kh.left) {
             heroPos.incrementX();
         }
-
+        rewardLogic.updateRewards(dl.gameObjectData, dl.timer);
         heroLogic.processPlayerMovement(heroPos, dl.gameObjectData);
         enemyLogic.processEnemyMovement(dl.gameObjectData);
-        rewardLogic.updateRewards(dl.gameObjectData, dl.timer);
 
         if (kh.escape) {
             if(dl.pause == 0) {
@@ -163,7 +162,7 @@ public class myGame extends JPanel{
 
     public void getAcorn(){
         try {
-            acorn_png = ImageIO.read(getClass().getResource("/acorn.png"));
+            chocolate_png = ImageIO.read(getClass().getResource("/chocolate.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -402,7 +401,7 @@ public class myGame extends JPanel{
                         g2.drawImage(peanuts_png, col * 60 + 15, row * 60+60 + 15, pixelsize-30, pixelsize - 30, null);
 
                     break;
-                    case BONUS: g2.drawImage(acorn_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
+                    case BONUS: g2.drawImage(chocolate_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
                     break;
                     //no exit image yet
                     case EXIT: g2.drawImage(exit_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
