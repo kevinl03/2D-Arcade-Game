@@ -252,7 +252,5 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         // Function to set visibility of JFrame.
         display.setVisible(true);
-
-
     }
 }

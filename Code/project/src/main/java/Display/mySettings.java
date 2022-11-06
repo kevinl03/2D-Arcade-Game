@@ -111,7 +111,6 @@ public class mySettings extends JPanel {
 
 
         settbackButton = new JButton(" Back ");
-        gbc.insets = new Insets(50,0,0,450);
         gbc.gridx = 1;
         gbc.gridy = 4;
         settbackButton.setFocusable(false);
