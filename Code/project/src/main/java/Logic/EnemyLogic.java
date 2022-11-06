@@ -153,13 +153,12 @@ public class EnemyLogic {
 
         }
         return nextMove;
-    };
+    }
 
     /**
      * A Breadth first search is performed on a 2d array starting at the enemy position
      * to find the shortest path to the hero and which direction the first step is.
-     * the shortest path may not contain any tree object tiles
-     *
+     * the shortest path may not contain any tree object tiles.
      * If the hero is hidden, and the shortest path is more than 3, the enemy cant "find"
      * the hero and will walk in a random direction
      *

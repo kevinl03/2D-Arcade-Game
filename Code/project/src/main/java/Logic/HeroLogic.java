@@ -85,7 +85,7 @@ public class HeroLogic {
 
     /**
      * Handles hero collecting a reward at pos, score from the reward is added
-     * to heros score and {@link Exit#rewardCollected(Difficulty) RewardCollected} is called
+     * to hero's score and {@link Exit#rewardCollected(Difficulty) RewardCollected} is called
      * @param pos position of reward
      * @param gameObjectData Object data
      */
@@ -110,7 +110,7 @@ public class HeroLogic {
     }
 
     /**
-     * Adds the points form bonus reward to heros score
+     * Adds the points form bonus reward to hero's score
      * @param pos position of the bonus reward
      * @param gameObjectData game data
      */
@@ -131,7 +131,7 @@ public class HeroLogic {
     }
 
     /**
-     * deducts the trap damage from the heros score. if the score turns negative game over
+     * deducts the trap damage from the hero's score. if the score turns negative game over
      * @param pos position of trap
      * @param gameObjectData game data
      */

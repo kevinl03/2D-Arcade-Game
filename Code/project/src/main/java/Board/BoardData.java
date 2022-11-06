@@ -1,19 +1,15 @@
 package Board;
 
-import Entities.Hero;
 import Entities.Position;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class BoardData {
-    private static int columns = 25;
-    private static int rows = 15;
+    private static final int columns = 25;
+    private static final int rows = 15;
 
-    private static Objects[][] ObjectMap = new Objects[columns][rows];
-
-    //TODO REPLACE HARD CODE
-//    private Difficulty dif = Difficulty.HARD;
+    private static final Objects[][] ObjectMap = new Objects[columns][rows];
 
     private void replaceTMPTrees() {
         for (int i = 0; i < columns; i++) {
@@ -21,7 +17,6 @@ public class BoardData {
                 if (ObjectMap[i][j] == Objects.TMP) {
                     ObjectMap[i][j] = Objects.TREE;
                 }
-                ;
             }
         }
     }
@@ -32,7 +27,6 @@ public class BoardData {
                 if (ObjectMap[i][j] == Objects.TMP) {
                     ObjectMap[i][j] = Objects.EMPTY;
                 }
-                ;
             }
         }
     }

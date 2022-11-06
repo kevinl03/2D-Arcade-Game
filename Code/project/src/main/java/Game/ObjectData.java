@@ -17,63 +17,63 @@ public class ObjectData {
     /**
      * {@link Hero} object
      */
-    private Hero hero;
+    private final Hero hero;
 
     /**
      * ArrayList of all {@link Enemy} objects
      */
-    private ArrayList<Enemy> enemies;
+    private final ArrayList<Enemy> enemies;
 
     /**
      * ArrayList of all {@link Trap} objects
      */
-    private ArrayList<Trap> traps;
+    private final ArrayList<Trap> traps;
 
     /**
      * ArrayList of all {@link RegularReward} objects
      */
-    private ArrayList<RegularReward> rewards;
+    private final ArrayList<RegularReward> rewards;
 
     /**
      * {@link BoardData} object
      */
-    private BoardData board;
+    private final BoardData board;
 
     /**
      * ArrayList of all {@link Bonus} objects
      */
-    private ArrayList<Bonus> bonus;
+    private final ArrayList<Bonus> bonus;
 
     /**
      * Exit Object {@link Exit}
      */
-    private Exit exit;
+    private final Exit exit;
 
     /**
      * GameStats Object {@link GameStats}
      */
 
-    private GameStats gameStats;
+    private final GameStats gameStats;
 
     /**
      * EnemyLogic Object {@link EnemyLogic}
      */
-    private EnemyLogic enemyLogic;
+    private final EnemyLogic enemyLogic;
 
     /**
      * {@link HeroColor} Object
      */
-    private HeroLogic heroLogic;
+    private final HeroLogic heroLogic;
 
     /**
      * {@link RewardLogic} Object
      */
-    private RewardLogic rewardLogic;
+    private final RewardLogic rewardLogic;
 
     /**
      * {@link Difficulty} Object
      */
-    private Difficulty dif;
+    private final Difficulty dif;
 
 
     /**
@@ -100,7 +100,6 @@ public class ObjectData {
         int rewardPoints = 50;
 
         switch(dif){
-            case EASY -> trapDamage = 50;
             case MEDIUM ->  trapDamage = 100;
             case HARD, INFINITE -> trapDamage = 200;
         }
@@ -139,20 +138,6 @@ public class ObjectData {
      */
     public ArrayList<Enemy> getEnemies() {
         return enemies;
-    }
-
-    /**
-     * returns enemy at position
-     * @param pos enemy position
-     * @return enemy at position
-     */
-    public Enemy getEnemyAt(Position pos) {
-        for (Enemy enemy : enemies) {
-            if ( (enemy.getX() == pos.getX()) && (enemy.getY() == pos.getY()) ) {
-                return enemy;
-            }
-        }
-        return null;
     }
 
     /**
