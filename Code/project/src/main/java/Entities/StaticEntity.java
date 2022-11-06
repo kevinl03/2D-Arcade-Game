@@ -1,7 +1,7 @@
 package Entities;
 
 public class StaticEntity extends Position {
-    protected int start_time; //reads the timer 
+    protected int start_time; //reads the timer
 
     public StaticEntity(){
         super();
