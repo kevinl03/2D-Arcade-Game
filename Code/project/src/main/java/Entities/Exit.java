@@ -2,20 +2,32 @@ package Entities;
 
 import Board.Difficulty;
 
+/**
+ * Represents the exit for the win condition
+ */
 public class Exit extends Position{
+    /**
+     * Exit's closed status, always starts closed
+     */
     private boolean closed = true;
+
+    /**
+     * amount of rewards collected thus far
+     */
     private int rewardCount = 0;
 
-
-    public Exit(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-
+    /**
+     * Default constructor
+     */
     public Exit() {
 
     }
 
+    /**
+     * Increments the reward count when a reward is collected
+     * If the reward count is sufficient for difficulty, the exit opens
+     * @param dif current Difficulty
+     */
     public void rewardCollected(Difficulty dif){
         rewardCount++;
         switch(dif){
@@ -27,6 +39,10 @@ public class Exit extends Position{
         }
     }
 
+    /**
+     * Gets the closed status
+     * @return Closed status
+     */
     public boolean isClosed() {
         return closed;
     }
