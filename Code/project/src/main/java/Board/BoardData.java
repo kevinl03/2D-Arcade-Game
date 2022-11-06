@@ -472,8 +472,11 @@ public class BoardData {
             int[] xy = getRandomXY();
             int x = xy[0];
             int y = xy[1];
-            //must pass checkValidEnemyProximity and also be a random tile
-            if(!checkValidEnemyProximity(heroLoc, xy, dif) || ObjectMap[x][y] != Objects.EMPTY){
+            //must pass
+            //1)checkValidEnemy Proximity
+            //2)be on empty tile
+            //3)tile below cannot be a tree (creates bug when generating bear initially
+            if(!checkValidEnemyProximity(heroLoc, xy, dif) || ObjectMap[x][y] != Objects.EMPTY || ObjectMap[x][y+1] != Objects.TREE){
                 //the loop did create a succesful generation so decrement by one
                 i--;
             }else{
