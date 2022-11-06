@@ -54,9 +54,9 @@ public class myGame extends JPanel{
 
     RewardLogic rewardLogic;
 
-    boolean firstRender;
+    public boolean firstRender;
 
-    ArrayList<Integer> treeTypeOrder;
+    public ArrayList<Integer> treeTypeOrder;
     public myGame(CardLayout cl, DisplayLayout dl, JPanel dp, JPanel mp){
         this.cl = cl;
         this.dl = dl;
@@ -74,8 +74,6 @@ public class myGame extends JPanel{
         scoreLabel = new JLabel();
         scoreLabel.setText("Score");
         font = new Font("Times New Roman", Font.BOLD, 30);
-        firstRender = true;
-        treeTypeOrder = new ArrayList<Integer>();
     }
 
     public void updates() throws InterruptedException {
