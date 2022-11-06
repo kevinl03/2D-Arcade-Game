@@ -103,6 +103,7 @@ public class mySettings extends JPanel {
 
 
         settbackButton = new JButton(" Back ");
+        gbc.insets = new Insets(50,0,0,450);
         gbc.gridx = 1;
         gbc.gridy = 4;
         settbackButton.setFocusable(false);
@@ -112,7 +113,7 @@ public class mySettings extends JPanel {
             public void actionPerformed(ActionEvent arg0) {
                 // go back to title panel
                 cl.show(dl.displayPanel, "1");
-
+                dl.sound.playClick();
                 // current panel is difficulty Panel
                 dl.currentCard = 1;
             }
@@ -127,6 +128,7 @@ public class mySettings extends JPanel {
         {
             public void actionPerformed(ActionEvent arg0)
             {
+                dl.sound.playClick();
                 //disable the sound
                 dl.sound.stopMusic();
             }
@@ -137,8 +139,9 @@ public class mySettings extends JPanel {
         {
             public void actionPerformed(ActionEvent arg0)
             {
+                dl.sound.playClick();
                 //enable the sound
-                dl.sound.startupMusic();
+                dl.sound.playMusic(0);
             }
         });
 
@@ -157,10 +160,9 @@ public class mySettings extends JPanel {
         {
             public void actionPerformed(ActionEvent arg0)
             {
+                dl.sound.playClick();
                 dl.heroColor = dl.heroColor.next();
                 color = dl.heroColor;
-
-
                 repaint();
             }
         });
@@ -177,6 +179,7 @@ public class mySettings extends JPanel {
         {
             public void actionPerformed(ActionEvent arg0)
             {
+                dl.sound.playClick();
                 dl.heroColor = dl.heroColor.prev();
                 color = dl.heroColor;
 
