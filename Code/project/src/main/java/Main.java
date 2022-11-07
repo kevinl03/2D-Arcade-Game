@@ -1,5 +1,6 @@
 import Board.BoardData;
 import Board.Difficulty;
+import Display.DisplayLayout;
 import Game.GameStats;
 import Game.ObjectData;
 
@@ -8,6 +9,7 @@ import Entities.Position;
 import Helpers.Direction;
 import Board.Objects;
 
+import javax.swing.*;
 import java.util.Arrays;
 
 public class Main {
@@ -32,26 +34,6 @@ public class Main {
 
         System.out.println(dir);
     }
-/*
-    public static void testStopwatch() throws InterruptedException {
-        GameStats stats = new GameStats();
-
-        Stopwatch time = stats.getTime();
-
-        time.startTime();
-        int counter = 0;
-        while(true){
-            Thread.sleep(1000);
-            counter++;
-            System.out.println(time.getElapsedTime().getSeconds());
-            if(counter > 10) System.out.println(time.getFinalTime().getSeconds());
-            if(counter == 10){
-                time.stopTime();
-            }
-        }
-    }
-    /*
- */
 
     public static void testBoardGen(){
 
@@ -59,26 +41,24 @@ public class Main {
 
         board.initialiseBoard(Difficulty.HARD);
 
-//        System.out.println(Arrays.deepToString(board.getBoardData()));
-//        System.out.println(Arrays.deepToString(board.getBoardData()).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
-
-
-
-
-
+        System.out.println(Arrays.deepToString(board.getBoardData()).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
     }
 
-    //public static void main (String[] args) throws InterruptedException {
+    /**
+     * This is the main method to create and display the game.
+     * Creates this JFrame object that holds all the JPanels and
+     * displays them on executable window.
+     * @param args Command line arguments
+     */
+    public static void main(String[] args)
+    {
+        // Creating Object of CardLayoutDemo class.
+        DisplayLayout display = new DisplayLayout();
 
+        // Function to set default operation of JFrame.
+        display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-/*       testShortestPath();
-//        testStopwatch();
-        for (int i = 0; i < 1000000; i++) {
-//            System.out.println(i);
-            testBoardGen();
-        }
-        */
-
-
-    //}
+        // Function to set visibility of JFrame.
+        display.setVisible(true);
+    }
 }
