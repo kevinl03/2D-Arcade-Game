@@ -59,6 +59,8 @@ public class myDifficulty extends JPanel {
         gbc.ipady = 50;
         easyButton.setFocusable(false);
         easyButton.setBorderPainted(false);
+        easyButton.setOpaque(false);
+        easyButton.setContentAreaFilled(false);
         this.add(easyButton, gbc);
 
         ImageIcon medImage = new ImageIcon(getClass().getResource("/medium.png"));
@@ -68,6 +70,8 @@ public class myDifficulty extends JPanel {
         gbc.gridy = 2;
         mediumButton.setFocusable(false);
         mediumButton.setBorderPainted(false);
+        mediumButton.setOpaque(false);
+        mediumButton.setContentAreaFilled(false);
         this.add(mediumButton, gbc);
 
         ImageIcon hardImg = new ImageIcon(getClass().getResource("/hard.png"));
@@ -76,6 +80,8 @@ public class myDifficulty extends JPanel {
         gbc.gridy = 3;
         hardButton.setFocusable(false);
         hardButton.setBorderPainted(false);
+        hardButton.setOpaque(false);
+        hardButton.setContentAreaFilled(false);
         this.add(hardButton, gbc);
 
         ImageIcon backImage = new ImageIcon(getClass().getResource("/back.png"));
@@ -84,6 +90,8 @@ public class myDifficulty extends JPanel {
         gbc.gridy = 4;
         difbackButton.setFocusable(false);
         difbackButton.setBorderPainted(false);
+        difbackButton.setOpaque(false);
+        difbackButton.setContentAreaFilled(false);
         this.add(difbackButton, gbc);
 
         // Toggles only 1 button

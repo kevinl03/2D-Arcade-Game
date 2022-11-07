@@ -61,6 +61,8 @@ public class myGameOver extends JPanel {
         //gomenuButton.setBackground(greenclr);
         //gomenuButton.setOpaque(true);
         gomenuButton.setBorderPainted(false);
+        gomenuButton.setOpaque(false);
+        gomenuButton.setContentAreaFilled(false);
         // Game over screen, add menu button
         this.add(gomenuButton);
 

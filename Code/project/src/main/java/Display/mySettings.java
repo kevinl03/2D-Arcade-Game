@@ -105,15 +105,17 @@ public class mySettings extends JPanel {
         muteButton.setFocusable(false);
         muteButton.setBorderPainted(false);
         muteButton.setContentAreaFilled(false);
+        muteButton.setOpaque(false);
         this.add(muteButton,gbc);
 
         ImageIcon unmuteImage = new ImageIcon(getClass().getResource("/unmute.png"));
         unmuteButton = new JToggleButton("",unmuteImage,true);
         gbc.gridx = 1;
         gbc.gridy = 3;
-        //unmuteButton.setFocusable(false);
+        unmuteButton.setFocusable(false);
         unmuteButton.setBorderPainted(false);
-        //unmuteButton.setContentAreaFilled(false);
+        unmuteButton.setContentAreaFilled(false);
+        unmuteButton.setOpaque(false);
         this.add(unmuteButton,gbc);
 
 
@@ -124,6 +126,8 @@ public class mySettings extends JPanel {
         gbc.gridy = 4;
         settbackButton.setBorderPainted(false);
         settbackButton.setFocusable(false);
+        settbackButton.setOpaque(false);
+        settbackButton.setContentAreaFilled(false);
         this.add(settbackButton,gbc);
 
         settbackButton.addActionListener(new ActionListener() {

@@ -68,6 +68,8 @@ public class myTitle extends JPanel {
         gbc.ipady = 50;
         playButton.setFocusable(false);
         playButton.setBorderPainted(false);
+        playButton.setOpaque(false);
+        playButton.setContentAreaFilled(false);
         this.add(playButton, gbc);
 
         ImageIcon settingImage = new ImageIcon(getClass().getResource("/settings.png"));
@@ -76,6 +78,8 @@ public class myTitle extends JPanel {
         gbc.gridy = 2;
         settButton.setFocusable(false);
         settButton.setBorderPainted(false);
+        settButton.setOpaque(false);
+        settButton.setContentAreaFilled(false);
         this.add(settButton, gbc);
 
         ImageIcon diffImage = new ImageIcon(getClass().getResource("/dif.png"));
@@ -84,6 +88,8 @@ public class myTitle extends JPanel {
         gbc.gridy = 3;
         diffButton.setFocusable(false);
         diffButton.setBorderPainted(false);
+        diffButton.setOpaque(false);
+        diffButton.setContentAreaFilled(false);
         this.add(diffButton, gbc);
 
         ImageIcon quitImage = new ImageIcon(getClass().getResource("/quit.png"));
@@ -92,6 +98,8 @@ public class myTitle extends JPanel {
         gbc.gridy = 4;
         quitButton.setFocusable(false);
         quitButton.setBorderPainted(false);
+        quitButton.setOpaque(false);
+        quitButton.setContentAreaFilled(false);
         this.add(quitButton, gbc);
 
         playButton.addActionListener(new ActionListener()

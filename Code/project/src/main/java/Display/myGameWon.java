@@ -58,6 +58,8 @@ public class myGameWon extends JPanel {
         gomenuButton.setFocusable(false);
         gomenuButton.setBounds(610, 570, 300, 100);
         gomenuButton.setBorderPainted(false);
+        gomenuButton.setOpaque(false);
+        gomenuButton.setContentAreaFilled(false);
 
         // Game over screen, add menu button
         this.add(gomenuButton);
