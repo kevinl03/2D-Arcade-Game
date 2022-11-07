@@ -89,14 +89,14 @@ public class mySettings extends JPanel {
         headerText = new Font("Times New Roman", Font.BOLD, 50);
         settLabel.setFont(headerText);
         gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.insets = new Insets(0,0,0,450);
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0,0,0,0);
         this.add(settLabel,gbc);
 
         soundGroup = new ButtonGroup();
         ImageIcon muteImage = new ImageIcon(getClass().getResource("/muteBtn.png"));
         muteButton = new JToggleButton("",muteImage);
-        //gbc.insets = new Insets(100,0,0,450);
+        gbc.insets = new Insets(25,0,0,0);
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.ipadx = 200;
@@ -207,8 +207,8 @@ public class mySettings extends JPanel {
                 repaint();
             }
         });
-        gbc.insets = new Insets(150,400,0,0);
-        gbc.gridx = 0;
+        gbc.insets = new Insets(150,0,0,400);
+        gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.ipadx = 0;
         gbc.ipady = 0;
@@ -232,11 +232,10 @@ public class mySettings extends JPanel {
 
             }
         });
-        gbc.insets = new Insets(150,0,0,100);
+        gbc.insets = new Insets(150,400,0,0);
         gbc.gridx = 1;
         gbc.gridy = 1;
         this.add(rightScroll, gbc);
-
     }
 
     /**
@@ -280,7 +279,7 @@ public class mySettings extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
         BufferedImage hero = heroColorPngs.get(color);
-        g2.drawImage(hero, 670, 250, 80, 80, null);
+        g2.drawImage(hero, 700, 250, 80, 80, null);
 
     }
 }
