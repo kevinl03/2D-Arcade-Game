@@ -1,5 +1,9 @@
 package Entities;
 
+/**
+*General class for entities which will be inherrited by Rewards, Bonus, Trap
+*/
+
 public class StaticEntity extends Position {
     protected int start_time; //reads the timer
 
