@@ -1,5 +1,10 @@
 package Entities;
 
+/**
+* Bonus reward which is spawned and despawned at different location on the map at different times
+*
+*/
+
 public class Bonus extends Reward {
     public Bonus() {
         super();
