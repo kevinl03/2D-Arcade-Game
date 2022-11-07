@@ -52,7 +52,7 @@ public class myDifficulty extends JPanel {
         difGroup = new ButtonGroup();
         ImageIcon easyImage = new ImageIcon(getClass().getResource("/easy.png"));
         easyButton = new JToggleButton("",easyImage,true);
-        gbc.insets = new Insets(200,0,0,0);
+        gbc.insets = new Insets(50,0,0,0);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.ipadx = 200;
@@ -63,7 +63,7 @@ public class myDifficulty extends JPanel {
 
         ImageIcon medImage = new ImageIcon(getClass().getResource("/medium.png"));
         mediumButton = new JToggleButton("",medImage,true);
-        gbc.insets = new Insets(50,0,0,0);
+        //gbc.insets = new Insets(50,0,0,0);
         gbc.gridx = 0;
         gbc.gridy = 2;
         mediumButton.setFocusable(false);
