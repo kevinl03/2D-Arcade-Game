@@ -86,27 +86,35 @@ public class mySettings extends JPanel {
         // Setting up the settings panel
         setLayout(new GridBagLayout());
         settLabel = new JLabel("Settings");
-        headerText = new Font("Times New Roman", Font.BOLD, 30);
+        headerText = new Font("Times New Roman", Font.BOLD, 50);
         settLabel.setFont(headerText);
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.insets = new Insets(0,0,0,450);
         this.add(settLabel,gbc);
 
         soundGroup = new ButtonGroup();
-        muteButton = new JToggleButton(" Mute ");
+        ImageIcon muteImage = new ImageIcon(getClass().getResource("/muteBtn.png"));
+        muteButton = new JToggleButton("",muteImage);
         gbc.insets = new Insets(100,0,0,450);
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.ipadx = 200;
         gbc.ipady = 50;
+        //muteButton.setBorder(BorderFactory.createEmptyBorder());
         muteButton.setFocusable(false);
+        muteButton.setBorderPainted(false);
+        muteButton.setContentAreaFilled(false);
         this.add(muteButton,gbc);
 
-        unmuteButton = new JToggleButton("Unmute", true);
+        ImageIcon unmuteImage = new ImageIcon(getClass().getResource("/unmute.png"));
+        unmuteButton = new JToggleButton("",unmuteImage,true);
+        gbc.insets = new Insets(50,0,0,450);
         gbc.gridx = 1;
         gbc.gridy = 3;
-        unmuteButton.setFocusable(false);
+        //unmuteButton.setFocusable(false);
+        unmuteButton.setBorderPainted(false);
+        //unmuteButton.setContentAreaFilled(false);
         this.add(unmuteButton,gbc);
 
 
@@ -172,7 +180,7 @@ public class mySettings extends JPanel {
         try {
             getButtonPngs();
             getHeroColors();
-            testimage_png = ImageIO.read(getClass().getResource("/testimage.png"));
+            testimage_png = ImageIO.read(getClass().getResource("/settingB.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
