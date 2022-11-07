@@ -81,6 +81,8 @@ public class myGame extends JPanel{
         scoreLabel = new JLabel();
         scoreLabel.setText("Score");
         font = new Font("Times New Roman", Font.BOLD, 30);
+        firstRender = true;
+        treeTypeOrder = new ArrayList<>();
     }
 
     /**
@@ -218,16 +220,6 @@ public class myGame extends JPanel{
         }
     }
 
-    /**
-     * Sets an Image object that can then be painted on the screen.
-     */
-    public void getHunter(){
-        try {
-            hunter_png = ImageIO.read(getClass().getResource("/hunter.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     /**
      * Sets an Image object that can then be painted on the screen.
@@ -295,7 +287,6 @@ public class myGame extends JPanel{
         getAcorn();
         getBear();
         getBush();
-        getHunter();
         getPeanuts();
         getTrees();
         getField();
