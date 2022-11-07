@@ -96,7 +96,7 @@ public class mySettings extends JPanel {
         soundGroup = new ButtonGroup();
         ImageIcon muteImage = new ImageIcon(getClass().getResource("/muteBtn.png"));
         muteButton = new JToggleButton("",muteImage);
-        gbc.insets = new Insets(25,0,0,0);
+        gbc.insets = new Insets(0,0,0,0);
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.ipadx = 200;
@@ -175,10 +175,11 @@ public class mySettings extends JPanel {
              */
             public void actionPerformed(ActionEvent arg0)
             {
-                dl.sound.startupMusic();
-                dl.sound.playClick();
+                //dl.sound.startupMusic();
                 //enable the sound
-                dl.sound.playMusic(0);
+                //dl.sound.playMusic(0);
+                dl.sound.playClick();
+                dl.sound.play();
             }
         });
 
@@ -279,7 +280,7 @@ public class mySettings extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
         BufferedImage hero = heroColorPngs.get(color);
-        g2.drawImage(hero, 700, 250, 80, 80, null);
+        g2.drawImage(hero, 700, 285, 80, 80, null);
 
     }
 }
