@@ -96,7 +96,7 @@ public class mySettings extends JPanel {
         soundGroup = new ButtonGroup();
         ImageIcon muteImage = new ImageIcon(getClass().getResource("/muteBtn.png"));
         muteButton = new JToggleButton("",muteImage);
-        gbc.insets = new Insets(100,0,0,450);
+        //gbc.insets = new Insets(100,0,0,450);
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.ipadx = 200;
@@ -109,7 +109,6 @@ public class mySettings extends JPanel {
 
         ImageIcon unmuteImage = new ImageIcon(getClass().getResource("/unmute.png"));
         unmuteButton = new JToggleButton("",unmuteImage,true);
-        gbc.insets = new Insets(50,0,0,450);
         gbc.gridx = 1;
         gbc.gridy = 3;
         //unmuteButton.setFocusable(false);
@@ -118,10 +117,12 @@ public class mySettings extends JPanel {
         this.add(unmuteButton,gbc);
 
 
-        settbackButton = new JButton(" Back ");
-        gbc.insets = new Insets(50,0,0,450);
+        ImageIcon backImage = new ImageIcon(getClass().getResource("/back.png"));
+        settbackButton = new JButton("",backImage);
+        //gbc.insets = new Insets(50,0,0,450);
         gbc.gridx = 1;
         gbc.gridy = 4;
+        settbackButton.setBorderPainted(false);
         settbackButton.setFocusable(false);
         this.add(settbackButton,gbc);
 
@@ -202,7 +203,7 @@ public class mySettings extends JPanel {
                 repaint();
             }
         });
-        gbc.insets = new Insets(150,300,0,0);
+        gbc.insets = new Insets(150,400,0,0);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.ipadx = 0;

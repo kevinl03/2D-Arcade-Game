@@ -53,13 +53,13 @@ public class myGameOver extends JPanel {
             throw new RuntimeException(e);
         }
 
-
-        gomenuButton = new JButton("Main Menu");
+        ImageIcon mainImage = new ImageIcon(getClass().getResource("/main.png"));
+        gomenuButton = new JButton("",mainImage);
         gomenuButton.setFocusable(false);
-        gomenuButton.setBounds(650, 600, 200, 100);
-        Color greenclr = new Color(114, 209, 127);
-        gomenuButton.setBackground(greenclr);
-        gomenuButton.setOpaque(true);
+        gomenuButton.setBounds(650, 570, 300, 100);
+       // Color greenclr = new Color(114, 209, 127);
+        //gomenuButton.setBackground(greenclr);
+        //gomenuButton.setOpaque(true);
         gomenuButton.setBorderPainted(false);
         // Game over screen, add menu button
         this.add(gomenuButton);

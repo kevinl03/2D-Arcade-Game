@@ -51,9 +51,14 @@ public class myGameWon extends JPanel {
             throw new RuntimeException(e);
         }
 
-        gomenuButton = new JButton("Main Menu");
+
+
+        ImageIcon mainImage = new ImageIcon(getClass().getResource("/main.png"));
+        gomenuButton = new JButton("",mainImage);
         gomenuButton.setFocusable(false);
-        gomenuButton.setBounds(675, 600, 200, 100);
+        gomenuButton.setBounds(650, 570, 300, 100);
+        gomenuButton.setBorderPainted(false);
+
         // Game over screen, add menu button
         this.add(gomenuButton);
 
