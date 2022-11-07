@@ -1,5 +1,9 @@
 package Entities;
 
+/**
+* Trap for map
+*/
+
 public class Trap extends StaticEntity{
     private int damage;
 
