@@ -1,5 +1,9 @@
 package Entities;
 
+/**
+* Regular reward entity for the game
+*/
+
 public class Reward extends StaticEntity{
     protected int point;
 
