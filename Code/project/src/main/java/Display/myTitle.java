@@ -53,37 +53,45 @@ public class myTitle extends JPanel {
 
         gbc = new GridBagConstraints();
         // Initialize JButton objects and add to title Panel
-        playButton = new JButton("   Play   ");
-        try {
-            buttonIcon = ImageIO.read(getClass().getResource("/acorn.png"));
-            playButton.setIcon(new ImageIcon(buttonIcon));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        gbc.insets = new Insets(100,0,0,0);
+        ImageIcon playImage = new ImageIcon(getClass().getResource("/play.png"));
+        playButton = new JButton("",playImage);
+//        try {
+//            buttonIcon = ImageIO.read(getClass().getResource("/acorn.png"));
+//            playButton.setIcon(new ImageIcon(buttonIcon));
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+        gbc.insets = new Insets(50,0,0,0);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.ipadx = 200;
         gbc.ipady = 50;
         playButton.setFocusable(false);
+        playButton.setBorderPainted(false);
         this.add(playButton, gbc);
 
-        settButton = new JButton(" Settings ");
+        ImageIcon settingImage = new ImageIcon(getClass().getResource("/settings.png"));
+        settButton = new JButton("",settingImage);
         gbc.gridx = 0;
         gbc.gridy = 2;
         settButton.setFocusable(false);
+        settButton.setBorderPainted(false);
         this.add(settButton, gbc);
 
-        diffButton = new JButton("Difficulty");
+        ImageIcon diffImage = new ImageIcon(getClass().getResource("/dif.png"));
+        diffButton = new JButton("",diffImage);
         gbc.gridx = 0;
         gbc.gridy = 3;
         diffButton.setFocusable(false);
+        diffButton.setBorderPainted(false);
         this.add(diffButton, gbc);
 
-        quitButton = new JButton("   Quit   ");
+        ImageIcon quitImage = new ImageIcon(getClass().getResource("/quit.png"));
+        quitButton = new JButton("",quitImage);
         gbc.gridx = 0;
         gbc.gridy = 4;
         quitButton.setFocusable(false);
+        quitButton.setBorderPainted(false);
         this.add(quitButton, gbc);
 
         playButton.addActionListener(new ActionListener()

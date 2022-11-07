@@ -56,7 +56,7 @@ public class myGameWon extends JPanel {
         ImageIcon mainImage = new ImageIcon(getClass().getResource("/main.png"));
         gomenuButton = new JButton("",mainImage);
         gomenuButton.setFocusable(false);
-        gomenuButton.setBounds(650, 570, 300, 100);
+        gomenuButton.setBounds(610, 570, 300, 100);
         gomenuButton.setBorderPainted(false);
 
         // Game over screen, add menu button
