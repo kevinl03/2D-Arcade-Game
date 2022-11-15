@@ -1,7 +1,11 @@
 package Entities;
 
+/**
+*General class for entities which will be inherrited by Rewards, Bonus, Trap
+*/
+
 public class StaticEntity extends Position {
-    protected int start_time; //reads the timer 
+    protected int start_time; //reads the timer
 
     public StaticEntity(){
         super();
@@ -9,7 +13,8 @@ public class StaticEntity extends Position {
     }
 
     public StaticEntity(int x, int y, int time) {
-        super(x,y);
+        this.x = x;
+        this.y = y;
         this.start_time = time;
     }
 

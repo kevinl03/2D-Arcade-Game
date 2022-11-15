@@ -1,5 +1,9 @@
 package Entities;
 
+/**
+* Trap for map
+*/
+
 public class Trap extends StaticEntity{
     private int damage;
 
@@ -12,6 +16,7 @@ public class Trap extends StaticEntity{
         super(x,y,time);
         damage = dmg;
     }
+
     public int getDamage(){
         return damage;
     }
