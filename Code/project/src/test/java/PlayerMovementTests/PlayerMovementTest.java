@@ -1,14 +1,14 @@
 package PlayerMovementTests;
 
+import Board.BoardData;
 import Board.Difficulty;
 import Board.Objects;
-import Board.BoardData;
-import Entities.Hero;
-import Entities.Position;
+import Entities.*;
 import Game.ObjectData;
 import Helpers.HeroColor;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 public class PlayerMovementTest {
     ObjectData objectData;
     BoardData boardData;
@@ -37,7 +37,7 @@ public class PlayerMovementTest {
         Uppos = new Position(heropos.getX(), heropos.getY() -1);
         Downpos = new Position(heropos.getX(), heropos.getY()+ 1);
 
-        //set adjecent tiles to empty so that character movement can be tested
+        //set adjecent tiles to a certain object so that character movement can be tested
         boardData.setTypeAt(Rightpos, object);
         boardData.setTypeAt(Leftpos, object);
         boardData.setTypeAt(Uppos, object);
@@ -131,5 +131,156 @@ public class PlayerMovementTest {
         assert(true);
     }
 
+    @Test
+    void pickUpReward(){
+        setup(Objects.REWARD);
+
+        ArrayList<RegularReward> rewardlist = objectData.getRewardArray();
+        RegularReward testreward = new RegularReward(Uppos.getX(), Uppos.getY(), 0, 50);
+        rewardlist.add(testreward);
+
+        //step over reward
+        objectData.getHeroLogic().processPlayerMovement(Uppos,objectData);
+
+        //will need to add a reward object to reward ArrayList in order for score
+        //to get incremented for hero within processPlayerMovement
+        //use 50 because we are testing for difficulty easy
+        if (hero.getScore() != 50){
+            assert(false);
+        }
+        //check that the tile is now a HERO object, not a REWARD object
+        if (boardData.getTypeAt(Uppos) != Objects.HERO){
+            assert(false);
+        }
+
+        //step back to initiale position
+        objectData.getHeroLogic().processPlayerMovement(heropos,objectData);
+
+        //check that reward is picked up and replaced with an empty tile
+        if (boardData.getTypeAt(Uppos) != Objects.EMPTY){
+          assert(false);
+        }
+        assert(true);
+    }
+
+
+    @Test
+    void pickUpBonus(){
+        setup(Objects.BONUS);
+        ArrayList<Bonus> bonuslist = objectData.getBonusArray();
+        Bonus testbonus = new Bonus(Uppos.getX(), Uppos.getY(), 0, 100);
+        bonuslist.add(testbonus);
+
+        //step over reward
+        objectData.getHeroLogic().processPlayerMovement(Uppos,objectData);
+
+        //will need to add a Bonus object to Bonus ArrayList in order for score
+        //to get incremented for hero within processPlayerMovement
+
+        //use 100 because difficulty easy is always 100
+        if (hero.getScore() != 100){
+            assert(false);
+        }
+
+
+        //check that the tile is now a HERO object, not a BONUS object
+        if (boardData.getTypeAt(Uppos) != Objects.HERO){
+            assert(false);
+        }
+
+        //step back to initiale position
+        objectData.getHeroLogic().processPlayerMovement(heropos,objectData);
+
+        //check that reward is picked up and replaced with an empty tile and that
+        //the tile is not a BONUS object
+        if (boardData.getTypeAt(Uppos) != Objects.EMPTY){
+            assert(false);
+        }
+        assert(true);
+    }
+
+    //only test for one direction because previous tests already cover
+    //for hero moving in different directions
+    @Test
+    void pickUpTrap() {
+        setup(Objects.TRAP);
+        ArrayList<Trap> traplist = objectData.getTrapArray();
+        Trap testtrap = new Trap(Uppos.getX(), Uppos.getY(), 0, 50);
+        traplist.add(testtrap);
+
+        //step over reward
+        objectData.getHeroLogic().processPlayerMovement(Uppos, objectData);
+
+        //will need to add a Bonus object to Bonus ArrayList in order for score
+        //to get incremented for hero within processPlayerMovement
+
+        //-50 for easy difficulty, the same test will cover for all difficulties
+        if (hero.getScore() != -50) {
+            assert (false);
+        }
+
+
+        //check that the tile is now a HERO object, not a TRAP object
+        if (boardData.getTypeAt(Uppos) != Objects.HERO) {
+            assert (false);
+        }
+
+        //step back to initiale position
+        objectData.getHeroLogic().processPlayerMovement(heropos, objectData);
+
+        //check that reward is picked up and replaced with an empty tile and that
+        //the tile is not a BONUS object
+        if (boardData.getTypeAt(Uppos) != Objects.EMPTY) {
+            assert (false);
+        }
+        assert (true);
+    }
+
+    @Test
+    void MoveIntoTree(){
+        setup(Objects.TREE);
+
+        //check to move into any position
+        objectData.getHeroLogic().processPlayerMovement(Uppos,objectData);
+        objectData.getHeroLogic().processPlayerMovement(Rightpos,objectData);
+        objectData.getHeroLogic().processPlayerMovement(Downpos,objectData);
+        //move into the same direction twice even when
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
+
+
+
+        //this would mean character moved but that's impossible since there are trees
+        //in every direction
+        if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
+            assert(false);
+        }
+        //check that the surrounding tiles are all still TREE objects
+        if (boardData.getTypeAt(Uppos) != Objects.TREE ||
+            boardData.getTypeAt(Downpos) != Objects.TREE ||
+                boardData.getTypeAt(Leftpos) != Objects.TREE ||
+                boardData.getTypeAt(Rightpos) != Objects.TREE){
+            assert(false);
+        }
+        assert(true);
+
+    }
+    @Test
+    void EnemyCollision(){
+        setup(Objects.ENEMY);
+        ArrayList<Enemy> enemylist = objectData.getEnemyArray();
+        Enemy testenemy = new Enemy(Uppos.getX(), Uppos.getY());
+        enemylist.add(testenemy);
+
+
+        //case for when enemy moves towards enemy
+        objectData.getHeroLogic().processPlayerMovement(Uppos, objectData);
+        //objectData.getEnemyLogic().processEnemyMovement(objectData);
+
+        if (!objectData.getGameStats().getGameOver()){
+            assert(false);
+        }
+        assert(true);
+    }
 
 }

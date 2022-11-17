@@ -243,5 +243,12 @@ public class ObjectData {
      * @return rewardLogic
      */
     public RewardLogic getRewardLogic() { return rewardLogic; }
-}
 
+    public ArrayList<Bonus> getBonusArray(){ return bonus; }
+
+    public ArrayList<RegularReward> getRewardArray() { return rewards;}
+
+    public ArrayList<Trap> getTrapArray(){ return traps;}
+
+    public ArrayList<Enemy> getEnemyArray() { return enemies;}
+}
