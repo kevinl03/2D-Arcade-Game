@@ -1,11 +1,17 @@
 package EnemyMovementTests;
 
+import Board.BoardData;
+import Board.Difficulty;
 import Board.Objects;
 import Entities.*;
+import Game.ObjectData;
 import Helpers.Direction;
+import Helpers.HeroColor;
 import Logic.EnemyLogic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 public class EnemyMovementTests
 {
@@ -118,6 +124,7 @@ public class EnemyMovementTests
         Assertions.assertEquals(Direction.NORTH, dir);
     }
 
+    @Test
     void blockedShortestPathAdvanced(){
         EnemyLogic gameLogic = new EnemyLogic();
         Objects [][] fakeMap= {
@@ -136,6 +143,29 @@ public class EnemyMovementTests
         Direction dir = gameLogic.findShortestPath(fakeMap, new Position(3, 4));
 
         Assertions.assertEquals(Direction.SOUTH, dir);
+    }
+
+    @Test
+    void ConfirmEnemyMoved(){
+
+        ObjectData gameObjectData = new ObjectData(Difficulty.HARD, HeroColor.BROWN);
+
+        EnemyLogic enemyLogic = gameObjectData.getEnemyLogic();
+
+        ArrayList<Enemy> enemies = gameObjectData.getEnemies();
+
+        ArrayList<Position> enemyPositions = new ArrayList<>();
+
+        for (Position enemy: enemies) {
+            Position tempPos = new Position(enemy.getX(), enemy.getY());
+            enemyPositions.add(tempPos);
+
+        }
+
+        enemyLogic.processEnemyMovement(gameObjectData);
+
+        Assertions.assertFalse(enemies.equals( enemyPositions));
+
     }
 
 
