@@ -146,7 +146,7 @@ public class EnemyMovementTests
     }
 
     @Test
-    void RandomMovementWhenHeroHidden(){
+    void RandomMovementWhenHeroHiddenAndFar(){
         EnemyLogic gameLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
@@ -165,6 +165,28 @@ public class EnemyMovementTests
 
         Assertions.assertEquals(Direction.RANDOM, dir);
     }
+
+    @Test
+    void RegularMovementWhenHeroHiddenAndClose(){
+        EnemyLogic gameLogic = new EnemyLogic();
+        Objects [][] fakeMap= {
+                //                             WEST
+                //               y0   y1   y2   y3   y4   y5   y6   y7
+                /*     x0  */  {Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE},
+                /*  N  x1  */  {Objects.EMPTY, Objects.EMPTY , Objects.TREE , Objects.EMPTY, Objects.HEROHIDDEN, Objects.EMPTY, Objects.EMPTY, Objects.TREE},  //  S
+                /*  O  x2  */  {Objects.EMPTY, Objects.TREE , Objects.EMPTY, Objects.TREE , Objects.EMPTY, Objects.TREE , Objects.EMPTY, Objects.TREE},  //  O
+                /*  R  x3  */  {Objects.EMPTY, Objects.TREE , Objects.EMPTY, Objects.EMPTY, Objects.ENEMY, Objects.EMPTY, Objects.EMPTY, Objects.TREE},  //  U
+                /*  T  x4  */  {Objects.EMPTY, Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE , Objects.EMPTY, Objects.TREE},  //  T
+                /*  H  x5  */  {Objects.EMPTY, Objects.EMPTY, Objects.EMPTY, Objects.EMPTY, Objects.EMPTY, Objects.EMPTY, Objects.EMPTY, Objects.TREE},  //  H
+                /*     x6  */  {Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE , Objects.TREE},
+                //                             EAST
+        };
+
+        Direction dir = gameLogic.findShortestPath(fakeMap, new Position(3, 4));
+
+        Assertions.assertEquals(Direction.WEST, dir);
+    }
+
 
     @Test
     void ConfirmEnemyMoved(){
