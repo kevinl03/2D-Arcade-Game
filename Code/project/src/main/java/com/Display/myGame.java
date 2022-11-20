@@ -152,25 +152,27 @@ public class myGame extends JPanel{
     public void getSquirrel(){
         try {
             squirrel_pngs = new HashMap<>();
-            URL resource = getClass().getClassLoader().getResource("/squirrels");
-            File folder = new File(resource.toURI());
-
-//            File folder = new File(getClass().getResourceAsStream("/squirrels"));
-            File[] files = folder.listFiles();
-            for(final File fileEntry : files){
-                if(fileEntry.isFile()){
-                    String fileName = fileEntry.getName();
-                    squirrel_pngs.put(fileName, ImageIO.read(getClass().getResource("/squirrels/" + fileName)));
+            URL pathUrl = getClass().getClassLoader().getResource("squirrels/");
+            if ((pathUrl != null) && pathUrl.getProtocol().equals("file")) {
+                File files[] = new File(pathUrl.toURI()).listFiles();
+                for(final File fileEntry : files){
+                    if(fileEntry.isFile()){
+                        String fileName = fileEntry.getName();
+                        squirrel_pngs.put(fileName, ImageIO.read(getClass().getResource("/squirrels/" + fileName)));
+                    }
                 }
             }
 
             hidden_squirrel_pngs = new HashMap<>();
-            File folder2 = new File(getClass().getResource("/hidingSquirrels").toURI());
-            File[] files2 = folder2.listFiles();
-            for(final File fileEntry : files2){
-                if(fileEntry.isFile()){
-                    String fileName = fileEntry.getName();
-                    hidden_squirrel_pngs.put(fileName, ImageIO.read(getClass().getResource("/hidingSquirrels/" + fileName)));
+
+            URL pathUrl2 = getClass().getClassLoader().getResource("hidingSquirrels/");
+            if ((pathUrl2 != null) && pathUrl2.getProtocol().equals("file")) {
+                File files2[] = new File(pathUrl2.toURI()).listFiles();
+                for (final File fileEntry : files2) {
+                    if (fileEntry.isFile()) {
+                        String fileName = fileEntry.getName();
+                        hidden_squirrel_pngs.put(fileName, ImageIO.read(getClass().getResource("/hidingSquirrels/" + fileName)));
+                    }
                 }
             }
         } catch (IOException e) {
@@ -197,13 +199,21 @@ public class myGame extends JPanel{
      */
     public void getBear(){
         try {
+
             bear_pngs = new HashMap<>();
-            File folder = new File(getClass().getResource("/bears").toURI());
-            File[] files = folder.listFiles();
-            for(final File fileEntry : files){
-                if(fileEntry.isFile()){
-                    String fileName = fileEntry.getName();
-                    bear_pngs.put(fileName, ImageIO.read(getClass().getResource("/bears/" + fileName)));
+            URL pathUrl = getClass().getClassLoader().getResource("bears/");
+
+            System.out.println("test");
+            if ((pathUrl != null) && pathUrl.getProtocol().equals("file")) {
+                System.out.println("test2");
+
+                File files[] = new File(pathUrl.toURI()).listFiles();
+                for (final File fileEntry : files) {
+                    if (fileEntry.isFile()) {
+                        String fileName = fileEntry.getName();
+                        System.out.println(fileName);
+                        bear_pngs.put(fileName, ImageIO.read(getClass().getResource("/bears/" + fileName)));
+                    }
                 }
             }
         } catch (IOException e) {
@@ -287,8 +297,8 @@ public class myGame extends JPanel{
      * Calls all the methods to set the Image objects.
      */
     public void getImages(){
-        getSquirrel();
         getAcorn();
+        getSquirrel();
         getBear();
         getBush();
         getPeanuts();

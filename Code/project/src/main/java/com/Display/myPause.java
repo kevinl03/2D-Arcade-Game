@@ -52,7 +52,7 @@ private GridBagConstraints gbc;
         resumeButton.setFocusable(false);
         this.add(resumeButton, gbc);
 
-        mainmenuButton = new JButton("com.Main Menu");
+        mainmenuButton = new JButton("Main Menu");
         gbc.gridx = 0;
         gbc.gridy = 4;
         mainmenuButton.setFocusable(false);
