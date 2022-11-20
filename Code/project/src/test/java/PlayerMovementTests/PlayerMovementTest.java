@@ -496,4 +496,110 @@ public class PlayerMovementTest {
         assert(true);
     }
 
+    @Test
+    void MoveIntoDoorEasyNotWin(){
+        setup(Objects.EXIT, Difficulty.EASY);
+        Exit exitDoor = objectData.getExit();
+        exitDoor.setX(Leftpos.getX());
+        exitDoor.setY(Leftpos.getY());
+        System.out.println(exitDoor.isClosed());
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
+        exitDoor.setRewardCount(2);
+        exitDoor.rewardCollected(Difficulty.EASY);
+        if( ! exitDoor.isClosed()){
+            assert(false);
+        }
+        if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
+            assert(false);
+        }
+    }
+
+    @Test
+    void MoveIntoDoorMediumNotWin(){
+        setup(Objects.EXIT, Difficulty.MEDIUM);
+        Exit exitDoor = objectData.getExit();
+        exitDoor.setX(Leftpos.getX());
+        exitDoor.setY(Leftpos.getY());
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
+        exitDoor.setRewardCount(8);
+        exitDoor.rewardCollected(Difficulty.MEDIUM);
+        if( ! exitDoor.isClosed()){
+            assert(false);
+        }
+        if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
+            assert(false);
+        }
+    }
+
+    @Test
+    void MoveIntoDoorHardNotWin(){
+        setup(Objects.EXIT, Difficulty.HARD);
+        Exit exitDoor = objectData.getExit();
+        exitDoor.setX(Leftpos.getX());
+        exitDoor.setY(Leftpos.getY());
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
+        exitDoor.setRewardCount(13);
+        exitDoor.rewardCollected(Difficulty.HARD);
+        if( ! exitDoor.isClosed()){
+            assert(false);
+        }
+        if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
+            assert(false);
+        }
+    }
+
+    @Test
+    void WinEasy(){
+        setup(Objects.EXIT, Difficulty.EASY);
+        Exit exitDoor = objectData.getExit();
+        exitDoor.setX(Leftpos.getX());
+        exitDoor.setY(Leftpos.getY());
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
+        exitDoor.setRewardCount(4);
+        exitDoor.rewardCollected(Difficulty.EASY);
+        if(exitDoor.isClosed()){
+            assert(false);
+        }
+
+        if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
+            assert(false);
+        }
+    }
+
+    @Test
+    void WinMedium(){
+        setup(Objects.EXIT, Difficulty.MEDIUM);
+        Exit exitDoor = objectData.getExit();
+        exitDoor.setX(Leftpos.getX());
+        exitDoor.setY(Leftpos.getY());
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
+        exitDoor.setRewardCount(9);
+        exitDoor.rewardCollected(Difficulty.MEDIUM);
+        if(exitDoor.isClosed()){
+            assert(false);
+        }
+
+        if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
+            assert(false);
+        }
+    }
+
+    @Test
+    void WinHard(){
+        setup(Objects.EXIT, Difficulty.HARD);
+        Exit exitDoor = objectData.getExit();
+        exitDoor.setX(Leftpos.getX());
+        exitDoor.setY(Leftpos.getY());
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
+        exitDoor.setRewardCount(14);
+        exitDoor.rewardCollected(Difficulty.HARD);
+        if(exitDoor.isClosed()){
+            assert(false);
+        }
+
+        if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
+            assert(false);
+        }
+    }
+
 }
