@@ -1,19 +1,14 @@
 package Display;
 
+import Board.BoardData;
 import Board.Difficulty;
 import Game.ObjectData;
 import Helpers.HeroColor;
 import Helpers.KeyHandler;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import Board.BoardData;
+import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Creates a JFrame with multiple JPanels for different screens of the game.
@@ -72,6 +67,21 @@ public class DisplayLayout extends JFrame implements Runnable{
      * the screens of title, gameplay, settings, difficulty, pause, game over,
      * and game won.
      */
+
+    //used to check our functions, so need to set up the game first
+    public DisplayLayout(int x){
+        //set up display in order to use helper functions
+        Difficulty dif = Difficulty.EASY;
+        HeroColor heroColor = HeroColor.BROWN;
+
+        gameObjectData = new ObjectData(dif, heroColor);
+        board = gameObjectData.getBoard();
+        dl = new CardLayout();
+        playPanel = new myGame(this, dl);
+        kh = new KeyHandler(this);
+
+
+    }
     public DisplayLayout()
     {
         setResizable(false);
@@ -252,5 +262,8 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         // Function to set visibility of JFrame.
         display.setVisible(true);
+    }
+    public KeyHandler getKH(){
+        return kh;
     }
 }

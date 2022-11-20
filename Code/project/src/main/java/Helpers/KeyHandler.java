@@ -1,6 +1,6 @@
 package Helpers;
+
 import Display.DisplayLayout;
-import Display.myGame;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -19,6 +19,7 @@ public class KeyHandler implements KeyListener{
     public KeyHandler(DisplayLayout dl){
         this.dl = dl;
     }
+
 
     @Override
     public void keyTyped(KeyEvent e) {
