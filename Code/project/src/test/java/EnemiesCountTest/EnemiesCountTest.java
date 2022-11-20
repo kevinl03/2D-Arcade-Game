@@ -1,13 +1,13 @@
 package EnemiesCountTest;
 
-import Board.BoardData;
-import Board.Difficulty;
-import Board.Objects;
-import Entities.Enemy;
-import Entities.Hero;
-import Entities.Position;
-import Game.ObjectData;
-import Helpers.HeroColor;
+import com.Board.BoardData;
+import com.Board.Difficulty;
+import com.Board.Objects;
+import com.Entities.Enemy;
+import com.Entities.Hero;
+import com.Entities.Position;
+import com.Game.ObjectData;
+import com.Helpers.HeroColor;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
