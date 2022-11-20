@@ -502,7 +502,6 @@ public class PlayerMovementTest {
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
         exitDoor.setY(Leftpos.getY());
-        System.out.println(exitDoor.isClosed());
         objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         exitDoor.setRewardCount(2);
         exitDoor.rewardCollected(Difficulty.EASY);
@@ -512,6 +511,7 @@ public class PlayerMovementTest {
         if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
             assert(false);
         }
+        assert(true);
     }
 
     @Test
@@ -529,6 +529,8 @@ public class PlayerMovementTest {
         if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
             assert(false);
         }
+        assert(true);
+
     }
 
     @Test
@@ -546,6 +548,7 @@ public class PlayerMovementTest {
         if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
             assert(false);
         }
+        assert(true);
     }
 
     @Test
@@ -564,6 +567,7 @@ public class PlayerMovementTest {
         if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
             assert(false);
         }
+        assert(true);
     }
 
     @Test
@@ -582,6 +586,7 @@ public class PlayerMovementTest {
         if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
             assert(false);
         }
+        assert(true);
     }
 
     @Test
@@ -600,6 +605,7 @@ public class PlayerMovementTest {
         if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
             assert(false);
         }
+        assert(true);
     }
 
 }
