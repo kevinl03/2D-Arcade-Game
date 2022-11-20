@@ -56,7 +56,7 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     public int timer;
 
-    public Difficulty dif = Difficulty.EASY;
+    public Difficulty dif = Difficulty.MEDIUM;
 
     HeroColor heroColor = HeroColor.BROWN;
 
