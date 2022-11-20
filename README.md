@@ -10,6 +10,8 @@ How to set up and run tests:
     2. set src/test/resources as Test Resource Root
     3. Right click on src/test/java folder and press Run all tests (or Ctrl + Shift + F10)
 
+Running in terminal:
 
-
-    
+    1. Change directory to find cd Code/project
+    2. mvn package
+    3. mvn exec:java
