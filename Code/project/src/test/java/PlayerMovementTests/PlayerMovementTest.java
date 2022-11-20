@@ -502,10 +502,13 @@ public class PlayerMovementTest {
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
         exitDoor.setY(Leftpos.getY());
-        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         exitDoor.setRewardCount(2);
         exitDoor.rewardCollected(Difficulty.EASY);
-        if( ! exitDoor.isClosed()){
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
+        if(!exitDoor.isClosed()){
+            assert(false);
+        }
+        if(objectData.getGameStats().isGameWon()){
             assert(false);
         }
         if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
@@ -520,10 +523,13 @@ public class PlayerMovementTest {
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
         exitDoor.setY(Leftpos.getY());
-        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         exitDoor.setRewardCount(8);
         exitDoor.rewardCollected(Difficulty.MEDIUM);
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         if( ! exitDoor.isClosed()){
+            assert(false);
+        }
+        if(objectData.getGameStats().isGameWon()){
             assert(false);
         }
         if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
@@ -539,12 +545,16 @@ public class PlayerMovementTest {
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
         exitDoor.setY(Leftpos.getY());
-        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         exitDoor.setRewardCount(13);
         exitDoor.rewardCollected(Difficulty.HARD);
-        if( ! exitDoor.isClosed()){
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
+        if( !exitDoor.isClosed()){
             assert(false);
         }
+        if(objectData.getGameStats().isGameWon()){
+            assert(false);
+        }
+
         if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
             assert(false);
         }
@@ -557,14 +567,16 @@ public class PlayerMovementTest {
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
         exitDoor.setY(Leftpos.getY());
-        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         exitDoor.setRewardCount(4);
         exitDoor.rewardCollected(Difficulty.EASY);
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         if(exitDoor.isClosed()){
             assert(false);
         }
-
-        if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
+        if(!objectData.getGameStats().isGameWon()){
+            assert(false);
+        }
+        if (hero.getX() != Leftpos.getX() || hero.getY() != Leftpos.getY()){
             assert(false);
         }
         assert(true);
@@ -576,14 +588,16 @@ public class PlayerMovementTest {
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
         exitDoor.setY(Leftpos.getY());
-        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         exitDoor.setRewardCount(9);
         exitDoor.rewardCollected(Difficulty.MEDIUM);
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         if(exitDoor.isClosed()){
             assert(false);
         }
-
-        if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
+        if (hero.getX() != Leftpos.getX() || hero.getY() != Leftpos.getY()){
+            assert(false);
+        }
+        if(!objectData.getGameStats().isGameWon()){
             assert(false);
         }
         assert(true);
@@ -595,14 +609,16 @@ public class PlayerMovementTest {
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
         exitDoor.setY(Leftpos.getY());
-        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         exitDoor.setRewardCount(14);
         exitDoor.rewardCollected(Difficulty.HARD);
+        objectData.getHeroLogic().processPlayerMovement(Leftpos,objectData);
         if(exitDoor.isClosed()){
             assert(false);
         }
-
-        if (hero.getX() != heropos.getX() || heropos.getY() != heropos.getY()){
+        if(!objectData.getGameStats().isGameWon()){
+            assert(false);
+        }
+        if (hero.getX() != Leftpos.getX() || hero.getY() != Leftpos.getY()){
             assert(false);
         }
         assert(true);
