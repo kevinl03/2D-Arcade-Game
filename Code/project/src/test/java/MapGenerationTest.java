@@ -1,11 +1,10 @@
 
-import Board.BoardData;
-import Board.Difficulty;
-import Board.Objects;
+import com.Board.BoardData;
+import com.Board.Difficulty;
+import com.Board.Objects;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

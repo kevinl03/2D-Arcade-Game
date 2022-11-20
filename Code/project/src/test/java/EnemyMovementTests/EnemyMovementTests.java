@@ -1,13 +1,12 @@
 package EnemyMovementTests;
 
-import Board.BoardData;
-import Board.Difficulty;
-import Board.Objects;
-import Entities.*;
-import Game.ObjectData;
-import Helpers.Direction;
-import Helpers.HeroColor;
-import Logic.EnemyLogic;
+import com.Board.Difficulty;
+import com.Board.Objects;
+import com.Entities.*;
+import com.Game.ObjectData;
+import com.Helpers.Direction;
+import com.Helpers.HeroColor;
+import com.Logic.EnemyLogic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
