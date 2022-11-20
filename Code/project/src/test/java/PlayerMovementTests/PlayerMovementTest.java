@@ -1,14 +1,13 @@
 package PlayerMovementTests;
 
-import Board.BoardData;
-import Board.Difficulty;
-import Board.Objects;
-import Entities.*;
-import Game.ObjectData;
-import Helpers.HeroColor;
+import com.Board.BoardData;
+import com.Board.Difficulty;
+import com.Board.Objects;
+import com.Entities.*;
+import com.Game.ObjectData;
+import com.Helpers.HeroColor;
 import org.junit.jupiter.api.Test;
 
-import java.security.DigestException;
 import java.util.ArrayList;
 public class PlayerMovementTest {
     ObjectData objectData;
