@@ -114,7 +114,6 @@ public class myTitle extends JPanel {
              */
             public void actionPerformed(ActionEvent arg0) {
                 dl.sound.playClick();
-                System.out.println("creating object data with color " + dl.heroColor.toString());
                 dl.gameObjectData = new ObjectData(dl.dif, dl.heroColor);
                 dl.board = dl.gameObjectData.getBoard();
 
