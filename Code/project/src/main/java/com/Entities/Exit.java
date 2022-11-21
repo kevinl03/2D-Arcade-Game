@@ -39,6 +39,13 @@ public class Exit extends Position{
         }
     }
 
+    public int getRewardCount() {
+        return rewardCount;
+    }
+    public void setRewardCount(int i){
+        rewardCount = i;
+    }
+
     /**
      * Gets the closed status
      * @return Closed status
