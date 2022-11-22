@@ -190,7 +190,7 @@ public class DisplayLayout extends JFrame implements Runnable{
                     pause = 0;
                     kh.escape = false;
                     //Go back to main menu
-                    System.out.println("com.Game is over");
+                    System.out.println("Game is over");
                     playPanel.firstRender = true;
                 }
                 if(gameObjectData.getGameStats().isGameWon()){

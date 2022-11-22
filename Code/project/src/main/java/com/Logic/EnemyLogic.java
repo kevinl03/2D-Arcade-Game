@@ -35,92 +35,142 @@ public class EnemyLogic {
         int width = boardArr.length;
         int height = boardArr[0].length;
 
-        //process movement for each enemy on board
-        for (Enemy enemy : enemies) {
+        boolean correctLoop = false;
+        boolean swapthree = false;
+        boolean swaplasttwo = false;
 
-            Objects[][] tempArr = new Objects[width][height];
-            for(int i = 0; i < width; i++){
-                System.arraycopy(boardArr[i], 0, tempArr[i], 0, height);
-            }
+        while(correctLoop == false) {
+            correctLoop = true;
 
-            Direction nextMove = findShortestPath(tempArr, enemy);
+            //process movement for each enemy on board
+            for (Enemy enemy : enemies) {
 
-            //get  random direction and make sure it's not going into a tree or exit
-            if(nextMove == Direction.RANDOM){
-                nextMove = getRandomDirection(board, enemy);
-            }
+                Objects[][] tempArr = new Objects[width][height];
+                for (int i = 0; i < width; i++) {
+                    System.arraycopy(boardArr[i], 0, tempArr[i], 0, height);
+                }
 
-            //check for two enemies colliding, if so, don't move
-            Objects nextTile = Objects.TMP;
-            switch(nextMove){
-                case NORTH -> nextTile = board.getTypeAt(enemy.getX(), enemy.getY() -1);
-                case EAST ->  nextTile = board.getTypeAt(enemy.getX() + 1, enemy.getY());
-                case SOUTH -> nextTile = board.getTypeAt(enemy.getX(), enemy.getY() +1);
-                case WEST ->  nextTile = board.getTypeAt(enemy.getX() - 1, enemy.getY());
-            }
-            if(nextTile == Objects.ENEMY){
-                nextMove = Direction.NULL;
-            }
+                Direction nextMove = findShortestPath(tempArr, enemy);
 
-            //if Moving, update board tiles accordingly
-            if (nextMove != Direction.NULL) {
-                Objects currentTile = board.getTypeAt(enemy);
-                if (currentTile == Objects.ENEMYANDREWARD) {
-                    board.setTypeAt(enemy, Objects.REWARD);
-                } else if (currentTile == Objects.ENEMYANDTRAP) {
-                    board.setTypeAt(enemy, Objects.TRAP);
-                } else if (currentTile == Objects.ENEMYANDBUSH){
-                    board.setTypeAt(enemy, Objects.BUSH);
-                } else if (currentTile == Objects.ENEMYANDBONUS){
-                    board.setTypeAt(enemy, Objects.BONUS);
-                } else {
-                    board.setTypeAt(enemy, Objects.EMPTY);
+                //get  random direction and make sure it's not going into a tree or exit
+                if (nextMove == Direction.RANDOM) {
+                    nextMove = getRandomDirection(board, enemy);
+                }
+
+                //check for two enemies colliding, if so, don't move
+                Objects nextTile = Objects.TMP;
+                switch (nextMove) {
+                    case NORTH -> nextTile = board.getTypeAt(enemy.getX(), enemy.getY() - 1);
+                    case EAST -> nextTile = board.getTypeAt(enemy.getX() + 1, enemy.getY());
+                    case SOUTH -> nextTile = board.getTypeAt(enemy.getX(), enemy.getY() + 1);
+                    case WEST -> nextTile = board.getTypeAt(enemy.getX() - 1, enemy.getY());
+                }
+                //2 or more enemies
+                if (nextTile == Objects.ENEMY) {
+                    //nextMove = Direction.NULL;
+                    //Testing code
+                    //medium
+                    if (enemies.size() == 2) {
+                        if ( enemies.indexOf(enemy) == 0 ) {
+                            //If there is enemy in the front, switch enemy order and try again
+                            Collections.swap(enemies, 0, 1);
+                            correctLoop = false;
+                            System.out.println("Swapped order");
+                            break;
+                        } else {
+                            nextMove = Direction.NULL;
+                        }
+                    }
+                    if(enemies.size() == 3){
+                        if (enemies.indexOf(enemy) == 0) {
+                            //If there is enemy in the front, rotate to back of enemy order and try again
+                            Collections.swap(enemies, 0, 2);
+                            Collections.swap(enemies, 0, 1);
+                            correctLoop = false;
+                            System.out.println("Swapped index 0 1 2 to 1 2 0");
+                            break;
+                        }
+                        if ( (enemies.indexOf(enemy) == 1) && !swaplasttwo) {
+                            //If there is enemy in the front, rotate 2nd and 3rd enemy
+                            Collections.swap(enemies, 1, 2);
+                            correctLoop = false;
+                            swapthree = true;
+                            swaplasttwo = true;
+                            System.out.println("Swapped last 2 enemies");
+                            break;
+                        }
+                        else {
+                            nextMove = Direction.NULL;
+                        }
+                    }
+                }
+
+                //First enemy moved and now has to not move
+                if (swapthree && enemies.indexOf(enemy) == 0){
+                    nextMove = Direction.NULL;
+                }
+
+                //if Moving, update board tiles accordingly
+                if (nextMove != Direction.NULL) {
+                    Objects currentTile = board.getTypeAt(enemy);
+                    if (currentTile == Objects.ENEMYANDREWARD) {
+                        board.setTypeAt(enemy, Objects.REWARD);
+                    } else if (currentTile == Objects.ENEMYANDTRAP) {
+                        board.setTypeAt(enemy, Objects.TRAP);
+                    } else if (currentTile == Objects.ENEMYANDBUSH) {
+                        board.setTypeAt(enemy, Objects.BUSH);
+                    } else if (currentTile == Objects.ENEMYANDBONUS) {
+                        board.setTypeAt(enemy, Objects.BONUS);
+                    } else {
+                        board.setTypeAt(enemy, Objects.EMPTY);
+                    }
+                }
+
+                //Adjust enemies location and the direction it is facing
+                switch (nextMove) {
+                    case NORTH:
+                        enemy.decrementY();
+                        enemy.setDir(Direction.NORTH);
+                        break;
+                    case EAST:
+                        enemy.incrementX();
+                        enemy.setDir(Direction.EAST);
+
+                        break;
+                    case SOUTH:
+                        enemy.incrementY();
+                        enemy.setDir(Direction.SOUTH);
+
+                        break;
+                    case WEST:
+                        enemy.decrementX();
+                        enemy.setDir(Direction.WEST);
+
+                        break;
+                    case NULL:
+                        break;
+
+                }
+
+                //if enemy moved, update new tiles information
+                if (nextMove != Direction.NULL) {
+                    Objects currentTile = board.getTypeAt(enemy);
+                    if (currentTile == Objects.REWARD) {
+                        board.setTypeAt(enemy, Objects.ENEMYANDREWARD);
+                    } else if (currentTile == Objects.TRAP) {
+                        board.setTypeAt(enemy, Objects.ENEMYANDTRAP);
+                    } else if (currentTile == Objects.BUSH) {
+                        board.setTypeAt(enemy, Objects.ENEMYANDBUSH);
+                    } else if (currentTile == Objects.BONUS) {
+                        board.setTypeAt(enemy, Objects.ENEMYANDBONUS);
+                    } else if (currentTile == Objects.HERO || currentTile == Objects.HEROHIDDEN) {
+                        gameStats.setGameOver(true);
+                    } else {
+                        board.setTypeAt(enemy, Objects.ENEMY);
+                    }
                 }
             }
 
-            //Adjust enemies location and the direction it is facing
-            switch (nextMove) {
-                case NORTH:
-                    enemy.decrementY();
-                    enemy.setDir(Direction.NORTH);
-                    break;
-                case EAST:
-                    enemy.incrementX();
-                    enemy.setDir(Direction.EAST);
-
-                    break;
-                case SOUTH:
-                    enemy.incrementY();
-                    enemy.setDir(Direction.SOUTH);
-
-                    break;
-                case WEST:
-                    enemy.decrementX();
-                    enemy.setDir(Direction.WEST);
-
-                    break;
-                case NULL:
-                    break;
-
-            }
-
-            //if enemy moved, update new tiles information
-            if (nextMove != Direction.NULL) {
-                Objects currentTile = board.getTypeAt(enemy);
-                if (currentTile == Objects.REWARD) {
-                    board.setTypeAt(enemy, Objects.ENEMYANDREWARD);
-                } else if (currentTile == Objects.TRAP) {
-                    board.setTypeAt(enemy, Objects.ENEMYANDTRAP);
-                } else if (currentTile == Objects.BUSH){
-                    board.setTypeAt(enemy, Objects.ENEMYANDBUSH);
-                } else if (currentTile == Objects.BONUS){
-                    board.setTypeAt(enemy, Objects.ENEMYANDBONUS);
-                } else if (currentTile == Objects.HERO || currentTile == Objects.HEROHIDDEN) {
-                    gameStats.setGameOver(true);
-                } else {
-                    board.setTypeAt(enemy, Objects.ENEMY);
-                }
-            }
         }
 
     }

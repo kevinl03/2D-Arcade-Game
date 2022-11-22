@@ -203,8 +203,8 @@ public class EnemiesCountTest {
                 newX2 = twoEnemy.getX();
                 newY2 = twoEnemy.getY();
                 if ((oldX1 == newX1) && (oldY1 == newY1)) {
-                    if( ((oneEnemy.getX() - twoEnemy.getX()) <= 2) && ((oneEnemy.getX() - twoEnemy.getX()) >= -2)
-                        && ((oneEnemy.getY() - twoEnemy.getY()) <= 2) && ((oneEnemy.getY() - twoEnemy.getY()) >= -2))
+                    if( ((oneEnemy.getX() - twoEnemy.getX()) <= 1) && ((oneEnemy.getX() - twoEnemy.getX()) >= -1)
+                        && ((oneEnemy.getY() - twoEnemy.getY()) <= 1) && ((oneEnemy.getY() - twoEnemy.getY()) >= -1))
                         // Do nothing
                         {}
                         else {
@@ -212,8 +212,8 @@ public class EnemiesCountTest {
                         }
                     }
                 if ((oldX2 == newX2) && (oldY2 == newY2)) {
-                    if( ((oneEnemy.getX() - twoEnemy.getX()) <= 2) && ((oneEnemy.getX() - twoEnemy.getX()) >= -2)
-                            && ((oneEnemy.getY() - twoEnemy.getY()) <= 2) && ((oneEnemy.getY() - twoEnemy.getY()) >= -2))
+                    if( ((oneEnemy.getX() - twoEnemy.getX()) <= 1) && ((oneEnemy.getX() - twoEnemy.getX()) >= -1)
+                            && ((oneEnemy.getY() - twoEnemy.getY()) <= 1) && ((oneEnemy.getY() - twoEnemy.getY()) >= -1))
                     // Do nothing
                     {}
                     else {
