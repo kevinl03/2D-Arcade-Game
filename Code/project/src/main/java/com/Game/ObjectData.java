@@ -124,6 +124,10 @@ public class ObjectData {
                 }
             }
         }
+        //test
+        Position herostart = new Position(2,14);
+        hero.setPosition(herostart);
+        //
         hero.setHeroColor(heroColor);
     }
 

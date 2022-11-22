@@ -112,7 +112,10 @@ public class myGame extends JPanel{
         }
 
         else if (kh.down && !kh.up) {
-            heroPos.incrementY();
+            //can't go down in starting point
+            if(hero.getY()!=14) {
+                heroPos.incrementY();
+            }
         }
 
         else if (kh.left && !kh.right) {

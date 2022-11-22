@@ -557,6 +557,8 @@ public class BoardData {
 
     private int[] setHeroLocation() {
 
+        //FIXED
+        /*
         boolean heroNotSpawned = true;
 
         while(heroNotSpawned){
@@ -572,6 +574,11 @@ public class BoardData {
         }
         //case will never hit
         return null;
+
+         */
+        ObjectMap[2][14] = Objects.HERO;
+        int heroLoc[] = {2,14};
+        return heroLoc;
     }
 
     /**
@@ -579,6 +586,8 @@ public class BoardData {
      *
      */
     public void setDoor() {
+        //Fixed
+        /*
         Random rand = new Random(); //instance of random class
 
         //0 = north, 1 = east, 2 = south, 3 = west;
@@ -610,7 +619,9 @@ public class BoardData {
                 break;
         }
         //place EXIT object in generated location
-        ObjectMap[x][y] = Objects.EXIT;
+
+         */
+        ObjectMap[23][0] = Objects.EXIT;
     }
 
 
