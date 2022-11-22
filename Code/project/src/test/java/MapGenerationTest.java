@@ -3,6 +3,9 @@ import com.Board.Difficulty;
 import com.Board.Objects;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import com.Helpers.Node;
+import com.Entities.Position;
+import com.Helpers.Direction;
 
 import java.util.*;
 
