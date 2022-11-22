@@ -2,7 +2,6 @@ package com.Game;
 
 import com.Board.BoardData;
 import com.Board.Difficulty;
-import com.Board.Objects;
 import com.Entities.*;
 import com.Helpers.HeroColor;
 import com.Logic.EnemyLogic;
@@ -116,7 +115,7 @@ public class ObjectData {
                     case TRAP -> traps.add(new Trap(x,y, 0,trapDamage));
                     case REWARD -> rewards.add(new RegularReward(x, y, 0, rewardPoints));
                     case EXIT -> exit.setPosition(currentTile);
-                    case BONUS -> {
+                    case BONUS -> b{
                         bonus.add(new Bonus(x, y, 0, rewardPoints * 2));
                         board.setTypeAt(new Position(x, y), Objects.EMPTY);
                     }

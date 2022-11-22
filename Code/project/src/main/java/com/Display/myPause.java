@@ -82,7 +82,6 @@ private GridBagConstraints gbc;
             {
                 //Resume
                 dl.sound.playClick();
-                System.out.println("Unpause");
                 dl.pause = 0;
                 dl.kh.escape = false;
                 // Out of pause
@@ -114,8 +113,6 @@ private GridBagConstraints gbc;
                 dl.pause = 0;
                 dl.kh.escape = false;
                 //Go back to main menu
-                System.out.println("Going Back");
-
                 // show associated difficulty panel
                 cl.show(dl.displayPanel, "1");
 
@@ -144,7 +141,6 @@ private GridBagConstraints gbc;
                 dl.pause = 0;
                 dl.kh.escape = false;
                 //Go back to main menu
-                System.out.println("com.Game is over");
             }
         });*/
     }
