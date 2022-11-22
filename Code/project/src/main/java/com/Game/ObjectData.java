@@ -106,8 +106,10 @@ public class ObjectData {
         }
 
         //iterate through board to create objects
-        for(int x = 0; x < board.getboardwidth() - 1; x++){
-            for(int y = 0; y < board.getboardheight() - 1; y++){
+        //for(int x = 0; x < board.getboardwidth() - 1; x++){
+            //for(int y = 0; y < board.getboardheight() - 1; y++){
+        for(int x = 0; x < board.getboardwidth() ; x++){
+            for(int y = 0; y < board.getboardheight() ; y++){
 
                 Position currentTile = new Position(x,y);
                 switch(board.getTypeAt(currentTile)){
@@ -125,8 +127,8 @@ public class ObjectData {
             }
         }
         //test
-        Position herostart = new Position(2,14);
-        hero.setPosition(herostart);
+        //Position herostart = new Position(2,14);
+        //hero.setPosition(herostart);
         //
         hero.setHeroColor(heroColor);
     }

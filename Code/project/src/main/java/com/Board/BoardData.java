@@ -576,8 +576,15 @@ public class BoardData {
         return null;
 
          */
-        ObjectMap[2][14] = Objects.HERO;
-        int heroLoc[] = {2,14};
+        Random rand = new Random(); //instance of random class
+
+        // Hero at south wall, so door appears west,north,east wall
+        //Somewhere on the south wall
+        int x = rand.nextInt(columns-2)+1;
+        int y = rows-1;
+
+        ObjectMap[x][y] = Objects.HERO;
+        int heroLoc[] = {x,y};
         return heroLoc;
     }
 
