@@ -7,6 +7,7 @@ import com.Helpers.HeroColor;
 import com.Logic.EnemyLogic;
 import com.Logic.HeroLogic;
 import com.Logic.RewardLogic;
+import com.Board.Objects;
 
 import java.util.ArrayList;
 
@@ -115,7 +116,7 @@ public class ObjectData {
                     case TRAP -> traps.add(new Trap(x,y, 0,trapDamage));
                     case REWARD -> rewards.add(new RegularReward(x, y, 0, rewardPoints));
                     case EXIT -> exit.setPosition(currentTile);
-                    case BONUS -> b{
+                    case BONUS -> {
                         bonus.add(new Bonus(x, y, 0, rewardPoints * 2));
                         board.setTypeAt(new Position(x, y), Objects.EMPTY);
                     }
