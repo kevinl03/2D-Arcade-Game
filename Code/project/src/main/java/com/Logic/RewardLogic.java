@@ -88,7 +88,6 @@ public class RewardLogic {
                 }
                 //used to hide object if the map just generated when game is early
                 if (ticks < 6000) {
-                    //System.out.printf("Setting");
                     Position curcoords = new Position(bonusObj.getX(), bonusObj.getY());
 
                     if (boardData.getTypeAt(curcoords) == Objects.BONUS){

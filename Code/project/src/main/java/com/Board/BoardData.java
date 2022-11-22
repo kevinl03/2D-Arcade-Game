@@ -260,14 +260,11 @@ public class BoardData {
 
             }
             //for successful wall segment generation
-            if (failedgeneration == false) {
-                //System.out.printf("successful generation");
-                //in order to exit while loop
+            if (failedgeneration == false) {//in order to exit while loop
 
                 createdwall = true;
                 replaceTMPTrees();
             } else {
-                //System.out.printf("fail generation");
                 //get rid of unusable TMP trees which failed generation
                 removeTMPTrees();
             }
@@ -307,13 +304,10 @@ public class BoardData {
             int[] xy = getRandomXY();
             int x = xy[0];
             int y = xy[1];
-//            System.out.println("X - " + x + "  Y - " + y);
 
             if(ObjectMap[x][y] == Objects.EMPTY){
                 int[] loc = {x,y};
                 boolean valid = checkValidRewardProximity(rewardLocations, loc, dif);
-//                System.out.println(test);
-//                    System.out.println(valid);
                 if(valid){
                     ObjectMap[x][y] = Objects.REWARD;
                     rewardLocations.add(loc);

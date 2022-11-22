@@ -190,7 +190,6 @@ public class DisplayLayout extends JFrame implements Runnable{
                     pause = 0;
                     kh.escape = false;
                     //Go back to main menu
-                    System.out.println("Game is over");
                     playPanel.firstRender = true;
                 }
                 if(gameObjectData.getGameStats().isGameWon()){
@@ -198,7 +197,6 @@ public class DisplayLayout extends JFrame implements Runnable{
                     gameWonTest = true;
                     pause = 0;
                     kh.escape = false;
-                    System.out.println("com.Game has been won!!!");
                 }
 
                 //choosing how long every thread lasts
@@ -211,7 +209,6 @@ public class DisplayLayout extends JFrame implements Runnable{
                 frameCounter = 0;
             }
         }
-        System.out.println("Out of the game");
         //reset the game
         playPanel.reset();
 

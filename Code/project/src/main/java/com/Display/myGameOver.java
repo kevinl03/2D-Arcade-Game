@@ -80,8 +80,6 @@ public class myGameOver extends JPanel {
             {
                 dl.sound.playClick();
                 //Go back to main menu
-                System.out.println("Going Back");
-
                 // show associated difficulty panel
                 cl.show(dl.displayPanel, "1");
 

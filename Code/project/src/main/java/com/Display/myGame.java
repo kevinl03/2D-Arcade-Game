@@ -203,15 +203,11 @@ public class myGame extends JPanel{
             bear_pngs = new HashMap<>();
             URL pathUrl = getClass().getClassLoader().getResource("bears/");
 
-            System.out.println("test");
             if ((pathUrl != null) && pathUrl.getProtocol().equals("file")) {
-                System.out.println("test2");
-
                 File files[] = new File(pathUrl.toURI()).listFiles();
                 for (final File fileEntry : files) {
                     if (fileEntry.isFile()) {
                         String fileName = fileEntry.getName();
-                        System.out.println(fileName);
                         bear_pngs.put(fileName, ImageIO.read(getClass().getResource("/bears/" + fileName)));
                     }
                 }

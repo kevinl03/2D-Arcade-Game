@@ -46,7 +46,6 @@ public class HeroLogic {
                 activateTrap(pos, gameObjectData);
                 break;
             case ENEMY:
-                sound.lostSound();
                 gameObjectData.getGameStats().setGameOver(true);
                 break;
             case EMPTY:
