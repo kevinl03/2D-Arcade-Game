@@ -9,57 +9,7 @@ import com.Helpers.HeroColor;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-public class PlayerMovementTest {
-    ObjectData objectData;
-    BoardData boardData;
-
-    Hero hero;
-
-    Position heropos;
-
-    Position Uppos;
-    Position Downpos;
-    Position Leftpos;
-    Position Rightpos;
-
-    int rewardValue;
-    //int bonusValue;
-    int trapValue;
-
-
-
-    void setup(Objects object,Difficulty difficulty) {
-        rewardValue=50;
-    if(difficulty== Difficulty.EASY) {
-        objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);
-        trapValue=50;
-    }
-    else if(difficulty== Difficulty.MEDIUM) {
-        objectData = new ObjectData(Difficulty.MEDIUM, HeroColor.BROWN);
-        trapValue=100;
-    }
-    else{
-        objectData = new ObjectData(Difficulty.HARD, HeroColor.BROWN);
-        trapValue=200;
-    }
-        boardData = objectData.getBoard();
-        hero = objectData.getHero();
-
-
-        heropos = new Position(hero.getX(), hero.getY());
-
-        Rightpos = new Position(heropos.getX() + 1, heropos.getY());
-        Leftpos = new Position(heropos.getX() -1, heropos.getY());
-        Uppos = new Position(heropos.getX(), heropos.getY() -1);
-        Downpos = new Position(heropos.getX(), heropos.getY()+ 1);
-
-        //set adjecent tiles to a certain object so that character movement can be tested
-        boardData.setTypeAt(Rightpos, object);
-        boardData.setTypeAt(Leftpos, object);
-        boardData.setTypeAt(Uppos, object);
-        boardData.setTypeAt(Downpos, object);
-
-    }
+public class PlayerMovementTest extends MovementTestInfo {
 
     @Test
     void NonConstraintPlayerMovementUp(){
