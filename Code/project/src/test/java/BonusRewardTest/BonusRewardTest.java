@@ -151,18 +151,40 @@ public class BonusRewardTest extends MovementTestInfo{
     }
 
     @Test
-    void DespawnWhenNonEmptyTile(){
-        createbonus();
-
-        Position testbonuspos = new Position(testbonus.getX(), testbonus.getY());
-
-        objectData.getBoard().setTypeAt(testbonuspos, Objects.ENEMYANDBONUS);
+    void DespawnWhenEnemyOnBonusTileTest(){
+        setup(Objects.EMPTY, Difficulty.EASY);
+        bonuslist = objectData.getBonusArray();
 
 
-        testbonus.setisSpawned(true);
-        testbonus.setStartTime(0);
+        for (int rewardbonus = 0; rewardbonus < bonuslist.size(); rewardbonus++) {
+            Bonus curBonus = bonuslist.get(rewardbonus);
 
-        objectData.getRewardLogic().updateRewards(objectData, 10001);
+            curBonus.setisSpawned(false);
+            curBonus.setStartTime(0);
+            curBonus.setdespawnedTime(0);
+            //spawnrewards
+            objectData.getRewardLogic().updateRewards(objectData, objectData.getRewardLogic().getMaxDespawnTime()+1);
+
+            Position newBonusPos = new Position(curBonus.getX(),curBonus.getY());
+            objectData.getBoard().setTypeAt(newBonusPos, Objects.ENEMYANDBONUS);
+
+            curBonus.setisSpawned(true);
+            curBonus.setStartTime(0);
+
+            objectData.getRewardLogic().updateRewards(objectData, objectData.getRewardLogic().getMaxLifeTime()+1);
+
+            Assertions.assertEquals(boardData.getTypeAt(newBonusPos), Objects.ENEMYANDBONUS);
+
+
+
+
+
+
+
+
+
+
+        }
     }
 
 }
