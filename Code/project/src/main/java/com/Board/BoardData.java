@@ -434,6 +434,7 @@ public class BoardData {
                 generateBonusrewards(2);
                 break;
             case HARD:
+            case INFINITE:
                 generateBonusrewards(1);
                 break;
         }
@@ -557,6 +558,8 @@ public class BoardData {
 
     private int[] setHeroLocation() {
 
+        //FIXED
+        /*
         boolean heroNotSpawned = true;
 
         while(heroNotSpawned){
@@ -572,6 +575,18 @@ public class BoardData {
         }
         //case will never hit
         return null;
+
+         */
+        Random rand = new Random(); //instance of random class
+
+        // Hero at south wall, so door appears west,north,east wall
+        //Somewhere on the south wall
+        int x = rand.nextInt(columns-2)+1;
+        int y = rows-1;
+
+        ObjectMap[x][y] = Objects.HERO;
+        int heroLoc[] = {x,y};
+        return heroLoc;
     }
 
     /**
@@ -583,33 +598,36 @@ public class BoardData {
 
         //0 = north, 1 = east, 2 = south, 3 = west;
         //generate number between 0 and 3
-        int side = rand.nextInt(3);
+        int side = rand.nextInt(2);
         int x = 0;
         int y = 0;
 
         switch(side){
+            // Hero at south wall, so door appears west,north,east wall
+            /*
             case(0):
                  //Somewhere on the south wall
                  x = rand.nextInt(columns-2)+1;
                  y = rows-1;
                 break;
-            case(1):
+
+             */
+            case(0):
                 //Somewhere on the WEST wall
                 y = rand.nextInt(rows-2)+1;
                 x = columns-1;
                 break;
-            case(2):
+            case(1):
                 //North wall
                 x = rand.nextInt(columns-2)+1;
                 y = 0;
                 break;
-            case(3):
+            case(2):
                 //EAST wall
                 y = rand.nextInt(rows-2)+1 ;
                 x = 0;
                 break;
         }
-        //place EXIT object in generated location
         ObjectMap[x][y] = Objects.EXIT;
     }
 

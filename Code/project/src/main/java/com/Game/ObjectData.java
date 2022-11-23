@@ -7,6 +7,7 @@ import com.Helpers.HeroColor;
 import com.Logic.EnemyLogic;
 import com.Logic.HeroLogic;
 import com.Logic.RewardLogic;
+import com.Board.Objects;
 
 import java.util.ArrayList;
 
@@ -105,8 +106,10 @@ public class ObjectData {
         }
 
         //iterate through board to create objects
-        for(int x = 0; x < board.getboardwidth() - 1; x++){
-            for(int y = 0; y < board.getboardheight() - 1; y++){
+        //for(int x = 0; x < board.getboardwidth() - 1; x++){
+            //for(int y = 0; y < board.getboardheight() - 1; y++){
+        for(int x = 0; x < board.getboardwidth() ; x++){
+            for(int y = 0; y < board.getboardheight() ; y++){
 
                 Position currentTile = new Position(x,y);
                 switch(board.getTypeAt(currentTile)){
@@ -115,11 +118,18 @@ public class ObjectData {
                     case TRAP -> traps.add(new Trap(x,y, 0,trapDamage));
                     case REWARD -> rewards.add(new RegularReward(x, y, 0, rewardPoints));
                     case EXIT -> exit.setPosition(currentTile);
-                    case BONUS -> bonus.add(new Bonus (x,y,0,rewardPoints*2));
+                    case BONUS -> {
+                        bonus.add(new Bonus(x, y, 0, rewardPoints * 2));
+                        board.setTypeAt(new Position(x, y), Objects.EMPTY);
+                    }
 
                 }
             }
         }
+        //test
+        //Position herostart = new Position(2,14);
+        //hero.setPosition(herostart);
+        //
         hero.setHeroColor(heroColor);
     }
 
