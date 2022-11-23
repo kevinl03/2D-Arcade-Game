@@ -434,6 +434,7 @@ public class BoardData {
                 generateBonusrewards(2);
                 break;
             case HARD:
+            case INFINITE:
                 generateBonusrewards(1);
                 break;
         }

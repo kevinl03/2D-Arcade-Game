@@ -1,12 +1,17 @@
 import com.Board.BoardData;
 import com.Board.Difficulty;
 import com.Board.Objects;
+import com.Entities.Bonus;
+import com.Game.ObjectData;
+import com.Helpers.HeroColor;
+import com.Logic.RewardLogic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.Helpers.Node;
 import com.Entities.Position;
 import com.Helpers.Direction;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class MapGenerationTest {
@@ -359,4 +364,157 @@ public class MapGenerationTest {
             Assertions.assertEquals(generationCountReward, rewardCount);
         }
     }
+
+    @Test
+    void BonusRewardDespawnInitially(){
+        for (Difficulty dif : Difficulty.values()) {
+            ObjectData objectData = new ObjectData(dif, HeroColor.BROWN);
+            ArrayList<Bonus> bonusList = objectData.getBonusArray();
+            RewardLogic bonusLogic = objectData.getRewardLogic();
+            bonusLogic.updateRewards(objectData, 0);
+            boolean result = true;
+            for(Bonus b : bonusList) {
+                if (b.getisSpawned()) {
+                    result = false;
+                }
+            }
+            assert(result);
+        }
+    }
+
+    @Test
+    void BonusRewardSpawnHard() {
+        int loop = 0;
+        while (loop < 100) {
+            ObjectData objectData = new ObjectData(Difficulty.MEDIUM, HeroColor.BROWN);
+            ArrayList<Bonus> bonusList = objectData.getBonusArray();
+            RewardLogic bonusLogic = objectData.getRewardLogic();
+            int switched0 = 0;
+            boolean result0 = false;
+            boolean spawndespawn0 = false;
+            Bonus b0 = bonusList.get(0);
+            //milliseconds
+            int count = 0;
+            //loop for 120 seconds, incrementing by 1 second
+            while (count <= 120000) {
+                bonusLogic.updateRewards(objectData, count);
+                if (b0.getisSpawned() && !result0) {
+                    result0 = true;
+                    switched0++;
+                }
+                //Despawn a spawned bonus
+                if (!b0.getisSpawned() && result0 && !spawndespawn0) {
+                    switched0++;
+                    spawndespawn0 = true;
+                }
+                count += 1000;
+            }
+            loop++;
+            assert (switched0 == 2);
+        }
+    }
+
+    @Test
+    void BonusRewardDespawnMedium() {
+        int loop = 0;
+        while (loop < 100) {
+            ObjectData objectData = new ObjectData(Difficulty.MEDIUM, HeroColor.BROWN);
+            ArrayList<Bonus> bonusList = objectData.getBonusArray();
+            RewardLogic bonusLogic = objectData.getRewardLogic();
+            int switched0 = 0;
+            int switched1 = 0;
+            boolean result0 = false;
+            boolean result1 = false;
+            boolean spawndespawn0 = false;
+            boolean spawndespawn1 = false;
+            Bonus b0 = bonusList.get(0);
+            Bonus b1 = bonusList.get(1);
+            //milliseconds
+            int count = 0;
+            //loop for 120 seconds, incrementing by 1 second
+            while (count <= 120000) {
+                bonusLogic.updateRewards(objectData, count);
+                if (b0.getisSpawned() && !result0) {
+                    result0 = true;
+                    switched0++;
+                }
+                //Despawn a spawned bonus
+                if (!b0.getisSpawned() && result0 && !spawndespawn0) {
+                    switched0++;
+                    spawndespawn0 = true;
+                }
+                if (b1.getisSpawned() && !result1) {
+                    result1 = true;
+                    switched1++;
+                }
+                //Despawn a spawned bonus
+                if (!b1.getisSpawned() && result1 && !spawndespawn1) {
+                    switched1++;
+                    spawndespawn1 = true;
+                }
+                count += 1000;
+            }
+            loop++;
+            assert ((switched0 == 2) && (switched1 == 2));
+        }
+    }
+
+    @Test
+    void BonusRewardDespawnEasy() {
+        int loop = 0;
+        while (loop < 100) {
+            ObjectData objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);
+            ArrayList<Bonus> bonusList = objectData.getBonusArray();
+            RewardLogic bonusLogic = objectData.getRewardLogic();
+            int switched0 = 0;
+            int switched1 = 0;
+            int switched2 = 0;
+            boolean result0 = false;
+            boolean result1 = false;
+            boolean result2 = false;
+            boolean spawndespawn0 = false;
+            boolean spawndespawn1 = false;
+            boolean spawndespawn2 = false;
+            Bonus b0 = bonusList.get(0);
+            Bonus b1 = bonusList.get(1);
+            Bonus b2 = bonusList.get(2);
+            //milliseconds
+            int count = 0;
+            //loop for 120 seconds, incrementing by 1 second
+            while (count <= 120000) {
+                bonusLogic.updateRewards(objectData, count);
+                if (b0.getisSpawned() && !result0) {
+                    result0 = true;
+                    switched0++;
+                }
+                //Despawn a spawned bonus
+                if (!b0.getisSpawned() && result0 && !spawndespawn0) {
+                    switched0++;
+                    spawndespawn0 = true;
+                }
+                if (b1.getisSpawned() && !result1) {
+                    result1 = true;
+                    switched1++;
+                }
+                //Despawn a spawned bonus
+                if (!b1.getisSpawned() && result1 && !spawndespawn1) {
+                    switched1++;
+                    spawndespawn1 = true;
+                }
+                if (b2.getisSpawned() && !result2) {
+                    result2 = true;
+                    switched2++;
+                }
+                //Despawn a spawned bonus
+                if (!b2.getisSpawned() && result2 && !spawndespawn2) {
+                    switched2++;
+                    spawndespawn2 = true;
+                }
+                count += 1000;
+            }
+            loop++;
+            assert ((switched0 == 2) && (switched1 == 2) && (switched2 == 2));
+        }
+    }
+
 }
