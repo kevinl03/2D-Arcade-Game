@@ -19,14 +19,11 @@ public class RewardLogic {
         ArrayList<Bonus> bonuses = gameobjectData.getBonus();
         Random rand = new Random(); //instance of random class
 
-
-
         Objects[][] objectMap = boardData.getBoardData();
         for (Bonus bonusObj : bonuses){
 
             //if the object is spawned, we must know to despawn it here
             if (bonusObj.getisSpawned()) {
-
 
                 //randomize despawns
                 int max = 100000; //15 seconds
@@ -98,9 +95,6 @@ public class RewardLogic {
                 }
             }
         }
-
-
-
     }
 
     /**

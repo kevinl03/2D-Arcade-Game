@@ -8,7 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 
 /**
@@ -41,12 +44,42 @@ public class mySettings extends JPanel {
      */
     private void getHeroColors(){
         try {
+//            heroColorPngs = new HashMap<>();
+//            for(HeroColor color: HeroColor.values()){
+//                System.out.println("/squirrels/Squirrel" + color.toString() + "East2.png");
+//                BufferedImage img = ImageIO.read(getClass().getResource("/squirrels/Squirrel" + color.toString() + "East2.png"));
+//                System.out.println(img);
+//
+//                heroColorPngs.put(color, img);
+//            }
+
             heroColorPngs = new HashMap<>();
-            for(HeroColor color: HeroColor.values()){
-                BufferedImage img = ImageIO.read(getClass().getResource("/squirrels/Squirrel" + color.toString() + "East2.png"));
-                heroColorPngs.put(color, img);
+            URL pathUrl = getClass().getClassLoader().getResource("squirrels/");
+            if ((pathUrl != null) && pathUrl.getProtocol().equals("file")) {
+                File files[] = new File(pathUrl.toURI()).listFiles();
+                for(final File fileEntry : files){
+                    if(fileEntry.isFile()){
+                        String fileName = fileEntry.getName();
+                        HeroColor color = HeroColor.BROWN;
+                        if(fileName.contains("Brown")){
+                            color = HeroColor.BROWN;
+                        } else if (fileName.contains("Grey")) {
+                            color = HeroColor.BROWN;
+                        } else if (fileName.contains("Red")) {
+                            color = HeroColor.BROWN;
+                        } else if (fileName.contains("White")) {
+                            color = HeroColor.BROWN;
+                        }
+                        if(fileName.contains("East2")){
+                            System.out.println("/squirrels/" + fileName);
+                            heroColorPngs.put(color, ImageIO.read(getClass().getResource("/squirrels/" + fileName)));
+                        }
+                    }
+                }
             }
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }

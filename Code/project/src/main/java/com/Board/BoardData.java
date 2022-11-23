@@ -384,7 +384,7 @@ public class BoardData {
             case HARD: case INFINITE: minProximity = 5;
             break;
         }
-//            using pythagorean theorem to make sure reward is atleast minProximity away from all other rewards
+//            using pythagorean theorem to make sure enemy is atleast minProximity away from hero
         if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
             return false;
         }
