@@ -14,6 +14,11 @@ import java.util.Random;
  * do not need to be updated inside of {@link myGame#updates()}
  */
 public class RewardLogic {
+    int maxLifeTime = 100000;
+    int maxDespawnTime = 100000;
+
+    int minLifeTime = 7000;
+    int minDespawnTime = 7000;
     public void updateRewards(ObjectData gameobjectData, int ticks){
         BoardData boardData = gameobjectData.getBoard();
         ArrayList<Bonus> bonuses = gameobjectData.getBonus();
@@ -29,11 +34,10 @@ public class RewardLogic {
 
 
                 //randomize despawns
-                int max = 100000; //15 seconds
-                int min = 5000; //8 seconds
+
 
                 //choose a random int between max and min so that the object despawns
-                int lifetime = rand.nextInt(max - min + 1) + min;
+                int lifetime = rand.nextInt(maxLifeTime - minLifeTime + 1) + minLifeTime;
                 //if its been spawned for long enough
                 if (ticks - bonusObj.getStartTime() > lifetime) {
 
@@ -70,7 +74,7 @@ public class RewardLogic {
                 Position newpos = new Position(newcoords[0], newcoords[1]);
 
                 //if its been between 5 - 10 seconds then we can respawn the object
-                int respawntime = rand.nextInt(100000-5000+1) +5000;
+                int respawntime = rand.nextInt(maxDespawnTime-minDespawnTime+1) + minDespawnTime;
                 if (ticks - bonusObj.getdespawnTime() > respawntime){
 
                     //show the object on the map again only if the tile is empty
@@ -128,5 +132,21 @@ public class RewardLogic {
         int[] xy = {x,y};
 
         return xy;
+    }
+
+    public int getMaxDespawnTime() {
+        return maxDespawnTime;
+    }
+
+    public int getMaxLifeTime() {
+        return maxLifeTime;
+    }
+
+    public int getMinDespawnTime() {
+        return minDespawnTime;
+    }
+
+    public int getMinLifeTime() {
+        return minLifeTime;
     }
 }
