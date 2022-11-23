@@ -38,11 +38,11 @@ public class Sound {
     }
     public void lostSound(){
         try {
-            AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResource("/fail.wav"));
+            AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("/fail.wav"));
             lostSound = AudioSystem.getClip();
             lostSound.open(musicstream);
         } catch(Exception e) {
-            System.out.println("Failed\n");
+            System.out.println(e.getMessage());
         }
         lostSound.start();
     }
