@@ -197,7 +197,7 @@ public class MapGenerationTest {
             int y = board.getboardheight();
             for (int i = 0; i < x; i++) {
                 for (int j = 0; j < y; j++) {
-                    if(board.getTypeAt(i,j) != Objects.EXIT){
+                    if(board.getTypeAt(i,j) != Objects.EXIT && board.getTypeAt(i,j) != Objects.HERO){
                         if( i == 0 || i == x-1){
                             Assertions.assertEquals(Objects.TREE, board.getTypeAt(i,j));
                         }else if (j == 0 || j == y-1){
