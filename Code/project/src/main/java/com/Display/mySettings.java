@@ -119,8 +119,8 @@ public class mySettings extends JPanel {
         gbc.insets = new Insets((dl.displayheight/15),0,0,0);
         gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.ipadx = 200;
-        gbc.ipady = 50;
+//        gbc.ipadx = 200;
+//        gbc.ipady = 50;
         //muteButton.setBorder(BorderFactory.createEmptyBorder());
         muteButton.setFocusable(false);
         muteButton.setBorderPainted(false);
