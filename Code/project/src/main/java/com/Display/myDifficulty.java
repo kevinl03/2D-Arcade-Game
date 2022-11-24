@@ -24,6 +24,8 @@ public class myDifficulty extends JPanel {
     private JLabel difLabel;
     private BufferedImage testimage_png;
 
+    private DisplayLayout dl;
+
     /**
      * Constructor creates the difficulty screen.
      * This constructor makes JToggleButtons for easy, medium,
@@ -33,6 +35,8 @@ public class myDifficulty extends JPanel {
      * @param cl the CardLayout object to use its methods
      */
     public myDifficulty(DisplayLayout dl, CardLayout cl){
+
+        this.dl = dl;
 
         try {
             testimage_png = ImageIO.read(getClass().getResource("/testimage.png"));
@@ -173,7 +177,7 @@ public class myDifficulty extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (testimage_png != null) {
-            g.drawImage(testimage_png, 0, 0, 1500, 960, null);
+            g.drawImage(testimage_png, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
     }
 }
