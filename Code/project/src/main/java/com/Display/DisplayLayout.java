@@ -22,17 +22,11 @@ public class DisplayLayout extends JFrame implements Runnable{
     private int columns = 26;
     private int rows = 17;
 
-//    GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-//    int displaywidth = gd.getDisplayMode().getWidth() - 700;
-//    int displayheight = gd.getDisplayMode().getHeight() -400;
-
     Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
     int displaywidth = screenSize.width;
     int displayheight = screenSize.height;
 
-//    private int displaywidth = pixelsize * columns;
-//    private int displayheight = pixelsize * rows;
     public int currentCard = 1;
 
     // Declare CardLayout class objects.

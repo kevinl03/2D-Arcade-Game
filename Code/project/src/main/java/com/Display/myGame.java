@@ -4,6 +4,7 @@ import com.Board.Objects;
 import com.Entities.Enemy;
 import com.Entities.Hero;
 import com.Entities.Position;
+import com.Helpers.Direction;
 import com.Helpers.KeyHandler;
 import com.Logic.EnemyLogic;
 import com.Logic.HeroLogic;
@@ -347,13 +348,10 @@ public class myGame extends JPanel{
         String color = hero.getHeroColor().toString();
         int movementProgress = 0;
         if(hero.isMoving()){
-            switch(dl.frameCounter){
-                case 0 -> movementProgress = 52;
-                case 1 -> movementProgress = 43;
-                case 2 -> movementProgress = 35;
-                case 3 -> movementProgress = 24;
-                case 4 -> movementProgress = 16;
-                case 5 -> movementProgress = 7;
+            if(hero.getDir() == Direction.NORTH || hero.getDir() == Direction.SOUTH){
+                movementProgress = tileHeight/7 * (6 - dl.frameCounter);
+            }else{
+                movementProgress = tileWidth/7 * (6 - dl.frameCounter);
             }
 
             if(dir == "North" || dir == "West"){
