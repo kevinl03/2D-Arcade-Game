@@ -398,14 +398,10 @@ public class myGame extends JPanel{
             String dir = enemy.getDir().toString();
 
             int movementProgress = 0;
-            switch(dl.frameCounter){
-                case 0 -> movementProgress = 52;
-                case 1 -> movementProgress = 43;
-                case 2 -> movementProgress = 35;
-                case 3 -> movementProgress = 24;
-                case 4 -> movementProgress = 16;
-                case 5 -> movementProgress = 7;
-
+            if(enemy.getDir() == Direction.NORTH || enemy.getDir() == Direction.SOUTH){
+                movementProgress = tileHeight/7 * (6 - dl.frameCounter);
+            }else{
+                movementProgress = tileWidth/7 * (6 - dl.frameCounter);
             }
 
             if(dir == "North" || dir == "West"){
@@ -459,26 +455,26 @@ public class myGame extends JPanel{
                     break;
                     case HEROHIDDEN:
                         if(!hero.isAtBush()){
-                            g2.drawImage(bush_png, col * tileWidth + 10, row * tileHeight+60 + 10, tileWidth - 20, tileHeight - 20, null);
+                            g2.drawImage(bush_png, col * tileWidth + 10, row * tileHeight+60 + 10, (int)(tileWidth*(2.0/3)), (int)(tileHeight*(2.0/3)), null);
                         }
                         break;
                     case ENEMYANDBUSH:
                     case BUSH:
-                            g2.drawImage(bush_png, col * tileWidth + 10, row * tileHeight+60 + 10, tileWidth - 20, tileHeight - 20, null);
+                            g2.drawImage(bush_png, col * tileWidth + 10, row * tileHeight+60 + 10, (int)(tileWidth*(2.0/3)), (int)(tileHeight*(2.0/3)), null);
                         break;
                     case ENEMYANDTRAP:
                     case TRAP:
-                        g2.drawImage(trap_png, col * tileWidth+20, row * tileHeight+60+20, tileWidth-40, tileHeight-40, null);
+                        g2.drawImage(trap_png, col * tileWidth+20, row * tileHeight+60+20, (int)(tileWidth*(1.0/3)), (int)(tileHeight*(1.0/3)), null);
                         break;
                     case ENEMYANDREWARD:
                     case REWARD:
-                        g2.drawImage(peanuts_png, col * tileWidth + 15, row * tileHeight+60 + 15, tileWidth-30, tileHeight - 30, null);
+                        g2.drawImage(peanuts_png, col * tileWidth + 15, row * tileHeight+60 + 15, tileWidth/2, tileHeight/2, null);
 
                     break;
                     case BONUS:
                         //hide the object on the first render
                         if(!firstRender) {
-                            g2.drawImage(chocolate_png, col * tileWidth, row * tileHeight + 60, tileWidth - 30, tileHeight - 30, null);
+                            g2.drawImage(chocolate_png, col * tileWidth, row * tileHeight + 60, tileWidth/2, tileHeight/2, null);
                         }
                     break;
                     //no exit image yet
