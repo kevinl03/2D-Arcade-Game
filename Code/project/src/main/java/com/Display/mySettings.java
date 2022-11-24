@@ -64,14 +64,13 @@ public class mySettings extends JPanel {
                         if(fileName.contains("Brown")){
                             color = HeroColor.BROWN;
                         } else if (fileName.contains("Grey")) {
-                            color = HeroColor.BROWN;
+                            color = HeroColor.GREY;
                         } else if (fileName.contains("Red")) {
-                            color = HeroColor.BROWN;
+                            color = HeroColor.RED;
                         } else if (fileName.contains("White")) {
-                            color = HeroColor.BROWN;
+                            color = HeroColor.WHITE;
                         }
                         if(fileName.contains("East2")){
-                            System.out.println("/squirrels/" + fileName);
                             heroColorPngs.put(color, ImageIO.read(getClass().getResource("/squirrels/" + fileName)));
                         }
                     }
@@ -234,6 +233,7 @@ public class mySettings extends JPanel {
                 dl.sound.playClick();
                 dl.heroColor = dl.heroColor.next();
                 color = dl.heroColor;
+                System.out.println(color);
                 repaint();
             }
         });
