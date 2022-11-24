@@ -1,5 +1,6 @@
 package EnemyMovementTests;
 
+import com.Board.BoardData;
 import com.Board.Difficulty;
 import com.Board.Objects;
 import com.Entities.*;
@@ -16,7 +17,7 @@ public class EnemyMovementTests
 {
     @Test
     void UnblockedShortestPathSouth(){
-        EnemyLogic gameLogic = new EnemyLogic();
+        EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
                 //               y0   y1   y2   y3   y4   y5   y6   y7
@@ -31,14 +32,14 @@ public class EnemyMovementTests
 
         };
 
-        Direction dir = gameLogic.findShortestPath(fakeMap, new Position(3, 4));
+        Direction dir = enemyLogic.findShortestPath(fakeMap, new Position(3, 4));
 
         Assertions.assertEquals(Direction.SOUTH, dir);
     }
 
     @Test
     void UnblockedShortestPathEast(){
-        EnemyLogic gameLogic = new EnemyLogic();
+        EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
                 //               y0   y1   y2   y3   y4   y5   y6   y7
@@ -53,14 +54,14 @@ public class EnemyMovementTests
 
         };
 
-        Direction dir = gameLogic.findShortestPath(fakeMap, new Position(3, 4));
+        Direction dir = enemyLogic.findShortestPath(fakeMap, new Position(3, 4));
 
         Assertions.assertEquals(Direction.EAST, dir);
     }
 
     @Test
     void UnblockedShortestPathNorth(){
-        EnemyLogic gameLogic = new EnemyLogic();
+        EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
                 //               y0   y1   y2   y3   y4   y5   y6   y7
@@ -75,14 +76,14 @@ public class EnemyMovementTests
 
         };
 
-        Direction dir = gameLogic.findShortestPath(fakeMap, new Position(3, 4));
+        Direction dir = enemyLogic.findShortestPath(fakeMap, new Position(3, 4));
 
         Assertions.assertEquals(Direction.NORTH, dir);
     }
 
     @Test
     void UnblockedShortestPathWest(){
-        EnemyLogic gameLogic = new EnemyLogic();
+        EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
                 //               y0   y1   y2   y3   y4   y5   y6   y7
@@ -97,14 +98,14 @@ public class EnemyMovementTests
 
         };
 
-        Direction dir = gameLogic.findShortestPath(fakeMap, new Position(3, 4));
+        Direction dir = enemyLogic.findShortestPath(fakeMap, new Position(3, 4));
 
         Assertions.assertEquals(Direction.WEST, dir);
     }
 
     @Test
     void blockedShortestPathBasic(){
-        EnemyLogic gameLogic = new EnemyLogic();
+        EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
                 //               y0   y1   y2   y3   y4   y5   y6   y7
@@ -118,14 +119,14 @@ public class EnemyMovementTests
                 //                             EAST
         };
 
-        Direction dir = gameLogic.findShortestPath(fakeMap, new Position(3, 4));
+        Direction dir = enemyLogic.findShortestPath(fakeMap, new Position(3, 4));
 
         Assertions.assertEquals(Direction.NORTH, dir);
     }
 
     @Test
     void blockedShortestPathAdvanced(){
-        EnemyLogic gameLogic = new EnemyLogic();
+        EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
                 //               y0   y1   y2   y3   y4   y5   y6   y7
@@ -139,14 +140,14 @@ public class EnemyMovementTests
                 //                             EAST
         };
 
-        Direction dir = gameLogic.findShortestPath(fakeMap, new Position(3, 4));
+        Direction dir = enemyLogic.findShortestPath(fakeMap, new Position(3, 4));
 
         Assertions.assertEquals(Direction.SOUTH, dir);
     }
 
     @Test
     void RandomMovementWhenHeroHiddenAndFar(){
-        EnemyLogic gameLogic = new EnemyLogic();
+        EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
                 //               y0   y1   y2   y3   y4   y5   y6   y7
@@ -160,14 +161,16 @@ public class EnemyMovementTests
                 //                             EAST
         };
 
-        Direction dir = gameLogic.findShortestPath(fakeMap, new Position(3, 4));
+        Direction dir = enemyLogic.findShortestPath(fakeMap, new Position(3, 4));
 
         Assertions.assertEquals(Direction.RANDOM, dir);
+
+
     }
 
     @Test
     void RegularMovementWhenHeroHiddenAndClose(){
-        EnemyLogic gameLogic = new EnemyLogic();
+        EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
                 //               y0   y1   y2   y3   y4   y5   y6   y7
@@ -181,7 +184,7 @@ public class EnemyMovementTests
                 //                             EAST
         };
 
-        Direction dir = gameLogic.findShortestPath(fakeMap, new Position(3, 4));
+        Direction dir = enemyLogic.findShortestPath(fakeMap, new Position(3, 4));
 
         Assertions.assertEquals(Direction.WEST, dir);
     }
@@ -210,5 +213,37 @@ public class EnemyMovementTests
 
     }
 
+
+    @Test
+    void GenerateRandomDirection(){
+
+        ObjectData gameObjectData = new ObjectData(Difficulty.HARD, HeroColor.BROWN);
+
+        EnemyLogic enemyLogic = gameObjectData.getEnemyLogic();
+
+        Hero hero = gameObjectData.getHero();
+
+        ArrayList<Enemy> enemies = gameObjectData.getEnemies();
+
+        BoardData board = gameObjectData.getBoard();
+
+        board.setTypeAt(hero, Objects.HEROHIDDEN);
+
+        hero.setAtBush(true);
+        hero.setHidden(true);
+
+        ArrayList<Position> enemyPositions = new ArrayList<>();
+
+        for (Position enemy: enemies) {
+            Position tempPos = new Position(enemy.getX(), enemy.getY());
+            enemyPositions.add(tempPos);
+
+        }
+
+        enemyLogic.processEnemyMovement(gameObjectData);
+
+        Assertions.assertFalse(enemies.equals( enemyPositions));
+
+    }
 
 }
