@@ -15,7 +15,7 @@ import com.Board.BoardData;
  * Creates a JFrame with multiple JPanels for different screens of the game.
  */
 public class DisplayLayout extends JFrame implements Runnable{
-    KeyHandler kh = new KeyHandler(this);
+    public KeyHandler kh = new KeyHandler(this);
 
     // Set up display
     protected int pixelsize = 60;   //60x60 pixels
@@ -37,7 +37,7 @@ public class DisplayLayout extends JFrame implements Runnable{
     private myGameOver gameOver;
     private myGameWon gameWon;
     public JPanel pausePanel;
-    private boolean gameovertest;
+    public boolean gameovertest;
     public boolean gameWonTest;
 
 
@@ -160,7 +160,7 @@ public class DisplayLayout extends JFrame implements Runnable{
      */
     @Override
     public void run() {   //   When starting thread, have thread use this run method
-        playPanel.goMain = 0;
+        //playPanel.goMain = 0;
         gameovertest = false;
         gameWonTest = false;
         timer = 0;
@@ -246,4 +246,8 @@ public class DisplayLayout extends JFrame implements Runnable{
         // Function to set visibility of JFrame.
         display.setVisible(true);
     }
+
+    public ObjectData getGameObjectData(){return gameObjectData;}
+    
+    public myTitle getTitlePanel(){return titlePanel;}
 }

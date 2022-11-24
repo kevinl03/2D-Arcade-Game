@@ -124,6 +124,7 @@ public class myTitle extends JPanel {
                 dl.currentCard = 2;
                 dl.playPanel.setFocusable(true);
                 dl.playPanel.requestFocus();
+                dl.playPanel.goMain = 0;
                 dl.startThread();
             }
         });
@@ -190,5 +191,7 @@ public class myTitle extends JPanel {
         g.drawImage(title_png, 0, 0, 1500, 960, null);
         g.drawImage(title_squirrel, 400, 400, 293, 400, null);
     }
+
+    public JButton getplayButton() {return playButton;}
 }
 

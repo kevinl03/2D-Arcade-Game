@@ -140,12 +140,12 @@ public class BonusRewardTest extends MovementTestInfo{
             int newYpos = curBonus.getY();
 
             //update rewards should not have changed anything if the timer doesn't change
-            Assertions.assertEquals(newXpos == curBonusPos.getX(), false);
-            Assertions.assertEquals((newYpos == curBonusPos.getY()),false);
+            Assertions.assertEquals(newXpos == curBonusPos.getX() && newYpos == curBonusPos.getY(), false);
+
 
             objectData.getHeroLogic().processPlayerMovement(new Position(newXpos,newYpos), objectData);
 
-            //non of the objects get picked up because they haven't spawned yet
+            //objects must be picked up sine they spawned
             Assertions.assertNotEquals(hero.getScore(), 0);
         }
     }

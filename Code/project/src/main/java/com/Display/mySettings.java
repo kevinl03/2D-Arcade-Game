@@ -279,4 +279,7 @@ public class mySettings extends JPanel {
         g2.drawImage(hero, 700, 285, 80, 80, null);
 
     }
+    public JToggleButton getmuteButton(){return muteButton;}
+
+    public JToggleButton getUnmuteButton(){return unmuteButton;}
 }
