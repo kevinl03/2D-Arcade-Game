@@ -44,15 +44,6 @@ public class mySettings extends JPanel {
      */
     private void getHeroColors(){
         try {
-//            heroColorPngs = new HashMap<>();
-//            for(HeroColor color: HeroColor.values()){
-//                System.out.println("/squirrels/Squirrel" + color.toString() + "East2.png");
-//                BufferedImage img = ImageIO.read(getClass().getResource("/squirrels/Squirrel" + color.toString() + "East2.png"));
-//                System.out.println(img);
-//
-//                heroColorPngs.put(color, img);
-//            }
-
             heroColorPngs = new HashMap<>();
             URL pathUrl = getClass().getClassLoader().getResource("squirrels/");
             if ((pathUrl != null) && pathUrl.getProtocol().equals("file")) {
@@ -108,6 +99,7 @@ public class mySettings extends JPanel {
     public mySettings(DisplayLayout dl, CardLayout cl) {
 
         this.cl = cl;
+        this.dl = dl;
         gbc = new GridBagConstraints();
         gbc.anchor = gbc.CENTER;
 
@@ -278,7 +270,7 @@ public class mySettings extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (testimage_png != null) {
-            g.drawImage(testimage_png, 0, 0, 1500, 960, null);
+            g.drawImage(testimage_png, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
         skinSelection(g);
     }
@@ -309,7 +301,7 @@ public class mySettings extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
         BufferedImage hero = heroColorPngs.get(color);
-        g2.drawImage(hero, 700, 285, 80, 80, null);
+        g2.drawImage(hero, dl.displaywidth/2 - 50, (int)(dl.displayheight*0.32), 80, 80, null);
 
     }
     public JToggleButton getmuteButton(){return muteButton;}
