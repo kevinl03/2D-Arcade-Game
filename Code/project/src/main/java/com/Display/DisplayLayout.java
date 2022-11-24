@@ -166,7 +166,7 @@ public class DisplayLayout extends JFrame implements Runnable{
      */
     @Override
     public void run() {   //   When starting thread, have thread use this run method
-        //playPanel.goMain = 0;
+        playPanel.goMain = 0;
         gameovertest = false;
         gameWonTest = false;
         timer = 0;
@@ -256,4 +256,6 @@ public class DisplayLayout extends JFrame implements Runnable{
     public ObjectData getGameObjectData(){return gameObjectData;}
     
     public myTitle getTitlePanel(){return titlePanel;}
+
+    public mySettings getmySettings(){return settPanel;}
 }

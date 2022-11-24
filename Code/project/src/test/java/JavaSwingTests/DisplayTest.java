@@ -16,7 +16,7 @@ public class DisplayTest {
         // Function to set default operation of JFrame.
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        display.setVisible(true);
+        display.setVisible(false);
 
         display.dispose();
 
@@ -34,20 +34,47 @@ public class DisplayTest {
         display.setVisible(true);
 
         //display.playPanel.goMain = 1;
-        //display.kh.up = true;
-        display.getTitlePanel().getplayButton().doClick();
+        display.kh.up = true;
+        try {
+
+            display.getTitlePanel().getplayButton().doClick();
+            int x = 0;
+            while(x < 100000000){
+                System.out.printf("hi");
+                x++;
+            }
+            assert(true);
+        } catch(Exception e) {
+            assert(false);
+        }
+
         //display.getGameObjectData().getGameStats().getGameOver();
 
 
-        display.dispose();
+        //display.dispose();
 
-        assert(display.getFocusableWindowState());
+
         //assert(!display.isShowing());
     }
 
 
     @Test
     void soundsettings(){
+        DisplayLayout display = new DisplayLayout();
+
+        // Function to set default operation of JFrame.
+        display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+       // display.setVisible(true);
+
+        try {
+            display.getmySettings().getmuteButton().doClick();
+            assert(true);
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+            assert(false);
+        }
+
 
     }
 
