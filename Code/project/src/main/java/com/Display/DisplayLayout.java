@@ -22,8 +22,12 @@ public class DisplayLayout extends JFrame implements Runnable{
     private int columns = 26;
     private int rows = 17;
 
-    private int displaywidth = pixelsize * columns;
-    private int displayheight = pixelsize * rows;
+    GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+    int displaywidth = gd.getDisplayMode().getWidth();
+    int displayheight = gd.getDisplayMode().getHeight();
+
+//    private int displaywidth = pixelsize * columns;
+//    private int displayheight = pixelsize * rows;
     public int currentCard = 1;
 
     // Declare CardLayout class objects.
@@ -78,7 +82,10 @@ public class DisplayLayout extends JFrame implements Runnable{
         setTitle("Hidden Squirrel: Peanuts and Acorns");
 
         // Function to set visibility of JFrame
-        setSize(displaywidth-45,displayheight-21);
+        setSize(displaywidth,displayheight);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setUndecorated(true);
+        setVisible(true);
 
         // Creating Object of JPanel class
         displayPanel = new JPanel();

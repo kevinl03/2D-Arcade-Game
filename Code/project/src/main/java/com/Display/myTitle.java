@@ -26,6 +26,8 @@ public class myTitle extends JPanel {
     private GridBagConstraints gbc;
     private Image buttonIcon;
 
+    private DisplayLayout displayLayout;
+
 
     /**
      * Constructor creates the title screen.
@@ -179,6 +181,8 @@ public class myTitle extends JPanel {
             }
         });
 
+        displayLayout = dl;
+
     }
 
     /**
@@ -188,8 +192,8 @@ public class myTitle extends JPanel {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.drawImage(title_png, 0, 0, 1500, 960, null);
-        g.drawImage(title_squirrel, 400, 400, 293, 400, null);
+        g.drawImage(title_png, 0, 0, displayLayout.displaywidth, displayLayout.displayheight, null);
+        g.drawImage(title_squirrel, displayLayout.displaywidth/4, displayLayout.displayheight/2, 293, 400, null);
     }
 
     public JButton getplayButton() {return playButton;}
