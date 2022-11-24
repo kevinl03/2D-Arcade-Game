@@ -43,6 +43,7 @@ public class myGame extends JPanel{
     private BufferedImage board_png;
     private BufferedImage exit_png;
     private BufferedImage trap_png;
+    private BufferedImage button_png;
     KeyHandler kh;
     private CardLayout cl;
     private DisplayLayout dl;
@@ -298,6 +299,14 @@ public class myGame extends JPanel{
         }
     }
 
+    public void getButton(){
+        try {
+            button_png = ImageIO.read(getClass().getResource("/RecButton.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Calls all the methods to set the Image objects.
      */
@@ -311,6 +320,7 @@ public class myGame extends JPanel{
         getField();
         getExit();
         getTrap();
+        getButton();
     }
 
     /**
@@ -484,17 +494,15 @@ public class myGame extends JPanel{
 
         firstRender = false;
 
-        g2.setColor(Color.gray);
-        g2.fillRect(700,0,150,30);
+        g2.drawImage(button_png, (int)(dl.displaywidth*0.24)-175, 10, 175, 45, null);
         g2.setFont(font);
-        g2.setColor(Color.white);
-        g2.drawString(scoreLabel.getText() + ": " + dl.gameObjectData.getHero().getScore(), 700, 25);
+        g2.setColor(Color.black);
+        g2.drawString(scoreLabel.getText() + ": " + dl.gameObjectData.getHero().getScore(), (int)(dl.displaywidth*0.25)-175, 42);
 
-        g2.setColor(Color.gray);
-        g2.fillRect(1300,0,150,30);
+        g2.drawImage(button_png, (int)(dl.displaywidth*0.74), 10, 175, 45, null);
         g2.setFont(font);
-        g2.setColor(Color.white);
-        g2.drawString(timeLabel.getText() + ": " + seconds, 1300, 25);
+        g2.setColor(Color.black);
+        g2.drawString(timeLabel.getText() + ": " + seconds, (int)(dl.displaywidth*0.75), 42);
         g2.dispose();
     }
 }
