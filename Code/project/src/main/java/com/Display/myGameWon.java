@@ -19,7 +19,8 @@ public class myGameWon extends JPanel {
     private Font titleText;
     private Font headerText;
     private BufferedImage win_png;
-
+    private BufferedImage testimage_png;
+    private DisplayLayout dl;
 
     /**
      * Constructor creates this com.Game Won screen.
@@ -29,24 +30,26 @@ public class myGameWon extends JPanel {
      * @param cl the CardLayout object to use its methods
      */
     public myGameWon(DisplayLayout dl, CardLayout cl){
-        titleText = new Font("Times New Roman", Font.BOLD, 50);
-        headerText = new Font("Times New Roman", Font.BOLD, 30);
+        this.dl = dl;
+        titleText = new Font("Times New Roman", Font.BOLD, (dl.displayheight/15));
+        headerText = new Font("Times New Roman", Font.BOLD, (dl.displayheight/30));
         this.setLayout(null);
         gameLabel = new JLabel("CONGRATULATIONS");
         gameLabel.setFont(titleText);
-        gameLabel.setBounds(500, 300, 550, 100);
+        gameLabel.setBounds((int)(dl.displaywidth*0.3), dl.displayheight/3, dl.displaywidth/2, dl.displayheight/10);
         timeLabel = new JLabel();
         timeLabel.setFont(headerText);
-        timeLabel.setBounds(700, 400, 800, 100);
+        timeLabel.setBounds((int)(dl.displaywidth*0.45), (int)(dl.displayheight*0.4), dl.displaywidth/2, dl.displayheight/10);
         scoreLabel = new JLabel();
         scoreLabel.setFont(headerText);
-        scoreLabel.setBounds(700, 500, 800, 100);
+        scoreLabel.setBounds((int)(dl.displaywidth*0.45), (int)(dl.displayheight*0.5), dl.displaywidth/2, dl.displayheight/10);
         this.add(gameLabel);
         this.add(timeLabel);
         this.add(scoreLabel);
 
         try {
             win_png = ImageIO.read(getClass().getResource("/win.png"));
+            testimage_png = ImageIO.read(getClass().getResource("/settingB.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -56,7 +59,7 @@ public class myGameWon extends JPanel {
         ImageIcon mainImage = new ImageIcon(getClass().getResource("/main.png"));
         gomenuButton = new JButton("",mainImage);
         gomenuButton.setFocusable(false);
-        gomenuButton.setBounds(610, 570, 300, 100);
+        gomenuButton.setBounds((int)(dl.displaywidth*0.37), (int)(dl.displayheight*0.6), dl.displaywidth/4, dl.displayheight/10);
         gomenuButton.setBorderPainted(false);
         gomenuButton.setOpaque(false);
         gomenuButton.setContentAreaFilled(false);
@@ -92,7 +95,8 @@ public class myGameWon extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (win_png != null) {
-            g.drawImage(win_png, 0, 0, 1500, 960, null);
+            g.drawImage(testimage_png, 0, 0, dl.displaywidth, dl.displayheight, null);
+            g.drawImage(win_png, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
     }
 
