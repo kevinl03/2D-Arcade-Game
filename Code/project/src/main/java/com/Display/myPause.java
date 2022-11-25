@@ -1,10 +1,13 @@
 package com.Display;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * Creates this JPanel to represent the Pause screen.
@@ -18,6 +21,8 @@ private JButton resumeButton;
 private JButton mainmenuButton;
 // private JButton gameoverButton;
 private JLabel pauseLabel;
+
+private BufferedImage pause_png;
 Font titleText;
 private GridBagConstraints gbc;
 
@@ -35,28 +40,55 @@ private GridBagConstraints gbc;
         this.kh = dl.kh;
         addKeyListener(kh);
 
+        gbc = new GridBagConstraints();
+        gbc.anchor = gbc.CENTER;
+
+        //background
+        try {
+            pause_png = ImageIO.read(getClass().getResource("/win.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         titleText = new Font("Times New Roman", Font.BOLD, 50);
         this.setLayout(new GridBagLayout());
 
         pauseLabel = new JLabel("PAUSED");
         pauseLabel.setFont(titleText);
-        this.add(pauseLabel);
+        gbc.insets = new Insets(0,0,0,0);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        this.add(pauseLabel,gbc);
 
         gbc = new GridBagConstraints();
-        resumeButton = new JButton("  Resume ");
-        gbc.insets = new Insets(50,0,0,0);
+        ImageIcon resumeImage = new ImageIcon(getClass().getResource("/resume.png"));
+        resumeButton = new JButton("",resumeImage);
+        //gbc.insets = new Insets(50,0,0,0);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.ipadx = 200;
+        gbc.ipady = 50;
+        resumeButton.setFocusable(false);
+        resumeButton.setBorderPainted(false);
+        resumeButton.setOpaque(false);
+        resumeButton.setContentAreaFilled(false);
+        this.add(resumeButton, gbc);
+
+
+        ImageIcon mainImage = new ImageIcon(getClass().getResource("/main.png"));
+        mainmenuButton = new JButton("",mainImage);
+        mainmenuButton.setFocusable(false);
+        mainmenuButton.setBounds(610, 570, 300, 100);
+        mainmenuButton.setBorderPainted(false);
+        mainmenuButton.setOpaque(false);
+        mainmenuButton.setContentAreaFilled(false);
+        //gbc.insets = new Insets(100,0,0,0);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.ipadx = 200;
         gbc.ipady = 50;
-        resumeButton.setFocusable(false);
-        this.add(resumeButton, gbc);
+        this.add(mainmenuButton,gbc);
 
-        mainmenuButton = new JButton("Main Menu");
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        mainmenuButton.setFocusable(false);
-        this.add(mainmenuButton, gbc);
 
         /*
         gameoverButton = new JButton("Test game over");
@@ -132,17 +164,15 @@ private GridBagConstraints gbc;
              * This is used to manually test playing to game over.
              * @param arg0 the event to be processed
              */
-        /*
-            public void actionPerformed(ActionEvent arg0)
-            {
-                dl.sound.playClick();
-                dl.playPanel.goMain = 1;
-                dl.gameWonTest= true;
-                dl.pause = 0;
-                dl.kh.escape = false;
-                //Go back to main menu
-            }
-        });*/
+    }
+
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (pause_png != null) {
+            g.drawImage(pause_png, 0, 0, 1500, 960, null);
+        }
     }
 
 }
