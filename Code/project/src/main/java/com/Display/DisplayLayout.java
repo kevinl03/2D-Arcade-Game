@@ -57,7 +57,7 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     public Difficulty dif = Difficulty.MEDIUM;
 
-    HeroColor heroColor = HeroColor.BROWN;
+    public HeroColor heroColor = HeroColor.BROWN;
 
     int frameCounter = 0;
 
@@ -258,4 +258,16 @@ public class DisplayLayout extends JFrame implements Runnable{
     public myTitle getTitlePanel(){return titlePanel;}
 
     public mySettings getmySettings(){return settPanel;}
+
+    public JPanel getmyPause(){return pausePanel;}
+
+    public myDifficulty getDiffPanel(){return diffPanel;}
+
+    public myGameOver getGameOver() {
+        return gameOver;
+    }
+
+    public myGameWon getGameWon() {
+        return gameWon;
+    }
 }
