@@ -308,4 +308,10 @@ public class mySettings extends JPanel {
     public JToggleButton getmuteButton(){return muteButton;}
 
     public JToggleButton getUnmuteButton(){return unmuteButton;}
+
+    public JButton getLeftScroll(){return leftScroll;}
+
+    public JButton getRightScroll(){return rightScroll;}
+
+    public HeroColor getHeroColor(){return color;}
 }
