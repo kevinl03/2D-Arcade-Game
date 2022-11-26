@@ -57,7 +57,7 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     public Difficulty dif = Difficulty.MEDIUM;
 
-    HeroColor heroColor = HeroColor.BROWN;
+    public HeroColor heroColor = HeroColor.BROWN;
 
     int frameCounter = 0;
 
@@ -166,7 +166,7 @@ public class DisplayLayout extends JFrame implements Runnable{
      */
     @Override
     public void run() {   //   When starting thread, have thread use this run method
-        //playPanel.goMain = 0;
+        playPanel.goMain = 0;
         gameovertest = false;
         gameWonTest = false;
         timer = 0;
@@ -262,4 +262,18 @@ public class DisplayLayout extends JFrame implements Runnable{
     public myTitle getMyTitle(){return titlePanel;}
 
     public KeyHandler getKeyHandler(){return kh;}
+
+    public mySettings getmySettings(){return settPanel;}
+
+    public JPanel getmyPause(){return pausePanel;}
+
+    public myDifficulty getDiffPanel(){return diffPanel;}
+
+    public myGameOver getGameOver() {
+        return gameOver;
+    }
+
+    public myGameWon getGameWon() {
+        return gameWon;
+    }
 }

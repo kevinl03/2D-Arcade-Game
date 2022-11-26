@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class LoadPngResources {
 
     @Test
-    void LoadPngResources() {
+    void loadPngResources() {
         DisplayLayout displayLayout = new DisplayLayout();
         try{
             displayLayout.playPanel.getImages();
@@ -16,5 +16,6 @@ public class LoadPngResources {
             System.out.println(e);
             assert(false);
         }
+        displayLayout.dispose();
     }
 }
