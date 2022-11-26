@@ -302,7 +302,7 @@ public class mySettings extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
         BufferedImage hero = heroColorPngs.get(color);
-        g2.drawImage(hero, (int)(dl.displaywidth*0.47), (int)(dl.displayheight*0.27), (dl.displayheight/10), (dl.displayheight/10), null);
+        g2.drawImage(hero, (int)(dl.displaywidth*0.47), (int)(dl.displayheight*0.28), (dl.displayheight/10), (dl.displayheight/10), null);
 
     }
     public JToggleButton getmuteButton(){return muteButton;}
