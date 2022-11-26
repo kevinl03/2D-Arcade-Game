@@ -194,7 +194,7 @@ public class myTitle extends JPanel {
         super.paintComponent(g);
 
         g.drawImage(title_png, 0, 0, displayLayout.displaywidth, displayLayout.displayheight, null);
-        g.drawImage(title_squirrel, displayLayout.displaywidth/4, displayLayout.displayheight/2, displayLayout.displaywidth/4, displayLayout.displayheight/3, null);
+        g.drawImage(title_squirrel, displayLayout.displaywidth/4, displayLayout.displayheight/2, displayLayout.displaywidth/5, displayLayout.displayheight/3, null);
     }
 
     public JButton getplayButton() {return playButton;}
