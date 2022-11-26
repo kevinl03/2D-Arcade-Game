@@ -56,11 +56,10 @@ public class myDifficulty extends JPanel {
         difGroup = new ButtonGroup();
         ImageIcon easyImage = new ImageIcon(getClass().getResource("/easy.png"));
         easyButton = new JToggleButton("",easyImage,true);
-        gbc.insets = new Insets(50,0,0,0);
+        gbc.insets = new Insets(dl.displayheight/30,0,0,0);
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.ipadx = 200;
-        gbc.ipady = 50;
+        gbc.ipady = dl.displayheight/30;
         easyButton.setFocusable(false);
         easyButton.setBorderPainted(false);
         easyButton.setOpaque(false);
