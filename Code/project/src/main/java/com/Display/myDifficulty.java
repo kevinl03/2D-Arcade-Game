@@ -180,4 +180,15 @@ public class myDifficulty extends JPanel {
             g.drawImage(testimage_png, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
     }
+
+    public JToggleButton getEasyButton() {
+        return easyButton;
+    }
+
+    public JToggleButton getMediumButton(){
+        return mediumButton;
+    }
+    public JToggleButton getHardButton(){
+        return hardButton;
+    }
 }
