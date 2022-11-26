@@ -256,4 +256,10 @@ public class DisplayLayout extends JFrame implements Runnable{
     public ObjectData getGameObjectData(){return gameObjectData;}
     
     public myTitle getTitlePanel(){return titlePanel;}
+
+    public CardLayout getCardLayout(){return dl;}
+
+    public myTitle getMyTitle(){return titlePanel;}
+
+    public KeyHandler getKeyHandler(){return kh;}
 }
