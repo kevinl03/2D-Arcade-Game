@@ -11,7 +11,7 @@ public class mySettingsTest {
     DisplayLayout display = new DisplayLayout();
     @Test
     public void testGamePresetsToBrownColor(){
-//        DisplayLayout display = new DisplayLayout();
+        DisplayLayout display = new DisplayLayout();
 
         Assertions.assertEquals(HeroColor.BROWN, display.heroColor);
         display.dispose();
