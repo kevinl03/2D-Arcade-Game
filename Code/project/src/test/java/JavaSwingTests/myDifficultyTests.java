@@ -2,12 +2,10 @@ package JavaSwingTests;
 
 import com.Board.Difficulty;
 import com.Display.DisplayLayout;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import javax.swing.*;
+
 
 public class myDifficultyTests {
 

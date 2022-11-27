@@ -5,7 +5,6 @@ import com.Display.DisplayLayout;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class DisposeDisplays {
 
     void deepDispose(DisplayLayout layout){

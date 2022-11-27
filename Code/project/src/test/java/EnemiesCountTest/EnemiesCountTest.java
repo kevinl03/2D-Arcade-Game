@@ -8,19 +8,29 @@ import com.Entities.Hero;
 import com.Entities.Position;
 import com.Game.ObjectData;
 import com.Helpers.HeroColor;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EnemiesCountTest {
 
     ObjectData objectData;
     BoardData boardData;
     Objects objectArray[][];
+    ArrayList<Enemy> enemies;
 
 
+    @BeforeEach
+    void cleanTest(){
+        objectData = null;
+        boardData = null;
+        objectArray = null;
+        ArrayList<Enemy> enemies = null;
+    }
     ////////////////////// Testing correct amount of enemies in map boundary //////////////////////////////////////////
     @Test
     void EnemyEasyCount() {
@@ -133,7 +143,7 @@ public class EnemiesCountTest {
             objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);
             boardData = objectData.getBoard();
             objectArray = boardData.getBoardData();
-            ArrayList<Enemy> enemies = objectData.getEnemyArray();
+            enemies = objectData.getEnemyArray();
             Enemy oneEnemy = enemies.get(0);
             Hero hero = objectData.getHero();
             Position heropos = new Position(hero.getX(), hero.getY());
@@ -159,8 +169,9 @@ public class EnemiesCountTest {
                 }
             }
             count++;
+            assert(result);
         }
-        assert(result);
+        //assert(result);
     }
 
     @Test
@@ -171,7 +182,7 @@ public class EnemiesCountTest {
             objectData = new ObjectData(Difficulty.MEDIUM, HeroColor.BROWN);
             boardData = objectData.getBoard();
             objectArray = boardData.getBoardData();
-            ArrayList<Enemy> enemies = objectData.getEnemyArray();
+            enemies = objectData.getEnemyArray();
             Enemy oneEnemy = enemies.get(0);
             Enemy twoEnemy = enemies.get(1);
             Hero hero = objectData.getHero();
@@ -222,8 +233,9 @@ public class EnemiesCountTest {
                 }
             }
         count++;
-        }
         assert(result);
+        }
+        //assert(result);
     }
 
     @Test
@@ -234,7 +246,7 @@ public class EnemiesCountTest {
             objectData = new ObjectData(Difficulty.HARD, HeroColor.BROWN);
             boardData = objectData.getBoard();
             objectArray = boardData.getBoardData();
-            ArrayList<Enemy> enemies = objectData.getEnemyArray();
+            enemies = objectData.getEnemyArray();
             Enemy oneEnemy = enemies.get(0);
             Enemy twoEnemy = enemies.get(1);
             Enemy thirdEnemy = enemies.get(2);
@@ -276,12 +288,12 @@ public class EnemiesCountTest {
                 newY3 = thirdEnemy.getY();
                 // Returns false is enemy stays in one spot, not due to surrounding enemies
                 if ((oldX1 == newX1) && (oldY1 == newY1)) {
-                    if( ((oneEnemy.getX() - twoEnemy.getX()) <= 2) && ((oneEnemy.getX() - twoEnemy.getX()) >= -2)
-                            && ((oneEnemy.getY() - twoEnemy.getY()) <= 2) && ((oneEnemy.getY() - twoEnemy.getY()) >= -2))
+                    if( ((oneEnemy.getX() - twoEnemy.getX()) <= 1) && ((oneEnemy.getX() - twoEnemy.getX()) >= -1)
+                            && ((oneEnemy.getY() - twoEnemy.getY()) <= 1) && ((oneEnemy.getY() - twoEnemy.getY()) >= -1))
                     // Do nothing
                     {}
-                    else if( ((oneEnemy.getX() - thirdEnemy.getX()) <= 2) && ((oneEnemy.getX() - thirdEnemy.getX()) >= -2)
-                            && ((oneEnemy.getY() - thirdEnemy.getY()) <= 2) && ((oneEnemy.getY() - thirdEnemy.getY()) >= -2))
+                    else if( ((oneEnemy.getX() - thirdEnemy.getX()) <= 1) && ((oneEnemy.getX() - thirdEnemy.getX()) >= -1)
+                            && ((oneEnemy.getY() - thirdEnemy.getY()) <= 1) && ((oneEnemy.getY() - thirdEnemy.getY()) >= -1))
                     // Do nothing
                     {}
                     else {
@@ -289,12 +301,12 @@ public class EnemiesCountTest {
                     }
                 }
                 if ((oldX2 == newX2) && (oldY2 == newY2)) {
-                    if( ((oneEnemy.getX() - twoEnemy.getX()) <= 2) && ((oneEnemy.getX() - twoEnemy.getX()) >= -2)
-                            && ((oneEnemy.getY() - twoEnemy.getY()) <= 2) && ((oneEnemy.getY() - twoEnemy.getY()) >= -2))
+                    if( ((oneEnemy.getX() - twoEnemy.getX()) <= 1) && ((oneEnemy.getX() - twoEnemy.getX()) >= -1)
+                            && ((oneEnemy.getY() - twoEnemy.getY()) <= 1) && ((oneEnemy.getY() - twoEnemy.getY()) >= -1))
                     // Do nothing
                     {}
-                    else if( ((twoEnemy.getX() - thirdEnemy.getX()) <= 2) && ((twoEnemy.getX() - thirdEnemy.getX()) >= -2)
-                            && ((twoEnemy.getY() - thirdEnemy.getY()) <= 2) && ((twoEnemy.getY() - thirdEnemy.getY()) >= -2))
+                    else if( ((twoEnemy.getX() - thirdEnemy.getX()) <= 1) && ((twoEnemy.getX() - thirdEnemy.getX()) >= -1)
+                            && ((twoEnemy.getY() - thirdEnemy.getY()) <= 1) && ((twoEnemy.getY() - thirdEnemy.getY()) >= -1))
                     // Do nothing
                     {}
                     else {
@@ -302,12 +314,12 @@ public class EnemiesCountTest {
                     }
                 }
                 if ((oldX3 == newX3) && (oldY3 == newY3)) {
-                    if( ((oneEnemy.getX() - thirdEnemy.getX()) <= 2) && ((oneEnemy.getX() - thirdEnemy.getX()) >= -2)
-                            && ((oneEnemy.getY() - thirdEnemy.getY()) <= 2) && ((oneEnemy.getY() - thirdEnemy.getY()) >= -2))
+                    if( ((oneEnemy.getX() - thirdEnemy.getX()) <= 1) && ((oneEnemy.getX() - thirdEnemy.getX()) >= -1)
+                            && ((oneEnemy.getY() - thirdEnemy.getY()) <= 1) && ((oneEnemy.getY() - thirdEnemy.getY()) >= -1))
                     // Do nothing
                     {}
-                    else if( ((twoEnemy.getX() - thirdEnemy.getX()) <= 2) && ((twoEnemy.getX() - thirdEnemy.getX()) >= -2)
-                            && ((twoEnemy.getY() - thirdEnemy.getY()) <= 2) && ((twoEnemy.getY() - thirdEnemy.getY()) >= -2))
+                    else if( ((twoEnemy.getX() - thirdEnemy.getX()) <= 1) && ((twoEnemy.getX() - thirdEnemy.getX()) >= -1)
+                            && ((twoEnemy.getY() - thirdEnemy.getY()) <= 1) && ((twoEnemy.getY() - thirdEnemy.getY()) >= -1))
                     // Do nothing
                     {}
                     else {
@@ -316,8 +328,9 @@ public class EnemiesCountTest {
                 }
             }
             count++;
+            assert(result);
         }
-        assert(result);
+        //wassert(result);
     }
     /////////////////////////////////Enemy moving across reward/////////////////////////////////////
     @Test

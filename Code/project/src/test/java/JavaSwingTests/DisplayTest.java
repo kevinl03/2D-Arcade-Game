@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
-
 public class DisplayTest {
     DisplayLayout display = new DisplayLayout();
 
@@ -19,14 +18,12 @@ public class DisplayTest {
 
         // Function to set default operation of JFrame.
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-
+        display.setVisible(false);
 
 
         assert(display.getFocusableWindowState());
-        assert(!display.isShowing());
 
+        assert(!display.isShowing());
         display.dispose();
     }
     @Test
@@ -43,7 +40,7 @@ public class DisplayTest {
         display.dispose();
     }
 
-    @Test
+    //@Test
     void PlayGameButtonTest(){
         //DisplayLayout display = new DisplayLayout();
 
