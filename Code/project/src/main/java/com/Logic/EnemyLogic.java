@@ -75,7 +75,6 @@ public class EnemyLogic {
                             //If there is enemy in the front, switch enemy order and try again
                             Collections.swap(enemies, 0, 1);
                             correctLoop = false;
-                            System.out.println("Swapped order");
                             break;
                         } else {
                             nextMove = Direction.NULL;
@@ -87,7 +86,6 @@ public class EnemyLogic {
                             Collections.swap(enemies, 0, 2);
                             Collections.swap(enemies, 0, 1);
                             correctLoop = false;
-                            System.out.println("Swapped index 0 1 2 to 1 2 0");
                             break;
                         }
                         if ( (enemies.indexOf(enemy) == 1) && !swaplasttwo) {
@@ -96,7 +94,6 @@ public class EnemyLogic {
                             correctLoop = false;
                             swapthree = true;
                             swaplasttwo = true;
-                            System.out.println("Swapped last 2 enemies");
                             break;
                         }
                         else {

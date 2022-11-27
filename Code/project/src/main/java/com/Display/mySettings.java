@@ -224,7 +224,6 @@ public class mySettings extends JPanel {
                 dl.sound.playClick();
                 dl.heroColor = dl.heroColor.next();
                 color = dl.heroColor;
-                System.out.println(color);
                 repaint();
             }
         });

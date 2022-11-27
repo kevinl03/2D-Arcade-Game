@@ -105,7 +105,6 @@ public class DisplayTest {
             display.getmySettings().getmuteButton().doClick();
             assert(true);
         }catch(Exception e) {
-            System.out.println(e.getMessage());
             assert(false);
         }
         display.dispose();
