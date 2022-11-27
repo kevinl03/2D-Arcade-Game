@@ -271,7 +271,7 @@ public class myGame extends JPanel{
      */
     public void getExit(){
         try {
-            exit_png = ImageIO.read(getClass().getResource("/exit.png"));
+            exit_png = ImageIO.read(getClass().getResource("/door.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
