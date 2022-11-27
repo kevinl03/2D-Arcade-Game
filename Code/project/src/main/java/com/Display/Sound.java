@@ -23,7 +23,6 @@ public class Sound {
             clip = AudioSystem.getClip();
             clip.open(musicstream);
         } catch(Exception e) {
-            System.out.println("Failed\n");
         }
     }
     public void playClick(){
@@ -32,7 +31,6 @@ public class Sound {
             btnSound = AudioSystem.getClip();
             btnSound.open(musicstream);
         } catch(Exception e) {
-            System.out.println("Failed\n");
         }
         btnSound.start();
     }
@@ -42,7 +40,6 @@ public class Sound {
             lostSound = AudioSystem.getClip();
             lostSound.open(musicstream);
         } catch(Exception e) {
-            System.out.println(e.getMessage());
         }
         lostSound.start();
     }
@@ -52,9 +49,7 @@ public class Sound {
             //AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResource("/walk.mp3"));
             heroSound = AudioSystem.getClip();
             //heroSound.open(musicstream);
-        } catch(Exception e) {
-            System.out.println("Failed\n");
-        }
+        } catch(Exception e) {}
         heroSound.start();
     }
 
@@ -64,7 +59,6 @@ public class Sound {
             winSound = AudioSystem.getClip();
             //winSound.open(musicstream);
         } catch(Exception e) {
-            System.out.println("Failed\n");
         }
         winSound.start();
     }

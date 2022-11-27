@@ -12,32 +12,12 @@ public class myDifficultyTest {
     DisplayLayout display = new DisplayLayout();
 
     @Test
-    public void testDifficultySettingsSetEasy(){
-        //DisplayLayout display = new DisplayLayout();
+    public void testGamePresetsToMediumDifficultyTest(){
+        DisplayLayout display = new DisplayLayout();
 
-        // Function to set default operation of JFrame.
-        display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-
-        //display.playPanel.goMain = 1;
-        //display.kh.up = true;
-        try {
-            display.getDiffPanel().getEasyButton().doClick();
-            //the game object data gets instantiated meaning the button worked
-            Assertions.assertEquals(display.dif, Difficulty.EASY);
-
-            display.getTitlePanel().getplayButton().doClick();
-            //on HARD, the amount of enemies generated is 1
-            //so this make sure that the HARD gamemode is saved
-            //and that when generating the map, 1 enemies are spawned in
-            //which indicates that generation has been succesful on easy difficulty
-
-            Assertions.assertEquals(display.getGameObjectData().getEnemyArray().size(), 1);
-
-        } catch(Exception e) {
-            assert(false);
-        }
+        display.setVisible(false);
+        //initialesd should always be Medium
+        Assertions.assertEquals(Difficulty.MEDIUM, display.dif);
         display.dispose();
 
     }
@@ -72,6 +52,38 @@ public class myDifficultyTest {
         display.dispose();
 
     }
+
+    @Test
+    public void testDifficultySettingsSetEasy(){
+        //DisplayLayout display = new DisplayLayout();
+
+        // Function to set default operation of JFrame.
+        display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+
+        //display.playPanel.goMain = 1;
+        //display.kh.up = true;
+        try {
+            display.getDiffPanel().getEasyButton().doClick();
+            //the game object data gets instantiated meaning the button worked
+            Assertions.assertEquals(display.dif, Difficulty.EASY);
+
+            display.getTitlePanel().getplayButton().doClick();
+            //on HARD, the amount of enemies generated is 1
+            //so this make sure that the HARD gamemode is saved
+            //and that when generating the map, 1 enemies are spawned in
+            //which indicates that generation has been succesful on easy difficulty
+
+            Assertions.assertEquals(display.getGameObjectData().getEnemyArray().size(), 1);
+
+        } catch(Exception e) {
+            assert(false);
+        }
+        display.dispose();
+
+    }
+
     //tests the buttons in sequeunce and checks that the difficulty gets
     //updated each time
     @Test
@@ -112,16 +124,6 @@ public class myDifficultyTest {
 
     }
 
-    @Test
-    public void testGamePresetsToMediumDifficultyTest(){
-        //DisplayLayout display = new DisplayLayout();
-
-        display.setVisible(false);
-        //initialesd should always be Medium
-        Assertions.assertEquals(display.dif,Difficulty.MEDIUM);
-        display.dispose();
-
-    }
     @AfterEach
     public void teardown(){
         DisposeDisplays dispose = new DisposeDisplays();

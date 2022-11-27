@@ -10,34 +10,24 @@ public class mySettingsTest {
 
     DisplayLayout display = new DisplayLayout();
     @Test
-    public void testChangeHeroColor(){
-        //DisplayLayout display = new DisplayLayout();
+    public void testGamePresetsToBrownColor(){
+//        DisplayLayout display = new DisplayLayout();
 
-
-
-
-
-        display.getmySettings().getLeftScroll().doClick();
-        Assertions.assertNotEquals(display.heroColor,HeroColor.BROWN);
-
+        Assertions.assertEquals(HeroColor.BROWN, display.heroColor);
         display.dispose();
     }
     @Test
-    public void testGamePresetsToBrownColor(){
+    public void testChangeHeroColor(){
         //DisplayLayout display = new DisplayLayout();
+        display.getmySettings().getLeftScroll().doClick();
+        Assertions.assertNotEquals(display.heroColor,HeroColor.BROWN);
 
-
-
-        Assertions.assertEquals(display.heroColor, HeroColor.BROWN);
         display.dispose();
     }
 
     @Test
     public void testLeftScrollMultipleClicks(){
         //DisplayLayout display = new DisplayLayout();
-
-
-
 
         HeroColor OriginalColor = display.heroColor;
         HeroColor PrevColor = OriginalColor;
@@ -47,9 +37,6 @@ public class mySettingsTest {
         for(int i = 1; i < colors.length; i++){
             PrevColor = display.heroColor;
             display.getmySettings().getLeftScroll().doClick();
-
-
-
             //test that loop does not reach the same color twice
             Assertions.assertNotEquals(display.heroColor, OriginalColor);
             //test that color changed from previous color
@@ -64,9 +51,6 @@ public class mySettingsTest {
     @Test
     public void testRightScrollMultipleClicks(){
         //DisplayLayout display = new DisplayLayout();
-
-
-
         HeroColor OriginalColor = display.heroColor;
         HeroColor PrevColor = OriginalColor;
 

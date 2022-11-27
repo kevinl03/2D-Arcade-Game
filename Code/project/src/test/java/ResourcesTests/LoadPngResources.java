@@ -13,7 +13,6 @@ public class LoadPngResources {
         try{
             displayLayout.playPanel.getImages();
         }catch (Exception e){
-            System.out.println(e);
             assert(false);
         }
         displayLayout.dispose();

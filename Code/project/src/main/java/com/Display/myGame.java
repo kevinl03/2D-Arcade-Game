@@ -447,10 +447,12 @@ public class myGame extends JPanel{
                             Random rand = new Random();
                             treeTypeOrder.add(rand.nextInt(3));
                         }
-                        if(row == 0) {
-                            g2.drawImage(tree_pngs[(treeTypeOrder.get(currentTree)+1)%3], col * tileWidth, 0, tileWidth, tileHeight, null);
-                        }
-                        g2.drawImage(tree_pngs[treeTypeOrder.get(currentTree)], col * tileWidth, row * tileHeight+60, tileWidth, tileHeight, null);
+                        try {
+                            if (row == 0) {
+                                g2.drawImage(tree_pngs[(treeTypeOrder.get(currentTree) + 1) % 3], col * tileWidth, 0, tileWidth, tileHeight, null);
+                            }
+                            g2.drawImage(tree_pngs[treeTypeOrder.get(currentTree)], col * tileWidth, row * tileHeight + 60, tileWidth, tileHeight, null);
+                        }catch(Exception e){};
                         currentTree++;
                     break;
                     case HEROHIDDEN:

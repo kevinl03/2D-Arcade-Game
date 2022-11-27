@@ -14,7 +14,7 @@ public class DisplayTest {
 
     @Test
     public void testDisplayNotShowing(){
-        //DisplayLayout display = new DisplayLayout();
+        DisplayLayout display = new DisplayLayout();
 
         // Function to set default operation of JFrame.
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,7 +28,7 @@ public class DisplayTest {
     }
     @Test
     public void testDisplayShowing(){
-        //DisplayLayout display = new DisplayLayout();
+        DisplayLayout display = new DisplayLayout();
 
         // Function to set default operation of JFrame.
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
