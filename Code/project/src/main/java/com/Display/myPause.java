@@ -21,6 +21,8 @@ private JButton resumeButton;
 private JButton mainmenuButton;
 // private JButton gameoverButton;
 private JLabel pauseLabel;
+private Font headerText;
+
 
 private BufferedImage pause_png;
 Font titleText;
@@ -45,40 +47,44 @@ private GridBagConstraints gbc;
 
         //background
         try {
-            pause_png = ImageIO.read(getClass().getResource("/win.png"));
+            pause_png = ImageIO.read(getClass().getResource("/pause_background.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        titleText = new Font("Times New Roman", Font.BOLD, 50);
-        this.setLayout(new GridBagLayout());
+        titleText = new Font("Times New Roman", Font.BOLD, (dl.displayheight/15));
+        //headerText = new Font("Times New Roman", Font.BOLD, (dl.displayheight/30));
+        this.setLayout(null);
 
         pauseLabel = new JLabel("PAUSED");
         pauseLabel.setFont(titleText);
+        pauseLabel.setBounds((int)(dl.displaywidth*0.4), (int) (dl.displayheight*0.38), dl.displaywidth/3, dl.displayheight/10);
         gbc.insets = new Insets(0,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        this.add(pauseLabel,gbc);
+//        gbc.gridx = 0;
+//        gbc.gridy = 0;
+        this.add(pauseLabel);
 
-        gbc = new GridBagConstraints();
+        //gbc = new GridBagConstraints();
         ImageIcon resumeImage = new ImageIcon(getClass().getResource("/resume.png"));
         resumeButton = new JButton("",resumeImage);
+        resumeButton.setBounds((int)(dl.displaywidth*0.22), (int)(dl.displayheight*0.6), dl.displaywidth/3, dl.displayheight/10);
         //gbc.insets = new Insets(50,0,0,0);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.ipadx = 200;
-        gbc.ipady = 50;
+//        gbc.gridx = 0;
+//        gbc.gridy = 1;
+//        gbc.ipadx = 200;
+//        gbc.ipady = 50;
         resumeButton.setFocusable(false);
         resumeButton.setBorderPainted(false);
         resumeButton.setOpaque(false);
         resumeButton.setContentAreaFilled(false);
-        this.add(resumeButton, gbc);
+        this.add(resumeButton);
 
 
         ImageIcon mainImage = new ImageIcon(getClass().getResource("/main.png"));
         mainmenuButton = new JButton("",mainImage);
+        mainmenuButton.setBounds((int)(dl.displaywidth*0.48), (int)(dl.displayheight*0.6), dl.displaywidth/3, dl.displayheight/10);
         mainmenuButton.setFocusable(false);
-        mainmenuButton.setBounds(610, 570, 300, 100);
+        //mainmenuButton.setBounds(610, 570, 300, 100);
         mainmenuButton.setBorderPainted(false);
         mainmenuButton.setOpaque(false);
         mainmenuButton.setContentAreaFilled(false);
