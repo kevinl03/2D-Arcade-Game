@@ -31,41 +31,41 @@ public class KeyHandlerTest {
             }
         }
        try{
-           Thread.sleep(20);
+           Thread.sleep(100);
            Robot robot = new Robot();
            robot.keyPress(KeyEvent.VK_W); // w
-           Thread.sleep(20);
+           Thread.sleep(100);
            Assertions.assertTrue(kh.up);
            robot.keyRelease(KeyEvent.VK_W);
-           Thread.sleep(20);
+           Thread.sleep(100);
            Assertions.assertFalse(kh.up);
 
            robot.keyPress(KeyEvent.VK_A); // a
-           Thread.sleep(20);
+           Thread.sleep(100);
            Assertions.assertTrue(kh.left);
            robot.keyRelease(KeyEvent.VK_A);
-           Thread.sleep(20);
+           Thread.sleep(100);
            Assertions.assertFalse(kh.left);
 
            robot.keyPress(KeyEvent.VK_S ); // s
-           Thread.sleep(20);
+           Thread.sleep(100);
            Assertions.assertTrue(kh.down);
            robot.keyRelease(KeyEvent.VK_S );
-           Thread.sleep(20);
+           Thread.sleep(100);
            Assertions.assertFalse(kh.down);
 
            robot.keyPress(KeyEvent.VK_D); // d
-           Thread.sleep(20);
+           Thread.sleep(100);
            Assertions.assertTrue(kh.right);
            robot.keyRelease(KeyEvent.VK_D );
-           Thread.sleep(20);
+           Thread.sleep(100);
            Assertions.assertFalse(kh.right);
 
            robot.keyPress(KeyEvent.VK_ESCAPE); // escape
-           Thread.sleep(20);
+           Thread.sleep(100);
            Assertions.assertTrue(kh.escape);
            robot.keyRelease(KeyEvent.VK_ESCAPE);
-           Thread.sleep(20);
+           Thread.sleep(100);
            Assertions.assertFalse(kh.escape);
        }catch (AWTException e){
            e.printStackTrace();
