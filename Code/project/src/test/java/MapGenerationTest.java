@@ -83,7 +83,7 @@ public class MapGenerationTest {
 
     //Makes sure that wall generation successful creates
     @Test
-    void TestWallGenerationAllDifficulties(){
+    public void testWallGenerationAllDifficulties(){
 
 
         for (Difficulty dif: Difficulty.values()) {
@@ -150,7 +150,7 @@ public class MapGenerationTest {
         return numIdenticalTiles;
     }
     @Test
-    void testMapSimilarity(){
+    public void testMapSimilarity(){
 
         for(Difficulty dif: Difficulty.values()) {
             BoardData compareboard = new BoardData();
@@ -177,19 +177,19 @@ public class MapGenerationTest {
         }
     }
     @Test
-    void testMassMapGeneration(){
+    public void testMassMapGeneration(){
         int upperbound = 50;
         for (int totalgenerations = 0; totalgenerations < upperbound; totalgenerations++){
 
 
-            TestWallGenerationAllDifficulties();
+            testWallGenerationAllDifficulties();
 
         }
         //upperbound number of map generations succeeded
         assert(true);
     }
     @Test
-    void OuterBoarderGenerationTest() {
+    public void testOuterBoarderGenerationTest() {
         for (Difficulty dif : Difficulty.values()) {
             BoardData board = new BoardData();
             board.initialiseBoard(dif);
@@ -209,7 +209,7 @@ public class MapGenerationTest {
         }
     }
     @Test
-    void MinDistanceBetweenEnemyAndHero() {
+    public void testMinDistanceBetweenEnemyAndHero() {
         for (Difficulty dif : Difficulty.values()) {
             int minProximity = 0;
             switch(dif){
@@ -256,7 +256,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void MinDistanceBetweenRewards() {
+    public void testMinDistanceBetweenRewards() {
         for (Difficulty dif : Difficulty.values()) {
             int minProximity = 0;
             switch(dif){
@@ -302,7 +302,7 @@ public class MapGenerationTest {
         assert (true);
     }
     @Test
-    void HeroGenerationCount() {
+    public void testHeroGenerationCount() {
         for (Difficulty dif : Difficulty.values()) {
             BoardData board = new BoardData();
             board.initialiseBoard(dif);
@@ -323,7 +323,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void ExitGenerationCount() {
+    public void testExitGenerationCount() {
         for (Difficulty dif : Difficulty.values()) {
             BoardData board = new BoardData();
             board.initialiseBoard(dif);
@@ -344,7 +344,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void TreeGenerationCount() {
+    public void testTreeGenerationCount() {
         for (Difficulty dif : Difficulty.values()) {
             BoardData board = new BoardData();
             board.initialiseBoard(dif);
@@ -365,7 +365,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void BushGenerationCount() {
+    public void testBushGenerationCount() {
         for (Difficulty dif : Difficulty.values()) {
             BoardData board = new BoardData();
             board.initialiseBoard(dif);
@@ -386,7 +386,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void EnemyGenerationCount() {
+    public void testEnemyGenerationCount() {
         for (Difficulty dif : Difficulty.values()) {
             Integer generationCountEnemy = 0;
             BoardData board = new BoardData();
@@ -413,7 +413,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void TrapGenerationCount() {
+    public void testTrapGenerationCount() {
         for (Difficulty dif : Difficulty.values()) {
             Integer generationCountTrap = 0;
             BoardData board = new BoardData();
@@ -440,7 +440,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void RewardGenerationCount() {
+    public void testRewardGenerationCount() {
         for (Difficulty dif : Difficulty.values()) {
             Integer generationCountReward = 0;
             BoardData board = new BoardData();
@@ -467,7 +467,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void BonusRewardDespawnInitially(){
+    public void testBonusRewardDespawnInitially(){
         for (Difficulty dif : Difficulty.values()) {
             ObjectData objectData = new ObjectData(dif, HeroColor.BROWN);
             ArrayList<Bonus> bonusList = objectData.getBonusArray();
@@ -484,7 +484,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void BonusRewardSpawnHard() {
+    public void testBonusRewardSpawnHard() {
         int loop = 0;
         while (loop < 100) {
             ObjectData objectData = new ObjectData(Difficulty.MEDIUM, HeroColor.BROWN);
@@ -516,7 +516,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void BonusRewardDespawnMedium() {
+    public void testBonusRewardDespawnMedium() {
         int loop = 0;
         while (loop < 100) {
             ObjectData objectData = new ObjectData(Difficulty.MEDIUM, HeroColor.BROWN);
@@ -561,7 +561,7 @@ public class MapGenerationTest {
     }
 
     @Test
-    void BonusRewardDespawnEasy() {
+    public void testBonusRewardDespawnEasy() {
         int loop = 0;
         while (loop < 100) {
             ObjectData objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);

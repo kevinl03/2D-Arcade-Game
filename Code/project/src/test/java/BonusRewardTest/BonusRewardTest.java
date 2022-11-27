@@ -15,7 +15,7 @@ public class BonusRewardTest extends MovementTestInfo{
 
     private ArrayList<Bonus> bonuslist;
     private Bonus testbonus;
-    void createbonus(){
+    public void createbonus(){
         //setup the objects for the map
         setup(Objects.BONUS, Difficulty.HARD);
         bonuslist = objectData.getBonusArray();
@@ -34,7 +34,7 @@ public class BonusRewardTest extends MovementTestInfo{
     }
 
     @Test
-    void DespawnBonus() {
+    public void testDespawnBonus() {
 
         createbonus();
 
@@ -59,7 +59,7 @@ public class BonusRewardTest extends MovementTestInfo{
     }
 
     @Test
-    void InitialBonusDoNotSpawnOnMapTest() {
+    public void testInitialBonusDoNotSpawnOnMapTest() {
         setup(Objects.EMPTY, Difficulty.HARD);
         bonuslist = objectData.getBonusArray();
 
@@ -84,7 +84,7 @@ public class BonusRewardTest extends MovementTestInfo{
         }
     }
     @Test
-    void SpawnWhenNotEnoughTimePassed(){
+    public void testSpawnWhenNotEnoughTimePassed(){
 
         setup(Objects.EMPTY, Difficulty.HARD);
         bonuslist = objectData.getBonusArray();
@@ -115,7 +115,7 @@ public class BonusRewardTest extends MovementTestInfo{
     }
 
     @Test
-    void SpawnWhenEnoughTimePassed(){
+    public void testSpawnWhenEnoughTimePassed(){
 
         setup(Objects.EMPTY, Difficulty.HARD);
         bonuslist = objectData.getBonusArray();
@@ -151,7 +151,7 @@ public class BonusRewardTest extends MovementTestInfo{
     }
 
     @Test
-    void DespawnWhenEnemyOnBonusTileTest(){
+    public void testDespawnWhenEnemyOnBonusTileTest(){
         setup(Objects.EMPTY, Difficulty.EASY);
         bonuslist = objectData.getBonusArray();
 
@@ -180,7 +180,7 @@ public class BonusRewardTest extends MovementTestInfo{
 
 
     @Test
-    void DespawnWhenHeroOnTileTest(){
+    public void testDespawnWhenHeroOnTileTest(){
         setup(Objects.EMPTY, Difficulty.EASY);
         bonuslist = objectData.getBonusArray();
 

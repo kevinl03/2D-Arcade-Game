@@ -13,10 +13,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-public class EnemyMovementTests
+public class EnemyMovementTest
 {
     @Test
-    void UnblockedShortestPathSouth(){
+    public void testUnblockedShortestPathSouth(){
         EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
@@ -38,7 +38,7 @@ public class EnemyMovementTests
     }
 
     @Test
-    void UnblockedShortestPathEast(){
+    public void testUnblockedShortestPathEast(){
         EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
@@ -60,7 +60,7 @@ public class EnemyMovementTests
     }
 
     @Test
-    void UnblockedShortestPathNorth(){
+    public void testUnblockedShortestPathNorth(){
         EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
@@ -82,7 +82,7 @@ public class EnemyMovementTests
     }
 
     @Test
-    void UnblockedShortestPathWest(){
+    public void testUnblockedShortestPathWest(){
         EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
@@ -104,7 +104,7 @@ public class EnemyMovementTests
     }
 
     @Test
-    void blockedShortestPathBasic(){
+    public void testblockedShortestPathBasic(){
         EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
@@ -125,7 +125,7 @@ public class EnemyMovementTests
     }
 
     @Test
-    void blockedShortestPathAdvanced(){
+    public void testblockedShortestPathAdvanced(){
         EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
@@ -146,7 +146,7 @@ public class EnemyMovementTests
     }
 
     @Test
-    void RandomMovementWhenHeroHiddenAndFar(){
+    public void testRandomMovementWhenHeroHiddenAndFar(){
         EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
@@ -169,7 +169,7 @@ public class EnemyMovementTests
     }
 
     @Test
-    void RegularMovementWhenHeroHiddenAndClose(){
+    public void testRegularMovementWhenHeroHiddenAndClose(){
         EnemyLogic enemyLogic = new EnemyLogic();
         Objects [][] fakeMap= {
                 //                             WEST
@@ -191,7 +191,7 @@ public class EnemyMovementTests
 
 
     @Test
-    void ConfirmEnemyMoved(){
+    public void testConfirmEnemyMoved(){
 
         ObjectData gameObjectData = new ObjectData(Difficulty.HARD, HeroColor.BROWN);
 
@@ -215,7 +215,7 @@ public class EnemyMovementTests
 
 
     @Test
-    void GenerateRandomDirection(){
+    public void testGenerateRandomDirection(){
 
         ObjectData gameObjectData = new ObjectData(Difficulty.HARD, HeroColor.BROWN);
 

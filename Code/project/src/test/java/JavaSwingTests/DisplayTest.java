@@ -13,7 +13,7 @@ public class DisplayTest {
     DisplayLayout display = new DisplayLayout();
 
     @Test
-    void TestDisplayNotShowing(){
+    public void testDisplayNotShowing(){
         //DisplayLayout display = new DisplayLayout();
 
         // Function to set default operation of JFrame.
@@ -27,7 +27,7 @@ public class DisplayTest {
         display.dispose();
     }
     @Test
-    void TestDisplayShowing(){
+    public void testDisplayShowing(){
         //DisplayLayout display = new DisplayLayout();
 
         // Function to set default operation of JFrame.
@@ -40,8 +40,8 @@ public class DisplayTest {
         display.dispose();
     }
 
-    //@Test
-    void PlayGameButtonTest(){
+    @Test
+    public void testPlayGameButtonTest(){
         //DisplayLayout display = new DisplayLayout();
 
         // Function to set default operation of JFrame.
@@ -67,7 +67,7 @@ public class DisplayTest {
     }
 
     @Test
-    void PauseMenuTest(){
+    public void testPauseMenuTest(){
         //DisplayLayout display = new DisplayLayout();
 
         // Function to set default operation of JFrame.
@@ -93,7 +93,7 @@ public class DisplayTest {
 
 
     @Test
-    void soundsettings(){
+    public void testsoundsettings(){
         //DisplayLayout display = new DisplayLayout();
 
         // Function to set default operation of JFrame.
@@ -111,7 +111,7 @@ public class DisplayTest {
         display.dispose();
     }
     @AfterEach
-    void teardown(){
+    public void teardown(){
         DisposeDisplays dispose = new DisposeDisplays();
         dispose.deepDispose(display);
         System.gc();

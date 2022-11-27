@@ -10,7 +10,7 @@ public class mySettingsTest {
 
     DisplayLayout display = new DisplayLayout();
     @Test
-    void ChangeHeroColor(){
+    public void testChangeHeroColor(){
         //DisplayLayout display = new DisplayLayout();
 
 
@@ -23,7 +23,7 @@ public class mySettingsTest {
         display.dispose();
     }
     @Test
-    void GamePresetsToBrownColor(){
+    public void testGamePresetsToBrownColor(){
         //DisplayLayout display = new DisplayLayout();
 
 
@@ -33,7 +33,7 @@ public class mySettingsTest {
     }
 
     @Test
-    void LeftScrollMultipleClicks(){
+    public void testLeftScrollMultipleClicks(){
         //DisplayLayout display = new DisplayLayout();
 
 
@@ -62,7 +62,7 @@ public class mySettingsTest {
     }
 
     @Test
-    void RightScrollMultipleClicks(){
+    public void testRightScrollMultipleClicks(){
         //DisplayLayout display = new DisplayLayout();
 
 
@@ -92,7 +92,7 @@ public class mySettingsTest {
     }
 
     @Test
-    void TestSounds(){
+    public void testSounds(){
         //DisplayLayout display = new DisplayLayout();
 
 
@@ -107,7 +107,7 @@ public class mySettingsTest {
         display.dispose();
     }
     @AfterEach
-    void teardown(){
+    public void teardown(){
         DisposeDisplays dispose = new DisposeDisplays();
         dispose.deepDispose(display);
         System.gc();

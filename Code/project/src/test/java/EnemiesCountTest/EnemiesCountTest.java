@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EnemiesCountTest {
 
     ObjectData objectData;
@@ -33,7 +32,7 @@ public class EnemiesCountTest {
     }
     ////////////////////// Testing correct amount of enemies in map boundary //////////////////////////////////////////
     @Test
-    void EnemyEasyCount() {
+    public void testEnemyEasyCount() {
         objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);
         boardData = objectData.getBoard();
         objectArray = boardData.getBoardData();
@@ -50,7 +49,7 @@ public class EnemiesCountTest {
     }
 
     @Test
-    void EnemyMediumCount() {
+    public void testEnemyMediumCount() {
         objectData = new ObjectData(Difficulty.MEDIUM, HeroColor.BROWN);
         boardData = objectData.getBoard();
         objectArray = boardData.getBoardData();
@@ -67,7 +66,7 @@ public class EnemiesCountTest {
     }
 
     @Test
-    void EnemyHardCount() {
+    public void testEnemyHardCount() {
         objectData = new ObjectData(Difficulty.HARD, HeroColor.BROWN);
         boardData = objectData.getBoard();
         objectArray = boardData.getBoardData();
@@ -84,7 +83,7 @@ public class EnemiesCountTest {
     }
 
     @Test
-    void TrapEasyCount() {
+    public void testTrapEasyCount() {
         objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);
         boardData = objectData.getBoard();
         objectArray = boardData.getBoardData();
@@ -101,7 +100,7 @@ public class EnemiesCountTest {
     }
 
     @Test
-    void TrapMediumCount() {
+    public void testTrapMediumCount() {
         objectData = new ObjectData(Difficulty.MEDIUM, HeroColor.BROWN);
         boardData = objectData.getBoard();
         objectArray = boardData.getBoardData();
@@ -118,7 +117,7 @@ public class EnemiesCountTest {
     }
 
     @Test
-    void TrapHardCount() {
+    public void testTrapHardCount() {
         objectData = new ObjectData(Difficulty.HARD, HeroColor.BROWN);
         boardData = objectData.getBoard();
         objectArray = boardData.getBoardData();
@@ -136,7 +135,7 @@ public class EnemiesCountTest {
 
     //////////////////Enemy moving at each tick///////////////////////////////////
     @Test
-    void IsEnemyMovingEasy(){
+    public void testIsEnemyMovingEasy(){
         boolean result = true;
         int count = 0;
         while(count < 100) {
@@ -175,7 +174,7 @@ public class EnemiesCountTest {
     }
 
     @Test
-    void IsEnemyMovingMedium(){
+    public void testIsEnemyMovingMedium(){
         boolean result = true;
         int count = 0;
         while(count < 100) {
@@ -239,7 +238,7 @@ public class EnemiesCountTest {
     }
 
     @Test
-    void IsEnemyMovingHard(){
+    public void testIsEnemyMovingHard(){
         boolean result = true;
         int count = 0;
         while(count < 100) {
@@ -334,7 +333,7 @@ public class EnemiesCountTest {
     }
     /////////////////////////////////Enemy moving across reward/////////////////////////////////////
     @Test
-    void EnemyonReward(){
+    public void testEnemyonReward(){
         objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);
         boardData = objectData.getBoard();
         Hero hero = objectData.getHero();
@@ -401,7 +400,7 @@ public class EnemiesCountTest {
     }
 
     @Test
-    void EnemyonBonusReward(){
+    public void testEnemyonBonusReward(){
         objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);
         boardData = objectData.getBoard();
         Hero hero = objectData.getHero();
@@ -468,7 +467,7 @@ public class EnemiesCountTest {
     }
 
     @Test
-    void EnemyonBush(){
+    public void testEnemyonBush(){
         objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);
         boardData = objectData.getBoard();
         Hero hero = objectData.getHero();
@@ -535,7 +534,7 @@ public class EnemiesCountTest {
     }
 
     @Test
-    void EnemyonTrap(){
+    public void testEnemyonTrap(){
         objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);
         boardData = objectData.getBoard();
         Hero hero = objectData.getHero();

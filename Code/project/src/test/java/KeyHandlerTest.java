@@ -2,7 +2,6 @@ import com.Board.BoardData;
 import com.Board.Objects;
 import com.Display.DisplayLayout;
 import com.Display.myTitle;
-import com.Entities.Enemy;
 import com.Entities.Position;
 import com.Helpers.KeyHandler;
 import org.junit.jupiter.api.Assertions;
@@ -10,14 +9,12 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 //@Disabled
-public class KeyHandlerTests {
+public class KeyHandlerTest {
     @Test
-    void keyHandlerTest(){
+    public void testkeyHandlerTest(){
         DisplayLayout dl = new DisplayLayout();
         dl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dl.setVisible(true);

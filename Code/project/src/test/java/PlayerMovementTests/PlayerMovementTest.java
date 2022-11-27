@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class PlayerMovementTest extends MovementTestInfo {
 
     @Test
-    void NonConstraintPlayerMovementUp() {
+    public void testNonConstraintPlayerMovementUp() {
         //create new gameobj to call processPlayerMovement
         setup(Objects.EMPTY, Difficulty.EASY);
         //movements are same for all difficulties => testing just one
@@ -34,7 +34,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void NonConstraintPlayerMovementDown() {
+    public void testNonConstraintPlayerMovementDown() {
         //create new gameobj to call processPlayerMovement
         setup(Objects.EMPTY, Difficulty.EASY);
         //movements are same for all difficulties => testing just one
@@ -55,7 +55,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void NonConstraintPlayerMovementLeft() {
+    public void testNonConstraintPlayerMovementLeft() {
         //create new gameobj to call processPlayerMovement
         setup(Objects.EMPTY, Difficulty.EASY);
         //movements are same for all difficulties => testing just one
@@ -76,7 +76,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void NonConstraintPlayerMovementRight() {
+    public void testNonConstraintPlayerMovementRight() {
         //create new gameobj to call processPlayerMovement
         setup(Objects.EMPTY, Difficulty.EASY);
         //movements are same for all difficulties => testing just one
@@ -97,7 +97,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void pickUpRewardEasyDif() {
+    public void testpickUpRewardEasyDif() {
         setup(Objects.REWARD, Difficulty.EASY);
         ArrayList<RegularReward> rewardlist = objectData.getRewardArray();
         RegularReward testreward = new RegularReward(Uppos.getX(), Uppos.getY(), 0, rewardValue);
@@ -128,7 +128,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void pickUpRewardMediumDif() {
+    public void testpickUpRewardMediumDif() {
         setup(Objects.REWARD, Difficulty.MEDIUM);
         ArrayList<RegularReward> rewardlist = objectData.getRewardArray();
         RegularReward testreward = new RegularReward(Uppos.getX(), Uppos.getY(), 0, rewardValue);
@@ -159,7 +159,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void pickUpRewardHardDif() {
+    public void testpickUpRewardHardDif() {
         setup(Objects.REWARD, Difficulty.HARD);
         ArrayList<RegularReward> rewardlist = objectData.getRewardArray();
         RegularReward testreward = new RegularReward(Uppos.getX(), Uppos.getY(), 0, rewardValue);
@@ -191,7 +191,7 @@ public class PlayerMovementTest extends MovementTestInfo {
 
 
     @Test
-    void pickUpBonusEasyDif() {
+    public void testpickUpBonusEasyDif() {
         setup(Objects.BONUS, Difficulty.EASY);
         ArrayList<Bonus> bonuslist = objectData.getBonusArray();
         Bonus testbonus = new Bonus(Uppos.getX(), Uppos.getY(), 0, rewardValue * 2);
@@ -226,7 +226,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void pickUpBonusMediumDif() {
+    public void testpickUpBonusMediumDif() {
         setup(Objects.BONUS, Difficulty.MEDIUM);
         ArrayList<Bonus> bonuslist = objectData.getBonusArray();
         Bonus testbonus = new Bonus(Uppos.getX(), Uppos.getY(), 0, rewardValue * 2);
@@ -261,7 +261,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void pickUpBonusHardDif() {
+    public void testpickUpBonusHardDif() {
         setup(Objects.BONUS, Difficulty.HARD);
         ArrayList<Bonus> bonuslist = objectData.getBonusArray();
         Bonus testbonus = new Bonus(Uppos.getX(), Uppos.getY(), 0, rewardValue * 2);
@@ -298,7 +298,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     //only test for one direction because previous tests already cover
     //for hero moving in different directions
     @Test
-    void pickUpTrapEasyDif() {
+    public void testpickUpTrapEasyDif() {
         setup(Objects.TRAP, Difficulty.EASY);
         ArrayList<Trap> traplist = objectData.getTrapArray();
         Trap testtrap = new Trap(Uppos.getX(), Uppos.getY(), 0, trapValue);
@@ -333,7 +333,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void pickUpTrapMediumDif() {
+    public void testpickUpTrapMediumDif() {
         setup(Objects.TRAP, Difficulty.MEDIUM);
         ArrayList<Trap> traplist = objectData.getTrapArray();
         Trap testtrap = new Trap(Uppos.getX(), Uppos.getY(), 0, trapValue);
@@ -368,7 +368,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void pickUpTrapHardDif() {
+    public void testpickUpTrapHardDif() {
         setup(Objects.TRAP, Difficulty.HARD);
         ArrayList<Trap> traplist = objectData.getTrapArray();
         Trap testtrap = new Trap(Uppos.getX(), Uppos.getY(), 0, trapValue);
@@ -403,7 +403,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void MoveIntoTree() {
+    public void testMoveIntoTree() {
         setup(Objects.TREE, Difficulty.EASY);
 
         //check to move into any position
@@ -432,7 +432,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void EnemyCollision() {
+    public void testEnemyCollision() {
         setup(Objects.ENEMY, Difficulty.EASY);
         ArrayList<Enemy> enemylist = objectData.getEnemyArray();
         Enemy testenemy = new Enemy(Uppos.getX(), Uppos.getY());
@@ -450,7 +450,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void MoveIntoDoorEasyNotWin() {
+    public void testMoveIntoDoorEasyNotWin() {
         setup(Objects.EXIT, Difficulty.EASY);
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
@@ -471,7 +471,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void MoveIntoDoorMediumNotWin() {
+    public void testMoveIntoDoorMediumNotWin() {
         setup(Objects.EXIT, Difficulty.MEDIUM);
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
@@ -493,7 +493,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void MoveIntoDoorHardNotWin() {
+    public void testMoveIntoDoorHardNotWin() {
         setup(Objects.EXIT, Difficulty.HARD);
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
@@ -515,7 +515,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void WinEasy() {
+    public void testWinEasy() {
         setup(Objects.EXIT, Difficulty.EASY);
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
@@ -536,7 +536,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void WinMedium() {
+    public void testWinMedium() {
         setup(Objects.EXIT, Difficulty.MEDIUM);
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
@@ -557,7 +557,7 @@ public class PlayerMovementTest extends MovementTestInfo {
     }
 
     @Test
-    void WinHard() {
+    public void testWinHard() {
         setup(Objects.EXIT, Difficulty.HARD);
         Exit exitDoor = objectData.getExit();
         exitDoor.setX(Leftpos.getX());
@@ -579,7 +579,7 @@ public class PlayerMovementTest extends MovementTestInfo {
 
 
     @Test
-    void HeroMoveIntoBush() {
+    public void testHeroMoveIntoBush() {
         setup(Objects.BUSH, Difficulty.EASY);
 
         //step over reward

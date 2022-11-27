@@ -7,12 +7,12 @@ import org.junit.jupiter.api.*;
 import javax.swing.*;
 
 
-public class myDifficultyTests {
+public class myDifficultyTest {
 
     DisplayLayout display = new DisplayLayout();
 
-    //@Test
-    void DifficultySettingsSetEasy(){
+    @Test
+    public void testDifficultySettingsSetEasy(){
         //DisplayLayout display = new DisplayLayout();
 
         // Function to set default operation of JFrame.
@@ -43,7 +43,7 @@ public class myDifficultyTests {
     }
 
     @Test
-    void SetHardDifficultyToHard(){
+    public void testSetHardDifficultyToHard(){
         //DisplayLayout display = new DisplayLayout();
 
         // Function to set default operation of JFrame.
@@ -74,8 +74,8 @@ public class myDifficultyTests {
     }
     //tests the buttons in sequeunce and checks that the difficulty gets
     //updated each time
-    //@Test
-    void ChangeMultipleDifficulties(){
+    @Test
+    public void testChangeMultipleDifficulties(){
         //DisplayLayout display = new DisplayLayout();
 
         // Function to set default operation of JFrame.
@@ -113,7 +113,7 @@ public class myDifficultyTests {
     }
 
     @Test
-    void GamePresetsToMediumDifficultyTest(){
+    public void testGamePresetsToMediumDifficultyTest(){
         //DisplayLayout display = new DisplayLayout();
 
         display.setVisible(false);
@@ -123,7 +123,7 @@ public class myDifficultyTests {
 
     }
     @AfterEach
-    void teardown(){
+    public void teardown(){
         DisposeDisplays dispose = new DisposeDisplays();
         dispose.deepDispose(display);
         System.gc();
