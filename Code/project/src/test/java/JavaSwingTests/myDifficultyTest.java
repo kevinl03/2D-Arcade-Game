@@ -13,12 +13,12 @@ public class myDifficultyTest {
 
     @Test
     public void testGamePresetsToMediumDifficultyTest(){
-        DisplayLayout display = new DisplayLayout();
+        DisplayLayout display2 = new DisplayLayout();
 
         display.setVisible(false);
         //initialesd should always be Medium
-        Assertions.assertEquals(Difficulty.MEDIUM, display.dif);
-        display.dispose();
+        Assertions.assertEquals(Difficulty.MEDIUM, display2.dif);
+        display2.dispose();
 
     }
 

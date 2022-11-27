@@ -132,7 +132,7 @@ public class EnemiesCountTest {
         }
         assertEquals(11, result);
     }
-    
+
     /////////////////////////////////Enemy moving across reward/////////////////////////////////////
     @Test
     public void testEnemyonReward(){
