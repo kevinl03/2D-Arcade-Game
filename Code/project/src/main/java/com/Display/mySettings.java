@@ -44,15 +44,6 @@ public class mySettings extends JPanel {
      */
     private void getHeroColors(){
         try {
-//            heroColorPngs = new HashMap<>();
-//            for(HeroColor color: HeroColor.values()){
-//                System.out.println("/squirrels/Squirrel" + color.toString() + "East2.png");
-//                BufferedImage img = ImageIO.read(getClass().getResource("/squirrels/Squirrel" + color.toString() + "East2.png"));
-//                System.out.println(img);
-//
-//                heroColorPngs.put(color, img);
-//            }
-
             heroColorPngs = new HashMap<>();
             URL pathUrl = getClass().getClassLoader().getResource("squirrels/");
             if ((pathUrl != null) && pathUrl.getProtocol().equals("file")) {
@@ -108,13 +99,14 @@ public class mySettings extends JPanel {
     public mySettings(DisplayLayout dl, CardLayout cl) {
 
         this.cl = cl;
+        this.dl = dl;
         gbc = new GridBagConstraints();
         gbc.anchor = gbc.CENTER;
 
         // Setting up the settings panel
         setLayout(new GridBagLayout());
         settLabel = new JLabel("Settings");
-        headerText = new Font("Times New Roman", Font.BOLD, 50);
+        headerText = new Font("Times New Roman", Font.BOLD, (dl.displayheight/15));
         settLabel.setFont(headerText);
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -124,11 +116,11 @@ public class mySettings extends JPanel {
         soundGroup = new ButtonGroup();
         ImageIcon muteImage = new ImageIcon(getClass().getResource("/muteBtn.png"));
         muteButton = new JToggleButton("",muteImage);
-        gbc.insets = new Insets(0,0,0,0);
+        gbc.insets = new Insets((dl.displayheight/15),0,0,0);
         gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.ipadx = 200;
-        gbc.ipady = 50;
+//        gbc.ipadx = 200;
+//        gbc.ipady = 50;
         //muteButton.setBorder(BorderFactory.createEmptyBorder());
         muteButton.setFocusable(false);
         muteButton.setBorderPainted(false);
@@ -149,7 +141,6 @@ public class mySettings extends JPanel {
 
         ImageIcon backImage = new ImageIcon(getClass().getResource("/back.png"));
         settbackButton = new JButton("",backImage);
-        //gbc.insets = new Insets(50,0,0,450);
         gbc.gridx = 1;
         gbc.gridy = 4;
         settbackButton.setBorderPainted(false);
@@ -220,7 +211,7 @@ public class mySettings extends JPanel {
         }
         color = dl.heroColor;
 
-        leftScroll = iconButton(leftButtonPng, 40, 40);
+        leftScroll = iconButton(leftButtonPng, (dl.displayheight/20), (dl.displayheight/20));
         leftScroll.setFocusable(false);
         leftScroll.addActionListener(new ActionListener()
         {
@@ -237,14 +228,16 @@ public class mySettings extends JPanel {
                 repaint();
             }
         });
-        gbc.insets = new Insets(150,0,0,400);
+        // 1/6 of height, /3.75 when 400 pixels from 1500 pixel-wide screen
+        gbc.insets = new Insets((dl.displayheight/6),0,0,(dl.displaywidth/4));
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.ipadx = 0;
         gbc.ipady = 0;
         this.add(leftScroll, gbc);
 
-        rightScroll = iconButton(rightButtonPng, 40, 40);
+        // Scroll Button /20 of screen height
+        rightScroll = iconButton(rightButtonPng, (dl.displayheight/20), (dl.displayheight/20));
         rightScroll.setFocusable(false);
         rightScroll.addActionListener(new ActionListener()
         {
@@ -262,7 +255,7 @@ public class mySettings extends JPanel {
 
             }
         });
-        gbc.insets = new Insets(150,400,0,0);
+        gbc.insets = new Insets((dl.displayheight/6),(dl.displaywidth/4),0,0);
         gbc.gridx = 1;
         gbc.gridy = 1;
         this.add(rightScroll, gbc);
@@ -278,7 +271,7 @@ public class mySettings extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (testimage_png != null) {
-            g.drawImage(testimage_png, 0, 0, 1500, 960, null);
+            g.drawImage(testimage_png, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
         skinSelection(g);
     }
@@ -309,10 +302,16 @@ public class mySettings extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
         BufferedImage hero = heroColorPngs.get(color);
-        g2.drawImage(hero, 700, 285, 80, 80, null);
+        g2.drawImage(hero, (int)(dl.displaywidth*0.47), (int)(dl.displayheight*0.28), (dl.displayheight/10), (dl.displayheight/10), null);
 
     }
     public JToggleButton getmuteButton(){return muteButton;}
 
     public JToggleButton getUnmuteButton(){return unmuteButton;}
+
+    public JButton getLeftScroll(){return leftScroll;}
+
+    public JButton getRightScroll(){return rightScroll;}
+
+    public HeroColor getHeroColor(){return color;}
 }

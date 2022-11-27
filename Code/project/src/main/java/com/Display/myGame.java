@@ -4,6 +4,7 @@ import com.Board.Objects;
 import com.Entities.Enemy;
 import com.Entities.Hero;
 import com.Entities.Position;
+import com.Helpers.Direction;
 import com.Helpers.KeyHandler;
 import com.Logic.EnemyLogic;
 import com.Logic.HeroLogic;
@@ -25,7 +26,10 @@ import java.util.Random;
  * Creates this JPanel to represent the com.Game screen
  */
 public class myGame extends JPanel{
-    private int pixelsize = 60;   //60x60 pixels
+
+
+    private int tileHeight;
+    private int tileWidth;
     private int columns = 25;
     private int rows = 15;
     protected HashMap<String, BufferedImage> squirrel_pngs;
@@ -39,6 +43,7 @@ public class myGame extends JPanel{
     private BufferedImage board_png;
     private BufferedImage exit_png;
     private BufferedImage trap_png;
+    private BufferedImage button_png;
     KeyHandler kh;
     private CardLayout cl;
     private DisplayLayout dl;
@@ -73,7 +78,7 @@ public class myGame extends JPanel{
         this.kh = dl.kh;
         //rows*pixelsize+60 we have +60 for putting the time and scores at the top of
         //and additional row of trees
-        setPreferredSize(new Dimension(columns*pixelsize, rows*pixelsize+60));
+        setPreferredSize(new Dimension(columns*tileWidth, rows*tileHeight+60));
         getImages();
         addKeyListener(kh);
         this.setLayout(null);
@@ -84,6 +89,8 @@ public class myGame extends JPanel{
         font = new Font("Times New Roman", Font.BOLD, 30);
         firstRender = true;
         treeTypeOrder = new ArrayList<>();
+        tileHeight = dl.displayheight/(rows+1);
+        tileWidth = dl.displaywidth/columns;
     }
 
     /**
@@ -292,6 +299,14 @@ public class myGame extends JPanel{
         }
     }
 
+    public void getButton(){
+        try {
+            button_png = ImageIO.read(getClass().getResource("/RecButton.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Calls all the methods to set the Image objects.
      */
@@ -305,6 +320,7 @@ public class myGame extends JPanel{
         getField();
         getExit();
         getTrap();
+        getButton();
     }
 
     /**
@@ -331,7 +347,7 @@ public class myGame extends JPanel{
                 hero.setAtBush(true);
             }
             if(hero.isAtBush()){
-                g2.drawImage(hidden_squirrel_pngs.get("SquirrelHiding" + hero.getHeroColor().toString() + ".png"), col * 60 + 10, row * 60+60 + 10, pixelsize-20, pixelsize-20, null);
+                g2.drawImage(hidden_squirrel_pngs.get("SquirrelHiding" + hero.getHeroColor().toString() + ".png"), col * tileWidth + 10, row * tileHeight+60 + 10, tileWidth-20, tileHeight-20, null);
                 return;
             }
         }
@@ -342,13 +358,10 @@ public class myGame extends JPanel{
         String color = hero.getHeroColor().toString();
         int movementProgress = 0;
         if(hero.isMoving()){
-            switch(dl.frameCounter){
-                case 0 -> movementProgress = 52;
-                case 1 -> movementProgress = 43;
-                case 2 -> movementProgress = 35;
-                case 3 -> movementProgress = 24;
-                case 4 -> movementProgress = 16;
-                case 5 -> movementProgress = 7;
+            if(hero.getDir() == Direction.NORTH || hero.getDir() == Direction.SOUTH){
+                movementProgress = tileHeight/7 * (6 - dl.frameCounter);
+            }else{
+                movementProgress = tileWidth/7 * (6 - dl.frameCounter);
             }
 
             if(dir == "North" || dir == "West"){
@@ -356,12 +369,12 @@ public class myGame extends JPanel{
             }
             //if direction in the y-axis
             if(dir == "North" || dir == "South"){
-                g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + animationFrame + ".png"), col * 60, row * 60+65 - movementProgress, pixelsize-10, pixelsize-10, null);
+                g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + animationFrame + ".png"), col * tileWidth, row * tileHeight+65 - movementProgress, tileWidth-10, tileHeight-10, null);
             }else{
-                g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + animationFrame + ".png"), col * 60 - movementProgress, row * 60+65, pixelsize-10, pixelsize-10, null);
+                g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + animationFrame + ".png"), col * tileWidth - movementProgress, row * tileHeight+65, tileWidth-10, tileHeight-10, null);
             }
         }else{
-            g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + "1.png"), col * 60, row * 60+65, pixelsize-10, pixelsize-10, null);
+            g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + "1.png"), col * tileWidth, row * tileHeight+65, tileWidth-10, tileHeight-10, null);
         }
 
         if(dl.frameCounter == 6) {
@@ -385,14 +398,10 @@ public class myGame extends JPanel{
             String dir = enemy.getDir().toString();
 
             int movementProgress = 0;
-            switch(dl.frameCounter){
-                case 0 -> movementProgress = 52;
-                case 1 -> movementProgress = 43;
-                case 2 -> movementProgress = 35;
-                case 3 -> movementProgress = 24;
-                case 4 -> movementProgress = 16;
-                case 5 -> movementProgress = 7;
-
+            if(enemy.getDir() == Direction.NORTH || enemy.getDir() == Direction.SOUTH){
+                movementProgress = tileHeight/7 * (6 - dl.frameCounter);
+            }else{
+                movementProgress = tileWidth/7 * (6 - dl.frameCounter);
             }
 
             if(dir == "North" || dir == "West"){
@@ -401,9 +410,9 @@ public class myGame extends JPanel{
 
             //if direction in the y-axis
             if(dir == "North" || dir == "South"){
-                g2.drawImage(bear_pngs.get("Bear"  + dir + animationFrame + ".png"), col * 60, row * 60+65 - movementProgress, pixelsize-10, pixelsize-10, null);
+                g2.drawImage(bear_pngs.get("Bear"  + dir + animationFrame + ".png"), col * tileWidth, row * tileHeight+65 - movementProgress, tileWidth-10, tileHeight-10, null);
             }else{
-                g2.drawImage(bear_pngs.get("Bear"  + dir + animationFrame + ".png"), col * 60 - movementProgress, row * 60+65, pixelsize-10, pixelsize-10, null);
+                g2.drawImage(bear_pngs.get("Bear"  + dir + animationFrame + ".png"), col * tileWidth - movementProgress, row * tileHeight+65, tileWidth-10, tileHeight-10, null);
 
             }
             enemy.incrementAnimationFrame();
@@ -422,7 +431,7 @@ public class myGame extends JPanel{
     protected void paintComponent(Graphics g){   //   Draw something on JPanel
         super.paintComponent(g);   //   Method already exists, so super is used to add additional lines
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
-        g.drawImage(board_png, 0, 0, 1500, 960, null);
+        g.drawImage(board_png, 0, 0, dl.displaywidth, dl.displayheight, null);
         Hero hero = dl.gameObjectData.getHero();
         boardMap = dl.board.getBoardData();
 
@@ -439,37 +448,37 @@ public class myGame extends JPanel{
                             treeTypeOrder.add(rand.nextInt(3));
                         }
                         if(row == 0) {
-                            g2.drawImage(tree_pngs[(treeTypeOrder.get(currentTree)+1)%3], col * 60, 0, pixelsize, pixelsize, null);
+                            g2.drawImage(tree_pngs[(treeTypeOrder.get(currentTree)+1)%3], col * tileWidth, 0, tileWidth, tileHeight, null);
                         }
-                        g2.drawImage(tree_pngs[treeTypeOrder.get(currentTree)], col * 60, row * 60+60, pixelsize, pixelsize, null);
+                        g2.drawImage(tree_pngs[treeTypeOrder.get(currentTree)], col * tileWidth, row * tileHeight+60, tileWidth, tileHeight, null);
                         currentTree++;
                     break;
                     case HEROHIDDEN:
                         if(!hero.isAtBush()){
-                            g2.drawImage(bush_png, col * 60 + 10, row * 60+60 + 10, pixelsize - 20, pixelsize - 20, null);
+                            g2.drawImage(bush_png, col * tileWidth + 10, row * tileHeight+60 + 10, (int)(tileWidth*(2.0/3)), (int)(tileHeight*(2.0/3)), null);
                         }
                         break;
                     case ENEMYANDBUSH:
                     case BUSH:
-                            g2.drawImage(bush_png, col * 60 + 10, row * 60+60 + 10, pixelsize - 20, pixelsize - 20, null);
+                            g2.drawImage(bush_png, col * tileWidth + 10, row * tileHeight+60 + 10, (int)(tileWidth*(2.0/3)), (int)(tileHeight*(2.0/3)), null);
                         break;
                     case ENEMYANDTRAP:
                     case TRAP:
-                        g2.drawImage(trap_png, col * 60+20, row * 60+60+20, pixelsize-40, pixelsize-40, null);
+                        g2.drawImage(trap_png, col * tileWidth+20, row * tileHeight+60+20, (int)(tileWidth*(1.0/3)), (int)(tileHeight*(1.0/3)), null);
                         break;
                     case ENEMYANDREWARD:
                     case REWARD:
-                        g2.drawImage(peanuts_png, col * 60 + 15, row * 60+60 + 15, pixelsize-30, pixelsize - 30, null);
+                        g2.drawImage(peanuts_png, col * tileWidth + 15, row * tileHeight+60 + 15, tileWidth/2, tileHeight/2, null);
 
                     break;
                     case BONUS:
                         //hide the object on the first render
                         if(!firstRender) {
-                            g2.drawImage(chocolate_png, col * 60, row * 60 + 60, pixelsize - 30, pixelsize - 30, null);
+                            g2.drawImage(chocolate_png, col * tileWidth, row * tileHeight + 60, tileWidth/2, tileHeight/2, null);
                         }
                     break;
                     //no exit image yet
-                    case EXIT: g2.drawImage(exit_png, col * 60, row * 60+60, pixelsize, pixelsize, null);
+                    case EXIT: g2.drawImage(exit_png, col * tileWidth, row * tileHeight+60, tileWidth, tileHeight, null);
                     break;
 
                 }
@@ -481,17 +490,15 @@ public class myGame extends JPanel{
 
         firstRender = false;
 
-        g2.setColor(Color.gray);
-        g2.fillRect(700,0,150,30);
+        g2.drawImage(button_png, (int)(dl.displaywidth*0.24)-175, 10, 175, 45, null);
         g2.setFont(font);
-        g2.setColor(Color.white);
-        g2.drawString(scoreLabel.getText() + ": " + dl.gameObjectData.getHero().getScore(), 700, 25);
+        g2.setColor(Color.black);
+        g2.drawString(scoreLabel.getText() + ": " + dl.gameObjectData.getHero().getScore(), (int)(dl.displaywidth*0.25)-175, 42);
 
-        g2.setColor(Color.gray);
-        g2.fillRect(1300,0,150,30);
+        g2.drawImage(button_png, (int)(dl.displaywidth*0.74), 10, 175, 45, null);
         g2.setFont(font);
-        g2.setColor(Color.white);
-        g2.drawString(timeLabel.getText() + ": " + seconds, 1300, 25);
+        g2.setColor(Color.black);
+        g2.drawString(timeLabel.getText() + ": " + seconds, (int)(dl.displaywidth*0.75), 42);
         g2.dispose();
     }
 }

@@ -24,6 +24,8 @@ public class myDifficulty extends JPanel {
     private JLabel difLabel;
     private BufferedImage testimage_png;
 
+    private DisplayLayout dl;
+
     /**
      * Constructor creates the difficulty screen.
      * This constructor makes JToggleButtons for easy, medium,
@@ -33,6 +35,8 @@ public class myDifficulty extends JPanel {
      * @param cl the CardLayout object to use its methods
      */
     public myDifficulty(DisplayLayout dl, CardLayout cl){
+
+        this.dl = dl;
 
         try {
             testimage_png = ImageIO.read(getClass().getResource("/testimage.png"));
@@ -52,11 +56,10 @@ public class myDifficulty extends JPanel {
         difGroup = new ButtonGroup();
         ImageIcon easyImage = new ImageIcon(getClass().getResource("/easy.png"));
         easyButton = new JToggleButton("",easyImage,true);
-        gbc.insets = new Insets(50,0,0,0);
+        gbc.insets = new Insets(dl.displayheight/30,0,0,0);
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.ipadx = 200;
-        gbc.ipady = 50;
+        gbc.ipady = dl.displayheight/30;
         easyButton.setFocusable(false);
         easyButton.setBorderPainted(false);
         easyButton.setOpaque(false);
@@ -173,7 +176,18 @@ public class myDifficulty extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (testimage_png != null) {
-            g.drawImage(testimage_png, 0, 0, 1500, 960, null);
+            g.drawImage(testimage_png, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
+    }
+
+    public JToggleButton getEasyButton() {
+        return easyButton;
+    }
+
+    public JToggleButton getMediumButton(){
+        return mediumButton;
+    }
+    public JToggleButton getHardButton(){
+        return hardButton;
     }
 }

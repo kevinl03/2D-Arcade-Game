@@ -22,8 +22,11 @@ public class DisplayLayout extends JFrame implements Runnable{
     private int columns = 26;
     private int rows = 17;
 
-    private int displaywidth = pixelsize * columns;
-    private int displayheight = pixelsize * rows;
+    Toolkit tk = Toolkit.getDefaultToolkit();
+    Dimension screenSize = tk.getScreenSize();
+    int displaywidth = screenSize.width;
+    int displayheight = screenSize.height;
+
     public int currentCard = 1;
 
     // Declare CardLayout class objects.
@@ -54,7 +57,7 @@ public class DisplayLayout extends JFrame implements Runnable{
 
     public Difficulty dif = Difficulty.MEDIUM;
 
-    HeroColor heroColor = HeroColor.BROWN;
+    public HeroColor heroColor = HeroColor.BROWN;
 
     int frameCounter = 0;
 
@@ -78,7 +81,10 @@ public class DisplayLayout extends JFrame implements Runnable{
         setTitle("Hidden Squirrel: Peanuts and Acorns");
 
         // Function to set visibility of JFrame
-        setSize(displaywidth-45,displayheight-21);
+        setSize(displaywidth,displayheight);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setUndecorated(true);
+        setVisible(true);
 
         // Creating Object of JPanel class
         displayPanel = new JPanel();
@@ -160,7 +166,7 @@ public class DisplayLayout extends JFrame implements Runnable{
      */
     @Override
     public void run() {   //   When starting thread, have thread use this run method
-        //playPanel.goMain = 0;
+        playPanel.goMain = 0;
         gameovertest = false;
         gameWonTest = false;
         timer = 0;
@@ -250,4 +256,24 @@ public class DisplayLayout extends JFrame implements Runnable{
     public ObjectData getGameObjectData(){return gameObjectData;}
     
     public myTitle getTitlePanel(){return titlePanel;}
+
+    public CardLayout getCardLayout(){return dl;}
+
+    public myTitle getMyTitle(){return titlePanel;}
+
+    public KeyHandler getKeyHandler(){return kh;}
+
+    public mySettings getmySettings(){return settPanel;}
+
+    public JPanel getmyPause(){return pausePanel;}
+
+    public myDifficulty getDiffPanel(){return diffPanel;}
+
+    public myGameOver getGameOver() {
+        return gameOver;
+    }
+
+    public myGameWon getGameWon() {
+        return gameWon;
+    }
 }

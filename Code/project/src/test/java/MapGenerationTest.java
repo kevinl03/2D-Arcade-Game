@@ -178,7 +178,7 @@ public class MapGenerationTest {
     }
     @Test
     void testMassMapGeneration(){
-        int upperbound = 10000;
+        int upperbound = 50;
         for (int totalgenerations = 0; totalgenerations < upperbound; totalgenerations++){
 
 
@@ -300,16 +300,6 @@ public class MapGenerationTest {
         }
 
         assert (true);
-    }
-
-    @Test
-    void bonusreward() {
-        assert (true);
-    }
-
-    @Test
-    void entitygen() {
-        assert (1 < 2);
     }
     @Test
     void HeroGenerationCount() {

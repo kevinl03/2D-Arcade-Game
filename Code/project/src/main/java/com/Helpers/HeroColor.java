@@ -54,4 +54,7 @@ public enum HeroColor {
         return colors[(ordinal() - 1  + colors.length) % colors.length];
     }
 
+    public static HeroColor[] getColors() {
+        return colors;
+    }
 }
