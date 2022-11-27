@@ -11,10 +11,10 @@ public class mySettingsTest {
     DisplayLayout display = new DisplayLayout();
     @Test
     public void testGamePresetsToBrownColor(){
-//        DisplayLayout display = new DisplayLayout();
+        DisplayLayout display2 = new DisplayLayout();
 
-        Assertions.assertEquals(HeroColor.BROWN, display.heroColor);
-        display.dispose();
+        Assertions.assertEquals(HeroColor.BROWN, display2.heroColor);
+        display2.dispose();
     }
     @Test
     public void testChangeHeroColor(){
