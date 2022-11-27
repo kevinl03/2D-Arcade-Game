@@ -602,4 +602,35 @@ public class PlayerMovementTest extends MovementTestInfo {
         Assertions.assertEquals(boardData.getTypeAt(heropos),Objects.HERO);
 
     }
+
+    @Test
+    void NegativePointsTriggersGameLoss(){
+        setup(Objects.TRAP, Difficulty.EASY);
+        ArrayList<Trap> traplist = objectData.getTrapArray();
+        Trap testtrap = new Trap(Uppos.getX(), Uppos.getY(), 0, trapValue);
+        traplist.add(testtrap);
+        //step over reward
+        objectData.getHeroLogic().processPlayerMovement(Uppos, objectData);
+        System.out.print(hero.getScore());
+
+
+        Assertions.assertEquals(objectData.getGameStats().getGameOver(), true);
+    }
+
+    @Test
+    void CollectingAllRewardsOpensExit() {
+
+        for (Difficulty dif : Difficulty.values()) {
+            objectData = new ObjectData(Difficulty.EASY, HeroColor.BROWN);
+            ArrayList<RegularReward> rewardlist = objectData.getRewardArray();
+            for (int i = 0; i < rewardlist.size(); i++) {
+                //pick up all rewards
+                Position newpos = new Position(rewardlist.get(i).getX(), rewardlist.get(i).getY());
+                objectData.getHeroLogic().processPlayerMovement(newpos, objectData);
+            }
+            Assertions.assertEquals(objectData.getExit().isClosed(), false);
+        }
+    }
+
+
 }
