@@ -177,7 +177,7 @@ private GridBagConstraints gbc;
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (pause_png != null) {
-            g.drawImage(pause_png, 0, 0, 1500, 960, null);
+            g.drawImage(pause_png, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
     }
 
