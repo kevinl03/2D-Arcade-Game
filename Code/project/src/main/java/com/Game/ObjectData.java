@@ -18,7 +18,7 @@ public class ObjectData {
     /**
      * {@link Hero} object
      */
-    private final Hero hero;
+    private Hero hero;
 
     /**
      * ArrayList of all {@link Enemy} objects
@@ -131,6 +131,11 @@ public class ObjectData {
         //hero.setPosition(herostart);
         //
         hero.setHeroColor(heroColor);
+    }
+
+    public ObjectData(Difficulty dif, HeroColor color, int score){
+        this(dif, color);
+        hero.addScore(score);
     }
 
 

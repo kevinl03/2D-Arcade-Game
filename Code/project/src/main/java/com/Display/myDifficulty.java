@@ -18,6 +18,9 @@ public class myDifficulty extends JPanel {
     private JToggleButton easyButton;
     private JToggleButton mediumButton;
     private JToggleButton hardButton;
+
+    private JToggleButton infiniteButton;
+
     private JButton difbackButton;
     private GridBagConstraints gbc;
     private Font headerText;
@@ -87,10 +90,20 @@ public class myDifficulty extends JPanel {
         hardButton.setContentAreaFilled(false);
         this.add(hardButton, gbc);
 
+        ImageIcon infiniteImg = new ImageIcon(getClass().getResource("/RecButton.png"));
+        infiniteButton = new JToggleButton("INFINITE",hardImg,true);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        infiniteButton.setFocusable(false);
+        infiniteButton.setBorderPainted(false);
+        infiniteButton.setOpaque(false);
+        infiniteButton.setContentAreaFilled(false);
+        this.add(infiniteButton, gbc);
+
         ImageIcon backImage = new ImageIcon(getClass().getResource("/back.png"));
         difbackButton = new JButton("",backImage);
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         difbackButton.setFocusable(false);
         difbackButton.setBorderPainted(false);
         difbackButton.setOpaque(false);
@@ -142,6 +155,19 @@ public class myDifficulty extends JPanel {
                 dl.sound.playClick();
                 //Change difficulty to hard
                 dl.dif = Difficulty.HARD;
+            }
+        });
+
+        infiniteButton.addActionListener(new ActionListener() {
+            /**
+             * When user presses Hard button, sets difficulty to hard.
+             * Sets the dif variable in DisplayLayout object to be enum Hard.
+             * @param arg0 the event to be processed
+             */
+            public void actionPerformed(ActionEvent arg0) {
+                dl.sound.playClick();
+                //Change difficulty to hard
+                dl.dif = Difficulty.INFINITE;
             }
         });
 

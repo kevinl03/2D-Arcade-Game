@@ -1,6 +1,7 @@
 package com.Display;
 
 import com.Board.Difficulty;
+import com.Entities.Hero;
 import com.Game.ObjectData;
 import com.Helpers.HeroColor;
 import com.Helpers.KeyHandler;
@@ -199,10 +200,17 @@ public class DisplayLayout extends JFrame implements Runnable{
                     playPanel.firstRender = true;
                 }
                 if(gameObjectData.getGameStats().isGameWon()){
-                    playPanel.goMain = 1;
-                    gameWonTest = true;
-                    pause = 0;
-                    kh.escape = false;
+                    if(gameObjectData.getDif() == Difficulty.INFINITE){
+                        Hero tempHero = gameObjectData.getHero();
+                        gameObjectData = null;
+                        System.gc();
+                        gameObjectData = new ObjectData(Difficulty.INFINITE, tempHero.getHeroColor(), tempHero.getScore());
+                    }else{
+                        playPanel.goMain = 1;
+                        gameWonTest = true;
+                        pause = 0;
+                        kh.escape = false;
+                    }
                 }
 
                 //choosing how long every thread lasts
