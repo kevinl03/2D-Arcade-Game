@@ -219,7 +219,7 @@ public class DisplayLayout extends JFrame implements Runnable{
                 throw new RuntimeException(e);
             }
             frameCounter++;
-            if(frameCounter > 6){
+            if(frameCounter > 4){
                 frameCounter = 0;
             }
         }

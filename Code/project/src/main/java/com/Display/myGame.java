@@ -343,7 +343,7 @@ public class myGame extends JPanel{
         int row = hero.getY();
 
         if(hero.isHidden()){
-            if(dl.frameCounter == 6){
+            if(dl.frameCounter == 4){
                 hero.setAtBush(true);
             }
             if(hero.isAtBush()){
@@ -359,9 +359,9 @@ public class myGame extends JPanel{
         int movementProgress = 0;
         if(hero.isMoving()){
             if(hero.getDir() == Direction.NORTH || hero.getDir() == Direction.SOUTH){
-                movementProgress = tileHeight/7 * (6 - dl.frameCounter);
+                movementProgress = tileHeight/5 * (4 - dl.frameCounter);
             }else{
-                movementProgress = tileWidth/7 * (6 - dl.frameCounter);
+                movementProgress = tileWidth/5 * (4 - dl.frameCounter);
             }
 
             if(dir == "North" || dir == "West"){
@@ -377,7 +377,7 @@ public class myGame extends JPanel{
             g2.drawImage(squirrel_pngs.get("Squirrel" + color + dir + "1.png"), col * tileWidth, row * tileHeight+65, tileWidth-10, tileHeight-10, null);
         }
 
-        if(dl.frameCounter == 6) {
+        if(dl.frameCounter == 4) {
             hero.setMoving(false);
         }
 
@@ -399,9 +399,9 @@ public class myGame extends JPanel{
 
             int movementProgress = 0;
             if(enemy.getDir() == Direction.NORTH || enemy.getDir() == Direction.SOUTH){
-                movementProgress = tileHeight/7 * (6 - dl.frameCounter);
+                movementProgress = tileHeight/5 * (4 - dl.frameCounter);
             }else{
-                movementProgress = tileWidth/7 * (6 - dl.frameCounter);
+                movementProgress = tileWidth/5 * (4 - dl.frameCounter);
             }
 
             if(dir == "North" || dir == "West"){
