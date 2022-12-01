@@ -515,7 +515,7 @@ public class BoardData {
             while(!posfound){
                 int[] coords = getRandomXY();
                 //check to see if generation is a valid
-                if (ObjectMap[coords[0]][coords[1]] == Objects.EMPTY){
+                if (ObjectMap[coords[0]][coords[1]] == Objects.EMPTY && coords[1] != getboardheight()-2){
 
                     ObjectMap[coords[0]][coords[1]] = Objects.TRAP;
                     posfound = true;
