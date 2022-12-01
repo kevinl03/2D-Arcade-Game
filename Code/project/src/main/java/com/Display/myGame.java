@@ -500,7 +500,7 @@ public class myGame extends JPanel{
         g2.drawImage(button_png, (int)(dl.displaywidth*0.74), 10, 175, 45, null);
         g2.setFont(font);
         g2.setColor(Color.black);
-        g2.drawString(timeLabel.getText() + ": " + seconds, (int)(dl.displaywidth*0.75), 42);
+        g2.drawString(timeLabel.getText() + ": " + dl.timer/1000, (int)(dl.displaywidth*0.75), 42);
         g2.dispose();
     }
 }
