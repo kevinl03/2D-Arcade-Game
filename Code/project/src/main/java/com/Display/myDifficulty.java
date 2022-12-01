@@ -90,8 +90,8 @@ public class myDifficulty extends JPanel {
         hardButton.setContentAreaFilled(false);
         this.add(hardButton, gbc);
 
-        ImageIcon infiniteImg = new ImageIcon(getClass().getResource("/RecButton.png"));
-        infiniteButton = new JToggleButton("INFINITE",hardImg,true);
+        ImageIcon infiniteImg = new ImageIcon(getClass().getResource("/infinit.png"));
+        infiniteButton = new JToggleButton("",infiniteImg,true);
         gbc.gridx = 0;
         gbc.gridy = 4;
         infiniteButton.setFocusable(false);
