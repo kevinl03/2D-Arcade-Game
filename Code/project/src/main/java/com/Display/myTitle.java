@@ -46,11 +46,12 @@ public class myTitle extends JPanel {
 
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.cyan);
-        titleLabel = new JLabel("Hidden Squirrel: Peanuts and Acorns");
+        titleLabel = new JLabel("");
+        titleLabel.setIcon(new ImageIcon(getClass().getResource("/gameName.png")));
         titleText = new Font("Times New Roman", Font.BOLD, 50);
         titleLabel.setFont(titleText);
         titleLabel.setBackground(Color.GRAY);
-        titleLabel.setOpaque(true);
+        titleLabel.setOpaque(false);
         titleLabel.setVerticalAlignment(JLabel.TOP);
         this.add(titleLabel);
 
