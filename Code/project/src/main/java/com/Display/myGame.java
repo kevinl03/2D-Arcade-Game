@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -43,6 +44,7 @@ public class myGame extends JPanel{
     private BufferedImage exitPng;
     private BufferedImage trapPng;
     private BufferedImage buttonPng;
+    private HashMap<String, BufferedImage> staticImages;
     KeyHandler kh;
     private CardLayout cl;
     private DisplayLayout dl;
@@ -320,6 +322,12 @@ public class myGame extends JPanel{
         getExit();
         getTrap();
         getButton();
+        staticImages = new HashMap<>();
+        staticImages.put("reward", peanutsPng);
+        staticImages.put("bush", bushPng);
+        staticImages.put("bonus", chocolatePng);
+        staticImages.put("exit",exitPng);
+        staticImages.put("trap", trapPng);
     }
 
     /**
@@ -346,7 +354,8 @@ public class myGame extends JPanel{
                 hero.setAtBush(true);
             }
             if(hero.isAtBush()){
-                g2.drawImage(hiddenSquirrelPngs.get("SquirrelHiding" + hero.getHeroColor().toString() + ".png"), col * tileWidth + 10, row * tileHeight+60 + 10, tileWidth-20, tileHeight-20, null);
+                //g2.drawImage(hiddenSquirrelPngs.get("SquirrelHiding" + hero.getHeroColor().toString() + ".png"), col * tileWidth + 10, row * tileHeight+60 + 10, tileWidth-20, tileHeight-20, null);
+                Objects.HERO.draw(g2, col, row, hiddenSquirrelPngs.get("SquirrelHiding" + hero.getHeroColor().toString() + ".png"), tileHeight, tileWidth);
                 return;
             }
         }
@@ -440,48 +449,22 @@ public class myGame extends JPanel{
 
         for(int col = 0; col < 25; col++){
             for(int row = 0; row < 15; row++){
-                switch (boardMap[col][row]) {
-                    case TREE:
-                        if(firstRender) {
-                            Random rand = new Random();
-                            treeTypeOrder.add(rand.nextInt(3));
+                if(boardMap[col][row] == Objects.TREE){
+                    if(firstRender) {
+                        Random rand = new Random();
+                        treeTypeOrder.add(rand.nextInt(3));
+                    }
+                    try {
+                        if (row == 0) {
+                            g2.drawImage(treePngs[(treeTypeOrder.get(currentTree) + 1) % 3], col * tileWidth, 0, tileWidth, tileHeight, null);
                         }
-                        try {
-                            if (row == 0) {
-                                g2.drawImage(treePngs[(treeTypeOrder.get(currentTree) + 1) % 3], col * tileWidth, 0, tileWidth, tileHeight, null);
-                            }
-                            g2.drawImage(treePngs[treeTypeOrder.get(currentTree)], col * tileWidth, row * tileHeight + 60, tileWidth, tileHeight, null);
-                        }catch(Exception e){};
-                        currentTree++;
-                    break;
-                    case HEROHIDDEN:
-                        if(!hero.isAtBush()){
-                            g2.drawImage(bushPng, col * tileWidth + 10, row * tileHeight+60 + 10, (int)(tileWidth*(2.0/3)), (int)(tileHeight*(2.0/3)), null);
-                        }
-                        break;
-                    case ENEMYANDBUSH:
-                    case BUSH:
-                            g2.drawImage(bushPng, col * tileWidth + 10, row * tileHeight+60 + 10, (int)(tileWidth*(2.0/3)), (int)(tileHeight*(2.0/3)), null);
-                        break;
-                    case ENEMYANDTRAP:
-                    case TRAP:
-                        g2.drawImage(trapPng, col * tileWidth+20, row * tileHeight+60+20, (int)(tileWidth*(1.0/3)), (int)(tileHeight*(1.0/3)), null);
-                        break;
-                    case ENEMYANDREWARD:
-                    case REWARD:
-                        g2.drawImage(peanutsPng, col * tileWidth + 15, row * tileHeight+60 + 15, tileWidth/2, tileHeight/2, null);
-
-                    break;
-                    case BONUS:
-                        //hide the object on the first render
-                        if(!firstRender) {
-                            g2.drawImage(chocolatePng, col * tileWidth, row * tileHeight + 60, tileWidth/2, tileHeight/2, null);
-                        }
-                    break;
-                    //no exit image yet
-                    case EXIT: g2.drawImage(exitPng, col * tileWidth, row * tileHeight+60, tileWidth, tileHeight, null);
-                    break;
-
+                        g2.drawImage(treePngs[treeTypeOrder.get(currentTree)], col * tileWidth, row * tileHeight + 60, tileWidth, tileHeight, null);
+                    }catch(Exception e){};
+                    currentTree++;
+                }else if (boardMap[col][row] != Objects.HERO && boardMap[col][row] != Objects.ENEMY){
+                    Object obj = boardMap[col][row];
+                    BufferedImage png = staticImages.get(obj.toString());
+                    boardMap[col][row].draw(g2, col, row, png, tileHeight, tileWidth);
                 }
             }
         }
