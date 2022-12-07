@@ -14,7 +14,7 @@ public enum HeroColor {
         }},
 
     RED{
-            public String toString(){
+        public String toString(){
                 return "Red";
             }
         },

@@ -125,16 +125,7 @@ public class BoardData {
      *                   to create 15 individual wall segments
      */
     private void setInnerWalls(Difficulty difficulty){
-        int wallsegments = 0;
-        switch(difficulty){
-            case EASY: wallsegments = 15;
-                break;
-            case MEDIUM: wallsegments = 15;
-                break;
-            case HARD:
-            case INFINITE: wallsegments = 15;
-                break;
-        }
+        int wallsegments = 15;
 
         for (int i = 1; i < wallsegments; i++) {
             setSegment();
@@ -290,15 +281,7 @@ public class BoardData {
         int rewardCount = 0;
         ArrayList<int[]> rewardLocations = new ArrayList<>();
 
-        switch(dif){
-            case EASY: rewardCount = 5;
-                break;
-            case MEDIUM: rewardCount = 10;
-                break;
-            case HARD:
-            case INFINITE: rewardCount = 15;
-                break;
-        }
+        rewardCount = dif.getRewardCount();
 
         for (int i = 0; i < rewardCount; i++) {
             int[] xy = getRandomXY();
@@ -341,15 +324,7 @@ public class BoardData {
             int newX = newReward[0];
             int newY = newReward[1];
 
-            switch(dif){
-                case EASY: minProximity = 5;
-                    break;
-                case MEDIUM: minProximity = 3;
-                    break;
-                case HARD:
-                case INFINITE: minProximity = 0;
-                    break;
-            }
+            minProximity = dif.getMinRewardProx();
             //using pythagorean theorem to make sure reward is atleast minProximity away from all other rewards
             if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
                 return false;
@@ -376,14 +351,8 @@ public class BoardData {
         int newX = newEnemy[0];
         int newY = newEnemy[1];
 
-        switch(dif){
-            case EASY: minProximity = 10;
-            break;
-            case MEDIUM: minProximity = 7;
-            break;
-            case HARD: case INFINITE: minProximity = 5;
-            break;
-        }
+        minProximity = dif.getMinEnemyProx();
+
 //            using pythagorean theorem to make sure enemy is atleast minProximity away from hero
         if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
             return false;
@@ -426,18 +395,7 @@ public class BoardData {
      *
      */
     private void setBonusRewards(Difficulty dif) {
-        switch (dif){
-            case EASY:
-                generateBonusrewards(3);
-                break;
-            case MEDIUM:
-                generateBonusrewards(2);
-                break;
-            case HARD:
-            case INFINITE:
-                generateBonusrewards(1);
-                break;
-        }
+        generateBonusrewards(dif.getBonusRewardCount());
     }
 
     /**
@@ -449,19 +407,8 @@ public class BoardData {
      */
     private void setEnemies(int[] heroLoc, Difficulty dif) {
         //initialize variable to hold
-        int enemyCount = 0;
-        switch(dif){
-            case EASY:
-                enemyCount = 1;
-                break;
-            case MEDIUM:
-                enemyCount = 2;
-                break;
-            case HARD:
-            case INFINITE:
-                enemyCount = 3;
-                break;
-        }
+        int enemyCount = dif.getEnemyCount();
+
         //loop for the number of enemies
         for(int i = 0; i < enemyCount; i++){
             int[] xy = getRandomXY();
@@ -536,23 +483,7 @@ public class BoardData {
     private void setTraps(Difficulty dif) {
         //does not matter if traps are in close to eachother
         //so we don't check for proximity when generating
-        switch(dif){
-            case EASY:
-                generateTraps(4);
-                break;
-            case MEDIUM:
-                generateTraps(7);
-                break;
-            case HARD:
-                generateTraps(11);
-                break;
-            case INFINITE:
-                generateTraps(11);
-                break;
-        }
-
-
-
+        generateTraps(dif.getTrapCount());
 
     }
 
