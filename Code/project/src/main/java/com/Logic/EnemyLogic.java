@@ -39,7 +39,7 @@ public class EnemyLogic {
         boolean swapthree = false;
         boolean swaplasttwo = false;
 
-        while(correctLoop == false) {
+        while(!correctLoop) {
             correctLoop = true;
 
             //process movement for each enemy on board

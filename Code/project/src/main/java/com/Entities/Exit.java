@@ -30,13 +30,7 @@ public class Exit extends Position{
      */
     public void rewardCollected(Difficulty dif){
         rewardCount++;
-        switch(dif){
-            case EASY: if (rewardCount == 5){ closed = false;} break;
-            case MEDIUM: if (rewardCount == 10){ closed = false;} break;
-            case HARD:
-            case INFINITE:
-                if (rewardCount == 15){ closed = false;} break;
-        }
+        if (rewardCount == dif.getRewardCount()) {closed = false;}
     }
 
     public int getRewardCount() {

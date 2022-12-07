@@ -8,25 +8,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Creates this JPanel to represent the Pause screen.
  * Users are able to resume or go back to com.Main Menu.
  */
 public class myPause extends JPanel{
-private DisplayLayout dl;
-private CardLayout cl;
-private KeyListener kh;
-private JButton resumeButton;
-private JButton mainmenuButton;
-// private JButton gameoverButton;
-private JLabel pauseLabel;
-private Font headerText;
-
-
-private BufferedImage pause_png;
-Font titleText;
-private GridBagConstraints gbc;
+private final DisplayLayout dl;
+private final BufferedImage pausePng;
 
     /**
      * Constructor creates the pause screen.
@@ -38,41 +28,34 @@ private GridBagConstraints gbc;
      */
     public myPause(DisplayLayout dl, CardLayout cl){
         this.dl = dl;
-        this.cl = cl;
-        this.kh = dl.kh;
+        KeyListener kh = dl.kh;
         addKeyListener(kh);
 
-        gbc = new GridBagConstraints();
-        gbc.anchor = gbc.CENTER;
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.CENTER;
 
         //background
         try {
-            pause_png = ImageIO.read(getClass().getResource("/pause_background.png"));
+            pausePng = ImageIO.read(Objects.requireNonNull(getClass().getResource("/pause_background.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        titleText = new Font("Times New Roman", Font.BOLD, (dl.displayheight/15));
+        Font titleText = new Font("Times New Roman", Font.BOLD, (dl.displayheight / 15));
         //headerText = new Font("Times New Roman", Font.BOLD, (dl.displayheight/30));
         this.setLayout(null);
 
-        pauseLabel = new JLabel("PAUSED");
+        // private JButton gameoverButton;
+        JLabel pauseLabel = new JLabel("PAUSED");
         pauseLabel.setFont(titleText);
         pauseLabel.setBounds((int)(dl.displaywidth*0.4), (int) (dl.displayheight*0.38), dl.displaywidth/3, dl.displayheight/10);
         gbc.insets = new Insets(0,0,0,0);
-//        gbc.gridx = 0;
-//        gbc.gridy = 0;
         this.add(pauseLabel);
 
         //gbc = new GridBagConstraints();
-        ImageIcon resumeImage = new ImageIcon(getClass().getResource("/resume.png"));
-        resumeButton = new JButton("",resumeImage);
+        ImageIcon resumeImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resume.png")));
+        JButton resumeButton = new JButton("", resumeImage);
         resumeButton.setBounds((int)(dl.displaywidth*0.22), (int)(dl.displayheight*0.6), dl.displaywidth/3, dl.displayheight/10);
-        //gbc.insets = new Insets(50,0,0,0);
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        gbc.ipadx = 200;
-//        gbc.ipady = 50;
         resumeButton.setFocusable(false);
         resumeButton.setBorderPainted(false);
         resumeButton.setOpaque(false);
@@ -80,8 +63,8 @@ private GridBagConstraints gbc;
         this.add(resumeButton);
 
 
-        ImageIcon mainImage = new ImageIcon(getClass().getResource("/main.png"));
-        mainmenuButton = new JButton("",mainImage);
+        ImageIcon mainImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/main.png")));
+        JButton mainmenuButton = new JButton("", mainImage);
         mainmenuButton.setBounds((int)(dl.displaywidth*0.48), (int)(dl.displayheight*0.6), dl.displaywidth/3, dl.displayheight/10);
         mainmenuButton.setFocusable(false);
         //mainmenuButton.setBounds(610, 570, 300, 100);
@@ -93,16 +76,7 @@ private GridBagConstraints gbc;
         gbc.gridy = 2;
         gbc.ipadx = 200;
         gbc.ipady = 50;
-        this.add(mainmenuButton,gbc);
-
-
-        /*
-        gameoverButton = new JButton("Test game over");
-        gbc.gridx=0;
-        gbc.gridy=6;
-        gameoverButton.setFocusable(false);
-        this.add(gameoverButton, gbc);
-         */
+        this.add(mainmenuButton, gbc);
 
         resumeButton.addActionListener(new ActionListener()
         {
@@ -124,7 +98,7 @@ private GridBagConstraints gbc;
                 dl.kh.escape = false;
                 // Out of pause
                 // show associated play panel
-                cl.show(dl.displayPanel, "2");
+                cl.show(dl.displayPanel, "Play");
 
                 // current panel is play Panel
                 dl.currentCard = 2;
@@ -152,7 +126,7 @@ private GridBagConstraints gbc;
                 dl.kh.escape = false;
                 //Go back to main menu
                 // show associated difficulty panel
-                cl.show(dl.displayPanel, "1");
+                cl.show(dl.displayPanel, "Title");
 
                 // current panel is difficulty Panel
                 dl.currentCard = 1;
@@ -176,8 +150,8 @@ private GridBagConstraints gbc;
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (pause_png != null) {
-            g.drawImage(pause_png, 0, 0, dl.displaywidth, dl.displayheight, null);
+        if (pausePng != null) {
+            g.drawImage(pausePng, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
     }
 

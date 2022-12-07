@@ -8,12 +8,12 @@ import java.util.Random;
 public class BoardData {
 
     //if ever need to change map size, this is the location
-    private static int columns = 25;
-    private static int rows = 15;
+    private static final int columns = 25;
+    private static final int rows = 15;
 
     //2Darray of objects containing all of the information to be processed from
     //during the game runtime
-    private static Objects[][] ObjectMap = new Objects[columns][rows];
+    private static final Objects[][] ObjectMap = new Objects[columns][rows];
 
 
 //    private Difficulty dif = Difficulty.HARD;
@@ -28,7 +28,6 @@ public class BoardData {
                 if (ObjectMap[i][j] == Objects.TMP) {
                     ObjectMap[i][j] = Objects.TREE;
                 }
-                ;
             }
         }
     }
@@ -43,7 +42,6 @@ public class BoardData {
                 if (ObjectMap[i][j] == Objects.TMP) {
                     ObjectMap[i][j] = Objects.EMPTY;
                 }
-                ;
             }
         }
     }
@@ -54,14 +52,10 @@ public class BoardData {
     public void setOuterWalls() {
         for (int i = 0; i < rows; i++) {
             ObjectMap[0][i] = Objects.TREE;
-        }
-        for (int i = 0; i < rows; i++) {
             ObjectMap[columns - 1][i] = Objects.TREE;
         }
         for (int i = 0; i < columns; i++) {
             ObjectMap[i][0] = Objects.TREE;
-        }
-        for (int i = 0; i < columns; i++) {
             ObjectMap[i][rows - 1] = Objects.TREE;
         }
     }
@@ -88,11 +82,8 @@ public class BoardData {
      *
      */
     static boolean foundAdjacentTrees(int xcoord, int ycoord) {
-        boolean isadjecent = false;
+        boolean isadjecent = ObjectMap[xcoord + 1][ycoord] == Objects.TREE;
         //check north west east west
-        if (ObjectMap[xcoord + 1][ycoord] == Objects.TREE) {
-            isadjecent = true;
-        }
         if (ObjectMap[xcoord][ycoord + 1] == Objects.TREE) {
             isadjecent = true;
         }
@@ -121,21 +112,9 @@ public class BoardData {
 
     /**
      *
-     * @param difficulty calls {@link #setSegment()} 15 times regardless of the difficulty
-     *                   to create 15 individual wall segments
      */
-    private void setInnerWalls(Difficulty difficulty){
-        int wallsegments = 0;
-        switch(difficulty){
-            case EASY: wallsegments = 15;
-                break;
-            case MEDIUM: wallsegments = 15;
-                break;
-            case HARD:
-            case INFINITE: wallsegments = 15;
-                break;
-        }
-
+    private void setInnerWalls(){
+        int wallsegments = 15;
         for (int i = 1; i < wallsegments; i++) {
             setSegment();
         }
@@ -260,7 +239,7 @@ public class BoardData {
 
             }
             //for successful wall segment generation
-            if (failedgeneration == false) {//in order to exit while loop
+            if (!failedgeneration) {//in order to exit while loop
 
                 createdwall = true;
                 replaceTMPTrees();
@@ -287,18 +266,10 @@ public class BoardData {
      *
      */
     private void setRegRewards(Difficulty dif) {
-        int rewardCount = 0;
+        int rewardCount;
         ArrayList<int[]> rewardLocations = new ArrayList<>();
 
-        switch(dif){
-            case EASY: rewardCount = 5;
-                break;
-            case MEDIUM: rewardCount = 10;
-                break;
-            case HARD:
-            case INFINITE: rewardCount = 15;
-                break;
-        }
+        rewardCount = dif.getRewardCount();
 
         for (int i = 0; i < rewardCount; i++) {
             int[] xy = getRandomXY();
@@ -333,7 +304,7 @@ public class BoardData {
     private boolean checkValidRewardProximity(ArrayList<int[]> rewards, int[] newReward, Difficulty dif){
 //
 
-        int minProximity = 0;
+        int minProximity;
 
         for (int[] reward : rewards) {
             int x = reward[0];
@@ -341,15 +312,7 @@ public class BoardData {
             int newX = newReward[0];
             int newY = newReward[1];
 
-            switch(dif){
-                case EASY: minProximity = 5;
-                    break;
-                case MEDIUM: minProximity = 3;
-                    break;
-                case HARD:
-                case INFINITE: minProximity = 0;
-                    break;
-            }
+            minProximity = dif.getMinRewardProx();
             //using pythagorean theorem to make sure reward is atleast minProximity away from all other rewards
             if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
                 return false;
@@ -368,7 +331,7 @@ public class BoardData {
      */
     private boolean checkValidEnemyProximity(int[] hero, int[] newEnemy, Difficulty dif){
 
-        int minProximity = 0;
+        int minProximity;
 
         //variables holders
         int x = hero[0];
@@ -376,19 +339,10 @@ public class BoardData {
         int newX = newEnemy[0];
         int newY = newEnemy[1];
 
-        switch(dif){
-            case EASY: minProximity = 10;
-            break;
-            case MEDIUM: minProximity = 7;
-            break;
-            case HARD: case INFINITE: minProximity = 5;
-            break;
-        }
+        minProximity = dif.getMinEnemyProx();
+
 //            using pythagorean theorem to make sure enemy is atleast minProximity away from hero
-        if(Math.sqrt(Math.pow(Math.abs(x-newX),2) + Math.pow(Math.abs(y-newY), 2)) < minProximity){
-            return false;
-        }
-        return true;
+        return !(Math.sqrt(Math.pow(Math.abs(x - newX), 2) + Math.pow(Math.abs(y - newY), 2)) < minProximity);
     }
 
     /**
@@ -426,18 +380,7 @@ public class BoardData {
      *
      */
     private void setBonusRewards(Difficulty dif) {
-        switch (dif){
-            case EASY:
-                generateBonusrewards(3);
-                break;
-            case MEDIUM:
-                generateBonusrewards(2);
-                break;
-            case HARD:
-            case INFINITE:
-                generateBonusrewards(1);
-                break;
-        }
+        generateBonusrewards(dif.getBonusRewardCount());
     }
 
     /**
@@ -449,19 +392,8 @@ public class BoardData {
      */
     private void setEnemies(int[] heroLoc, Difficulty dif) {
         //initialize variable to hold
-        int enemyCount = 0;
-        switch(dif){
-            case EASY:
-                enemyCount = 1;
-                break;
-            case MEDIUM:
-                enemyCount = 2;
-                break;
-            case HARD:
-            case INFINITE:
-                enemyCount = 3;
-                break;
-        }
+        int enemyCount = dif.getEnemyCount();
+
         //loop for the number of enemies
         for(int i = 0; i < enemyCount; i++){
             int[] xy = getRandomXY();
@@ -536,47 +468,11 @@ public class BoardData {
     private void setTraps(Difficulty dif) {
         //does not matter if traps are in close to eachother
         //so we don't check for proximity when generating
-        switch(dif){
-            case EASY:
-                generateTraps(4);
-                break;
-            case MEDIUM:
-                generateTraps(7);
-                break;
-            case HARD:
-                generateTraps(11);
-                break;
-            case INFINITE:
-                generateTraps(11);
-                break;
-        }
-
-
-
+        generateTraps(dif.getTrapCount());
 
     }
 
     private int[] setHeroLocation() {
-
-        //FIXED
-        /*
-        boolean heroNotSpawned = true;
-
-        while(heroNotSpawned){
-            int[] xy = getRandomXY();
-            int x = xy[0];
-            int y = xy[1];
-            if(ObjectMap[x][y] == Objects.EMPTY) {
-                ObjectMap[x][y] = Objects.HERO;
-                heroNotSpawned = false;
-                int heroLoc[] = {x,y};
-                return heroLoc;
-            }
-        }
-        //case will never hit
-        return null;
-
-         */
         Random rand = new Random(); //instance of random class
 
         // Hero at south wall, so door appears west,north,east wall
@@ -585,8 +481,7 @@ public class BoardData {
         int y = rows-1;
 
         ObjectMap[x][y] = Objects.HERO;
-        int heroLoc[] = {x,y};
-        return heroLoc;
+        return new int[]{x,y};
     }
 
     /**
@@ -598,20 +493,12 @@ public class BoardData {
 
         //0 = north, 1 = east, 2 = south, 3 = west;
         //generate number between 0 and 3
-        int side = rand.nextInt(2);
+        int side = rand.nextInt(3);
         int x = 0;
         int y = 0;
 
         switch(side){
             // Hero at south wall, so door appears west,north,east wall
-            /*
-            case(0):
-                 //Somewhere on the south wall
-                 x = rand.nextInt(columns-2)+1;
-                 y = rows-1;
-                break;
-
-             */
             case(0):
                 //Somewhere on the WEST wall
                 y = rand.nextInt(rows-2)+1;
@@ -620,12 +507,10 @@ public class BoardData {
             case(1):
                 //North wall
                 x = rand.nextInt(columns-2)+1;
-                y = 0;
                 break;
             case(2):
                 //EAST wall
                 y = rand.nextInt(rows-2)+1 ;
-                x = 0;
                 break;
         }
         ObjectMap[x][y] = Objects.EXIT;
@@ -640,7 +525,7 @@ public class BoardData {
      * see following function descriptions for the methods used in this method
      * {@link #setEmptyTiles()}
      * {@link #setOuterWalls()}
-     * {@link #setInnerWalls(Difficulty)}
+     * {@link #setInnerWalls()}
      * {@link #setBonusRewards(Difficulty)}
      * {@link #setBonusRewards(Difficulty)}
      * {@link #setRegRewards(Difficulty)}
@@ -651,13 +536,13 @@ public class BoardData {
      */
     public void initialiseBoard(Difficulty dif) {
 
-        int heroLoc[];
+        int[] heroLoc;
 
         //empty tiles to show to which positions will be available
         setEmptyTiles();
         //walls
         setOuterWalls();
-        setInnerWalls(dif);
+        setInnerWalls();
 
         //static entities generations
         setBonusRewards(dif);
@@ -748,9 +633,8 @@ public class BoardData {
         int x = rand.nextInt(columns-2) + 1;
         int y = rand.nextInt(rows-2) + 1;
         //store inside of array
-        int[] xy = {x,y};
 
-        return xy;
+        return new int[]{x,y};
     }
 
     /**
@@ -763,10 +647,4 @@ public class BoardData {
 
 
 }
-
-    /* might be redunant
-    public String[][] getBoardData(){
-        return string2DArray;
-    }
-    */
 

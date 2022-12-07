@@ -1,6 +1,6 @@
 package com.Display;
 
-import java.net.URL;
+import java.util.Objects;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -14,51 +14,45 @@ public class Sound {
     static Clip heroSound;
     static  Clip lostSound;
 
-    URL Musicpath[] = new URL[40];
-
     public void setMusic() {
         // Get the music in selected file path and make it an object, create reference to clip, and open the audio
         try {
-            AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResource("/Music_zapsplat.wav"));
+            AudioInputStream musicstream = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResource("/Music_zapsplat.wav")));
             clip = AudioSystem.getClip();
             clip.open(musicstream);
-        } catch(Exception e) {
+        } catch(Exception ignored) {
         }
     }
     public void playClick(){
         try {
-            AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResource("/click.wav"));
+            AudioInputStream musicstream = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResource("/click.wav")));
             btnSound = AudioSystem.getClip();
             btnSound.open(musicstream);
-        } catch(Exception e) {
+        } catch(Exception ignored) {
         }
         btnSound.start();
     }
     public void lostSound(){
         try {
-            AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("/fail.wav"));
+            AudioInputStream musicstream = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/fail.wav")));
             lostSound = AudioSystem.getClip();
             lostSound.open(musicstream);
-        } catch(Exception e) {
+        } catch(Exception ignored) {
         }
         lostSound.start();
     }
 
     public void heroWalkSound(){
         try {
-            //AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResource("/walk.mp3"));
             heroSound = AudioSystem.getClip();
-            //heroSound.open(musicstream);
-        } catch(Exception e) {}
+        } catch(Exception ignored) {}
         heroSound.start();
     }
 
     public void winSound(){
         try {
-            //AudioInputStream musicstream = AudioSystem.getAudioInputStream(getClass().getResource("/win.mp3"));
             winSound = AudioSystem.getClip();
-            //winSound.open(musicstream);
-        } catch(Exception e) {
+        } catch(Exception ignored) {
         }
         winSound.start();
     }
