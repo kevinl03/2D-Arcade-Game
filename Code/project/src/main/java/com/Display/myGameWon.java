@@ -7,20 +7,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Creates this JPanel to represent the com.Game Won screen.
  */
 public class myGameWon extends JPanel {
-    private JLabel gameLabel;
-    private JLabel timeLabel;
-    private JLabel scoreLabel;
-    private JButton gomenuButton;
-    private Font titleText;
-    private Font headerText;
-    private BufferedImage winPng;
-    private BufferedImage testimagePng;
-    private DisplayLayout dl;
+    private final JLabel timeLabel;
+    private final JLabel scoreLabel;
+    private final BufferedImage winPng;
+    private final BufferedImage testimagePng;
+    private final DisplayLayout dl;
 
     /**
      * Constructor creates this com.Game Won screen.
@@ -31,10 +28,10 @@ public class myGameWon extends JPanel {
      */
     public myGameWon(DisplayLayout dl, CardLayout cl){
         this.dl = dl;
-        titleText = new Font("Times New Roman", Font.BOLD, (dl.displayheight/15));
-        headerText = new Font("Times New Roman", Font.BOLD, (dl.displayheight/30));
+        Font titleText = new Font("Times New Roman", Font.BOLD, (dl.displayheight / 15));
+        Font headerText = new Font("Times New Roman", Font.BOLD, (dl.displayheight / 30));
         this.setLayout(null);
-        gameLabel = new JLabel("CONGRATULATIONS");
+        JLabel gameLabel = new JLabel("CONGRATULATIONS");
         gameLabel.setFont(titleText);
         gameLabel.setBounds((int)(dl.displaywidth*0.3), dl.displayheight/3, dl.displaywidth/2, dl.displayheight/10);
         timeLabel = new JLabel();
@@ -48,16 +45,15 @@ public class myGameWon extends JPanel {
         this.add(scoreLabel);
 
         try {
-            winPng = ImageIO.read(getClass().getResource("/win.png"));
-            testimagePng = ImageIO.read(getClass().getResource("/settingB.jpg"));
+            winPng = ImageIO.read(Objects.requireNonNull(getClass().getResource("/win.png")));
+            testimagePng = ImageIO.read(Objects.requireNonNull(getClass().getResource("/settingB.jpg")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
 
-
-        ImageIcon mainImage = new ImageIcon(getClass().getResource("/main.png"));
-        gomenuButton = new JButton("",mainImage);
+        ImageIcon mainImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/main.png")));
+        JButton gomenuButton = new JButton("", mainImage);
         gomenuButton.setFocusable(false);
         gomenuButton.setBounds((int)(dl.displaywidth*0.37), (int)(dl.displayheight*0.6), dl.displaywidth/4, dl.displayheight/10);
         gomenuButton.setBorderPainted(false);

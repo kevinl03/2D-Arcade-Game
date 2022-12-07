@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -31,14 +30,12 @@ public class myGame extends JPanel{
 
     private int tileHeight;
     private int tileWidth;
-    private int columns = 25;
-    private int rows = 15;
     protected HashMap<String, BufferedImage> squirrelPngs;
     protected HashMap<String, BufferedImage> hiddenSquirrelPngs;
-    private BufferedImage chocolatePng;
+    private BufferedImage bonusPng;
     private HashMap<String, BufferedImage> bearPngs;
     private BufferedImage bushPng;
-    private BufferedImage peanutsPng;
+    private BufferedImage rewardPng;
     private BufferedImage[] treePngs;
     private BufferedImage boardPng;
     private BufferedImage exitPng;
@@ -46,13 +43,12 @@ public class myGame extends JPanel{
     private BufferedImage buttonPng;
     private HashMap<String, BufferedImage> staticImages;
     KeyHandler kh;
-    private CardLayout cl;
-    private DisplayLayout dl;
+    private final CardLayout cl;
+    private final DisplayLayout dl;
     public int goMain = 0;
-    private JLabel timeLabel;
-    private JLabel scoreLabel;
+    private final JLabel timeLabel;
+    private final JLabel scoreLabel;
     Font font;
-    private int seconds;
 
     Objects[][] boardMap;
 
@@ -77,9 +73,11 @@ public class myGame extends JPanel{
         this.cl = cl;
         this.dl = dl;
         this.kh = dl.kh;
-        //rows*pixelsize+60 we have +60 for putting the time and scores at the top of
+        //rows*pixel size+60 we have +60 for putting the time and scores at the top of
         //and additional row of trees
-        setPreferredSize(new Dimension(columns*tileWidth, rows*tileHeight+60));
+        int columns = 25;
+        int rows = 15;
+        setPreferredSize(new Dimension(columns *tileWidth, rows *tileHeight+60));
         getImages();
         addKeyListener(kh);
         this.setLayout(null);
@@ -90,8 +88,8 @@ public class myGame extends JPanel{
         font = new Font("Times New Roman", Font.BOLD, 30);
         firstRender = true;
         treeTypeOrder = new ArrayList<>();
-        tileHeight = dl.displayheight/(rows+1);
-        tileWidth = dl.displaywidth/columns;
+        tileHeight = dl.displayheight/(rows +1);
+        tileWidth = dl.displaywidth/ columns;
     }
 
     /**
@@ -103,7 +101,7 @@ public class myGame extends JPanel{
     public void updates() throws InterruptedException {
 
         dl.timer+=525;
-        seconds = dl.timer/1000;
+        //int seconds = dl.timer / 1000;
 
         Hero hero = dl.gameObjectData.getHero();
 
@@ -165,11 +163,12 @@ public class myGame extends JPanel{
             squirrelPngs = new HashMap<>();
             URL pathUrl = getClass().getClassLoader().getResource("squirrels/");
             if ((pathUrl != null) && pathUrl.getProtocol().equals("file")) {
-                File files[] = new File(pathUrl.toURI()).listFiles();
+                File[] files = new File(pathUrl.toURI()).listFiles();
+                assert files != null;
                 for(final File fileEntry : files){
                     if(fileEntry.isFile()){
                         String fileName = fileEntry.getName();
-                        squirrelPngs.put(fileName, ImageIO.read(getClass().getResource("/squirrels/" + fileName)));
+                        squirrelPngs.put(fileName, ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/squirrels/" + fileName))));
                     }
                 }
             }
@@ -178,17 +177,16 @@ public class myGame extends JPanel{
 
             URL pathUrl2 = getClass().getClassLoader().getResource("hidingSquirrels/");
             if ((pathUrl2 != null) && pathUrl2.getProtocol().equals("file")) {
-                File files2[] = new File(pathUrl2.toURI()).listFiles();
+                File[] files2 = new File(pathUrl2.toURI()).listFiles();
+                assert files2 != null;
                 for (final File fileEntry : files2) {
                     if (fileEntry.isFile()) {
                         String fileName = fileEntry.getName();
-                        hiddenSquirrelPngs.put(fileName, ImageIO.read(getClass().getResource("/hidingSquirrels/" + fileName)));
+                        hiddenSquirrelPngs.put(fileName, ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/hidingSquirrels/" + fileName))));
                     }
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -197,9 +195,9 @@ public class myGame extends JPanel{
     /**
      * Sets an Image object that can then be painted on the screen.
      */
-    public void getAcorn(){
+    public void getBonusReward(){
         try {
-            chocolatePng = ImageIO.read(getClass().getResource("/chocolate.png"));
+            bonusPng = ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/chocolate.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -215,17 +213,16 @@ public class myGame extends JPanel{
             URL pathUrl = getClass().getClassLoader().getResource("bears/");
 
             if ((pathUrl != null) && pathUrl.getProtocol().equals("file")) {
-                File files[] = new File(pathUrl.toURI()).listFiles();
+                File[] files = new File(pathUrl.toURI()).listFiles();
+                assert files != null;
                 for (final File fileEntry : files) {
                     if (fileEntry.isFile()) {
                         String fileName = fileEntry.getName();
-                        bearPngs.put(fileName, ImageIO.read(getClass().getResource("/bears/" + fileName)));
+                        bearPngs.put(fileName, ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/bears/" + fileName))));
                     }
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -235,7 +232,7 @@ public class myGame extends JPanel{
      */
     public void getBush(){
         try {
-            bushPng = ImageIO.read(getClass().getResource("/bush1.png"));
+            bushPng = ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/bush1.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -245,9 +242,9 @@ public class myGame extends JPanel{
     /**
      * Sets an Image object that can then be painted on the screen.
      */
-    public void getPeanuts(){
+    public void getReward(){
         try {
-            peanutsPng = ImageIO.read(getClass().getResource("/acorn.png"));
+            rewardPng = ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/acorn.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -260,7 +257,7 @@ public class myGame extends JPanel{
         try {
             treePngs = new BufferedImage[3];
             for(int i = 1; i < 4; i++){
-                treePngs[i-1] = ImageIO.read(getClass().getResource("/tree" + i + ".png"));
+                treePngs[i-1] = ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/tree" + i + ".png")));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -272,7 +269,7 @@ public class myGame extends JPanel{
      */
     public void getExit(){
         try {
-            exitPng = ImageIO.read(getClass().getResource("/door.png"));
+            exitPng = ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/door.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -283,7 +280,7 @@ public class myGame extends JPanel{
      */
     public void getTrap(){
         try {
-            trapPng = ImageIO.read(getClass().getResource("/trap4.png"));
+            trapPng = ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/trap4.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -294,7 +291,7 @@ public class myGame extends JPanel{
      */
     public void getField(){
         try {
-            boardPng = ImageIO.read(getClass().getResource("/board2.png"));
+            boardPng = ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/board2.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -302,7 +299,7 @@ public class myGame extends JPanel{
 
     public void getButton(){
         try {
-            buttonPng = ImageIO.read(getClass().getResource("/RecButton.png"));
+            buttonPng = ImageIO.read(java.util.Objects.requireNonNull(getClass().getResource("/RecButton.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -312,20 +309,20 @@ public class myGame extends JPanel{
      * Calls all the methods to set the Image objects.
      */
     public void getImages(){
-        getAcorn();
+        getBonusReward();
         getSquirrel();
         getBear();
         getBush();
-        getPeanuts();
+        getReward();
         getTrees();
         getField();
         getExit();
         getTrap();
         getButton();
         staticImages = new HashMap<>();
-        staticImages.put("reward", peanutsPng);
+        staticImages.put("reward", rewardPng);
         staticImages.put("bush", bushPng);
-        staticImages.put("bonus", chocolatePng);
+        staticImages.put("bonus", bonusPng);
         staticImages.put("exit",exitPng);
         staticImages.put("trap", trapPng);
     }
@@ -354,8 +351,8 @@ public class myGame extends JPanel{
                 hero.setAtBush(true);
             }
             if(hero.isAtBush()){
-                //g2.drawImage(hiddenSquirrelPngs.get("SquirrelHiding" + hero.getHeroColor().toString() + ".png"), col * tileWidth + 10, row * tileHeight+60 + 10, tileWidth-20, tileHeight-20, null);
-                Objects.HERO.draw(g2, col, row, hiddenSquirrelPngs.get("SquirrelHiding" + hero.getHeroColor().toString() + ".png"), tileHeight, tileWidth);
+                g2.drawImage(hiddenSquirrelPngs.get("SquirrelHiding" + hero.getHeroColor().toString() + ".png"), col * tileWidth + 10, row * tileHeight+60 + 10, tileWidth-20, tileHeight-20, null);
+//                Objects.HERO.draw(g2, col, row, hiddenSquirrelPngs.get("SquirrelHiding" + hero.getHeroColor().toString() + ".png"), tileHeight, tileWidth);
                 return;
             }
         }
@@ -364,7 +361,7 @@ public class myGame extends JPanel{
         int animationFrame = hero.getAnimationFrame();
         String dir = hero.getDir().toString();
         String color = hero.getHeroColor().toString();
-        int movementProgress = 0;
+        int movementProgress;
         if(hero.isMoving()){
             if(hero.getDir() == Direction.NORTH || hero.getDir() == Direction.SOUTH){
                 movementProgress = tileHeight/5 * (4 - dl.frameCounter);
@@ -372,11 +369,11 @@ public class myGame extends JPanel{
                 movementProgress = tileWidth/5 * (4 - dl.frameCounter);
             }
 
-            if(dir == "North" || dir == "West"){
+            if(java.util.Objects.equals(dir, "North") || java.util.Objects.equals(dir, "West")){
                 movementProgress = movementProgress * -1;
             }
             //if direction in the y-axis
-            if(dir == "North" || dir == "South"){
+            if(java.util.Objects.equals(dir, "North") || java.util.Objects.equals(dir, "South")){
                 g2.drawImage(squirrelPngs.get("Squirrel" + color + dir + animationFrame + ".png"), col * tileWidth, row * tileHeight+65 - movementProgress, tileWidth-10, tileHeight-10, null);
             }else{
                 g2.drawImage(squirrelPngs.get("Squirrel" + color + dir + animationFrame + ".png"), col * tileWidth - movementProgress, row * tileHeight+65, tileWidth-10, tileHeight-10, null);
@@ -405,19 +402,19 @@ public class myGame extends JPanel{
             int animationFrame = enemy.getAnimationFrame();
             String dir = enemy.getDir().toString();
 
-            int movementProgress = 0;
+            int movementProgress;
             if(enemy.getDir() == Direction.NORTH || enemy.getDir() == Direction.SOUTH){
                 movementProgress = tileHeight/5 * (4 - dl.frameCounter);
             }else{
                 movementProgress = tileWidth/5 * (4 - dl.frameCounter);
             }
 
-            if(dir == "North" || dir == "West"){
+            if(java.util.Objects.equals(dir, "North") || java.util.Objects.equals(dir, "West")){
                 movementProgress = movementProgress * -1;
             }
 
             //if direction in the y-axis
-            if(dir == "North" || dir == "South"){
+            if(java.util.Objects.equals(dir, "North") || java.util.Objects.equals(dir, "South")){
                 g2.drawImage(bearPngs.get("Bear"  + dir + animationFrame + ".png"), col * tileWidth, row * tileHeight+65 - movementProgress, tileWidth-10, tileHeight-10, null);
             }else{
                 g2.drawImage(bearPngs.get("Bear"  + dir + animationFrame + ".png"), col * tileWidth - movementProgress, row * tileHeight+65, tileWidth-10, tileHeight-10, null);
@@ -440,7 +437,6 @@ public class myGame extends JPanel{
         super.paintComponent(g);   //   Method already exists, so super is used to add additional lines
         Graphics2D g2 = (Graphics2D) g;   //   Draws shapes
         g.drawImage(boardPng, 0, 0, dl.displaywidth, dl.displayheight, null);
-        Hero hero = dl.gameObjectData.getHero();
         boardMap = dl.board.getBoardData();
 
         int currentTree = 0;
@@ -449,7 +445,8 @@ public class myGame extends JPanel{
 
         for(int col = 0; col < 25; col++){
             for(int row = 0; row < 15; row++){
-                if(boardMap[col][row] == Objects.TREE){
+                Object obj = boardMap[col][row];
+                if(obj == Objects.TREE){
                     if(firstRender) {
                         Random rand = new Random();
                         treeTypeOrder.add(rand.nextInt(3));
@@ -459,10 +456,9 @@ public class myGame extends JPanel{
                             g2.drawImage(treePngs[(treeTypeOrder.get(currentTree) + 1) % 3], col * tileWidth, 0, tileWidth, tileHeight, null);
                         }
                         g2.drawImage(treePngs[treeTypeOrder.get(currentTree)], col * tileWidth, row * tileHeight + 60, tileWidth, tileHeight, null);
-                    }catch(Exception e){};
+                    }catch(Exception ignored){}
                     currentTree++;
-                }else if (boardMap[col][row] != Objects.HERO && boardMap[col][row] != Objects.ENEMY){
-                    Object obj = boardMap[col][row];
+                }else if (obj != Objects.HERO && obj != Objects.ENEMY){
                     BufferedImage png = staticImages.get(obj.toString());
                     boardMap[col][row].draw(g2, col, row, png, tileHeight, tileWidth);
                 }

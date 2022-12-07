@@ -2,7 +2,6 @@ package com.Helpers;
 
 /**
  * all supported hero colors
- *
  * contains a twoString method for each enum that returns the color in UpperCamelCase as a string
  */
 public enum HeroColor {
@@ -34,7 +33,7 @@ public enum HeroColor {
     /**
      * array of all types of HeroColor
      */
-    private static HeroColor[] colors = values();
+    private static final HeroColor[] colors = values();
 
     /**
      * When called on a HeroColor, the next color in colors array is returned,

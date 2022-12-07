@@ -8,24 +8,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Creates this JPanel to represent the Title screen
  */
 public class myTitle extends JPanel {
 
-    private BufferedImage titlePng;
-    private BufferedImage titleSquirrel;
-    private Font titleText;
-    private JLabel titleLabel;
-    private JButton playButton;
-    private JButton settButton;
-    private JButton diffButton;
-    private JButton quitButton;
-    private GridBagConstraints gbc;
-    private Image buttonIcon;
-
-    private DisplayLayout displayLayout;
+    private final BufferedImage titlePng;
+    private final BufferedImage titleSquirrel;
+    private final JButton playButton;
+    private final DisplayLayout displayLayout;
 
 
     /**
@@ -37,26 +30,26 @@ public class myTitle extends JPanel {
      */
     public myTitle(DisplayLayout dl, CardLayout cl){
         try {
-            titlePng = ImageIO.read(getClass().getResource("/title_pic.png"));
-            titleSquirrel = ImageIO.read(getClass().getResource("/title_squirrel.png"));
+            titlePng = ImageIO.read(Objects.requireNonNull(getClass().getResource("/title_pic.png")));
+            titleSquirrel = ImageIO.read(Objects.requireNonNull(getClass().getResource("/title_squirrel.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.cyan);
-        titleLabel = new JLabel("");
-        titleLabel.setIcon(new ImageIcon(getClass().getResource("/gameName.png")));
-        titleText = new Font("Times New Roman", Font.BOLD, 50);
+        JLabel titleLabel = new JLabel("");
+        titleLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/gameName.png"))));
+        Font titleText = new Font("Times New Roman", Font.BOLD, 50);
         titleLabel.setFont(titleText);
         titleLabel.setBackground(Color.GRAY);
         titleLabel.setOpaque(false);
         titleLabel.setVerticalAlignment(JLabel.TOP);
         this.add(titleLabel);
 
-        gbc = new GridBagConstraints();
+        GridBagConstraints gbc = new GridBagConstraints();
         // Initialize JButton objects and add to title Panel
-        ImageIcon playImage = new ImageIcon(getClass().getResource("/play.png"));
+        ImageIcon playImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/play.png")));
         playButton = new JButton("",playImage);
         gbc.insets = new Insets(50,0,0,0);
         gbc.gridx = 0;
@@ -69,8 +62,8 @@ public class myTitle extends JPanel {
         playButton.setContentAreaFilled(false);
         this.add(playButton, gbc);
 
-        ImageIcon settingImage = new ImageIcon(getClass().getResource("/settings.png"));
-        settButton = new JButton("",settingImage);
+        ImageIcon settingImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/settings.png")));
+        JButton settButton = new JButton("", settingImage);
         gbc.gridx = 0;
         gbc.gridy = 2;
         settButton.setFocusable(false);
@@ -79,8 +72,8 @@ public class myTitle extends JPanel {
         settButton.setContentAreaFilled(false);
         this.add(settButton, gbc);
 
-        ImageIcon diffImage = new ImageIcon(getClass().getResource("/dif.png"));
-        diffButton = new JButton("",diffImage);
+        ImageIcon diffImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/dif.png")));
+        JButton diffButton = new JButton("", diffImage);
         gbc.gridx = 0;
         gbc.gridy = 3;
         diffButton.setFocusable(false);
@@ -89,8 +82,8 @@ public class myTitle extends JPanel {
         diffButton.setContentAreaFilled(false);
         this.add(diffButton, gbc);
 
-        ImageIcon quitImage = new ImageIcon(getClass().getResource("/quit.png"));
-        quitButton = new JButton("",quitImage);
+        ImageIcon quitImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/quit.png")));
+        JButton quitButton = new JButton("", quitImage);
         gbc.gridx = 0;
         gbc.gridy = 4;
         quitButton.setFocusable(false);

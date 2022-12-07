@@ -18,11 +18,6 @@ import com.Board.BoardData;
 public class DisplayLayout extends JFrame implements Runnable{
     public KeyHandler kh = new KeyHandler(this);
 
-    // Set up display
-    protected int pixelsize = 60;   //60x60 pixels
-    private int columns = 26;
-    private int rows = 17;
-
     Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
     int displaywidth = screenSize.width;
@@ -31,21 +26,20 @@ public class DisplayLayout extends JFrame implements Runnable{
     public int currentCard = 1;
 
     // Declare CardLayout class objects.
-    private CardLayout dl;
+    private final CardLayout dl;
 
     public JPanel displayPanel;
-    private myTitle titlePanel;
+    private final myTitle titlePanel;
     public myGame playPanel;
-    private mySettings settPanel;
-    private myDifficulty diffPanel;
-    private myGameOver gameOver;
-    private myGameWon gameWon;
+    private final mySettings settPanel;
+    private final myDifficulty diffPanel;
+    private final myGameOver gameOver;
+    private final myGameWon gameWon;
     public JPanel pausePanel;
     public boolean gameovertest;
     public boolean gameWonTest;
 
 
-    private GridBagConstraints gbc;
     public int pause = 0;
     Font titleText;
     Font headerText;
@@ -95,7 +89,6 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         // set the layout
         displayPanel.setLayout(dl);
-        gbc = new GridBagConstraints();   //   Helps position buttons
 
         // Initialize Title JPanel class
         titlePanel = new myTitle(this,dl);
@@ -172,7 +165,7 @@ public class DisplayLayout extends JFrame implements Runnable{
         gameWonTest = false;
         timer = 0;
         playPanel.firstRender = true;
-        playPanel.treeTypeOrder = new ArrayList<Integer>();
+        playPanel.treeTypeOrder = new ArrayList<>();
 
         //com.Game starts when pressed
         playPanel.repaint();

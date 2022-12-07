@@ -35,8 +35,8 @@ public enum Difficulty {
     HARD{},
     INFINITE{};
 
-    public int getTrapCount() {return 11;};
-    public int getMinRewardProx() {return 0;};
+    public int getTrapCount() {return 11;}
+    public int getMinRewardProx() {return 0;}
     public int getRewardCount() {return 15;}
     public int getEnemyCount() {return 3;}
     public int getMinEnemyProx() {return 5;}

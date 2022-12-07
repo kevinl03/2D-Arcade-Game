@@ -9,25 +9,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Creates this JPanel to represent the Difficulty screen
  */
 public class myDifficulty extends JPanel {
-    private ButtonGroup difGroup;
-    private JToggleButton easyButton;
-    private JToggleButton mediumButton;
-    private JToggleButton hardButton;
+    private final JToggleButton easyButton;
+    private final JToggleButton mediumButton;
+    private final JToggleButton hardButton;
 
-    private JToggleButton infiniteButton;
+    private final BufferedImage testimagePng;
 
-    private JButton difbackButton;
-    private GridBagConstraints gbc;
-    private Font headerText;
-    private JLabel difLabel;
-    private BufferedImage testimagePng;
-
-    private DisplayLayout dl;
+    private final DisplayLayout dl;
 
     /**
      * Constructor creates the difficulty screen.
@@ -42,22 +36,22 @@ public class myDifficulty extends JPanel {
         this.dl = dl;
 
         try {
-            testimagePng = ImageIO.read(getClass().getResource("/testimage.png"));
+            testimagePng = ImageIO.read(Objects.requireNonNull(getClass().getResource("/testimage.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        gbc = new GridBagConstraints();
+        GridBagConstraints gbc = new GridBagConstraints();
         this.setLayout(new GridBagLayout());
 
-        difLabel = new JLabel("Difficulty");
-        headerText = new Font("Times New Roman", Font.BOLD, 30);
+        JLabel difLabel = new JLabel("Difficulty");
+        Font headerText = new Font("Times New Roman", Font.BOLD, 30);
         difLabel.setFont(headerText);
         this.add(difLabel);
 
         // Initialize Toggle/Button objects and add to buttongroup and Difficulty Panel
-        difGroup = new ButtonGroup();
-        ImageIcon easyImage = new ImageIcon(getClass().getResource("/easy.png"));
+        ButtonGroup difGroup = new ButtonGroup();
+        ImageIcon easyImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/easy.png")));
         easyButton = new JToggleButton("",easyImage,true);
         gbc.insets = new Insets(dl.displayheight/30,0,0,0);
         gbc.gridx = 0;
@@ -69,7 +63,7 @@ public class myDifficulty extends JPanel {
         easyButton.setContentAreaFilled(false);
         this.add(easyButton, gbc);
 
-        ImageIcon medImage = new ImageIcon(getClass().getResource("/medium.png"));
+        ImageIcon medImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/medium.png")));
         mediumButton = new JToggleButton("",medImage,true);
         //gbc.insets = new Insets(50,0,0,0);
         gbc.gridx = 0;
@@ -80,7 +74,7 @@ public class myDifficulty extends JPanel {
         mediumButton.setContentAreaFilled(false);
         this.add(mediumButton, gbc);
 
-        ImageIcon hardImg = new ImageIcon(getClass().getResource("/hard.png"));
+        ImageIcon hardImg = new ImageIcon(Objects.requireNonNull(getClass().getResource("/hard.png")));
         hardButton = new JToggleButton("",hardImg,true);
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -90,8 +84,8 @@ public class myDifficulty extends JPanel {
         hardButton.setContentAreaFilled(false);
         this.add(hardButton, gbc);
 
-        ImageIcon infiniteImg = new ImageIcon(getClass().getResource("/infinit.png"));
-        infiniteButton = new JToggleButton("",infiniteImg,true);
+        ImageIcon infiniteImg = new ImageIcon(Objects.requireNonNull(getClass().getResource("/infinit.png")));
+        JToggleButton infiniteButton = new JToggleButton("", infiniteImg, true);
         gbc.gridx = 0;
         gbc.gridy = 4;
         infiniteButton.setFocusable(false);
@@ -100,8 +94,8 @@ public class myDifficulty extends JPanel {
         infiniteButton.setContentAreaFilled(false);
         this.add(infiniteButton, gbc);
 
-        ImageIcon backImage = new ImageIcon(getClass().getResource("/back.png"));
-        difbackButton = new JButton("",backImage);
+        ImageIcon backImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/back.png")));
+        JButton difbackButton = new JButton("", backImage);
         gbc.gridx = 0;
         gbc.gridy = 5;
         difbackButton.setFocusable(false);

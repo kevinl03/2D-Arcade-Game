@@ -18,7 +18,7 @@ public class ObjectData {
     /**
      * {@link Hero} object
      */
-    private Hero hero;
+    private final Hero hero;
 
     /**
      * ArrayList of all {@link Enemy} objects
@@ -126,10 +126,6 @@ public class ObjectData {
                 }
             }
         }
-        //test
-        //Position herostart = new Position(2,14);
-        //hero.setPosition(herostart);
-        //
         hero.setHeroColor(heroColor);
     }
 

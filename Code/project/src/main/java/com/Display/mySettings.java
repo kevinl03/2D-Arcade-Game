@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Creates this JPanel to represent the Settings screen.
@@ -24,18 +25,12 @@ public class mySettings extends JPanel {
     private BufferedImage leftButtonPng;
     private BufferedImage rightButtonPng;
     private HeroColor color;
-    private JButton leftScroll;
-    private JButton rightScroll;
-    private BufferedImage testimagePng;
-    private JLabel settLabel;
-    private Font headerText;
-    private ButtonGroup soundGroup;
-    private JToggleButton muteButton;
-    private JToggleButton unmuteButton;
-    private GridBagConstraints gbc;
-    private JButton settbackButton;
-    private CardLayout cl;
-    private DisplayLayout dl;
+    private final JButton leftScroll;
+    private final JButton rightScroll;
+    private final BufferedImage testimagePng;
+    private final JToggleButton muteButton;
+    private final JToggleButton unmuteButton;
+    private final DisplayLayout dl;
 
     /**
      * Sets up the available squirrel colours to select.
@@ -47,13 +42,12 @@ public class mySettings extends JPanel {
             heroColorPngs = new HashMap<>();
             URL pathUrl = getClass().getClassLoader().getResource("squirrels/");
             if ((pathUrl != null) && pathUrl.getProtocol().equals("file")) {
-                File files[] = new File(pathUrl.toURI()).listFiles();
+                File[] files = new File(pathUrl.toURI()).listFiles();
                 for(final File fileEntry : files){
                     if(fileEntry.isFile()){
                         String fileName = fileEntry.getName();
                         HeroColor color = HeroColor.BROWN;
                         if(fileName.contains("Brown")){
-                            color = HeroColor.BROWN;
                         } else if (fileName.contains("Grey")) {
                             color = HeroColor.GREY;
                         } else if (fileName.contains("Red")) {
@@ -62,14 +56,12 @@ public class mySettings extends JPanel {
                             color = HeroColor.WHITE;
                         }
                         if(fileName.contains("East2")){
-                            heroColorPngs.put(color, ImageIO.read(getClass().getResource("/squirrels/" + fileName)));
+                            heroColorPngs.put(color, ImageIO.read(Objects.requireNonNull(getClass().getResource("/squirrels/" + fileName))));
                         }
                     }
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -79,8 +71,8 @@ public class mySettings extends JPanel {
      */
     private void getButtonPngs() {
         try {
-            leftButtonPng = ImageIO.read(getClass().getResource("/scrollButtonLeft.png"));
-            rightButtonPng = ImageIO.read(getClass().getResource("/scrollButtonRight.png"));
+            leftButtonPng = ImageIO.read(Objects.requireNonNull(getClass().getResource("/scrollButtonLeft.png")));
+            rightButtonPng = ImageIO.read(Objects.requireNonNull(getClass().getResource("/scrollButtonRight.png")));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -98,37 +90,33 @@ public class mySettings extends JPanel {
      */
     public mySettings(DisplayLayout dl, CardLayout cl) {
 
-        this.cl = cl;
         this.dl = dl;
-        gbc = new GridBagConstraints();
-        gbc.anchor = gbc.CENTER;
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.CENTER;
 
         // Setting up the settings panel
         setLayout(new GridBagLayout());
-        settLabel = new JLabel("Settings");
-        headerText = new Font("Times New Roman", Font.BOLD, (dl.displayheight/15));
+        JLabel settLabel = new JLabel("Settings");
+        Font headerText = new Font("Times New Roman", Font.BOLD, (dl.displayheight / 15));
         settLabel.setFont(headerText);
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.insets = new Insets(0,0,0,0);
-        this.add(settLabel,gbc);
+        this.add(settLabel, gbc);
 
-        soundGroup = new ButtonGroup();
-        ImageIcon muteImage = new ImageIcon(getClass().getResource("/muteBtn.png"));
+        ButtonGroup soundGroup = new ButtonGroup();
+        ImageIcon muteImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/muteBtn.png")));
         muteButton = new JToggleButton("",muteImage);
         gbc.insets = new Insets((dl.displayheight/15),0,0,0);
         gbc.gridx = 1;
         gbc.gridy = 2;
-//        gbc.ipadx = 200;
-//        gbc.ipady = 50;
-        //muteButton.setBorder(BorderFactory.createEmptyBorder());
         muteButton.setFocusable(false);
         muteButton.setBorderPainted(false);
         muteButton.setContentAreaFilled(false);
         muteButton.setOpaque(false);
-        this.add(muteButton,gbc);
+        this.add(muteButton, gbc);
 
-        ImageIcon unmuteImage = new ImageIcon(getClass().getResource("/unmute.png"));
+        ImageIcon unmuteImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/unmute.png")));
         unmuteButton = new JToggleButton("",unmuteImage,true);
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -136,18 +124,18 @@ public class mySettings extends JPanel {
         unmuteButton.setBorderPainted(false);
         unmuteButton.setContentAreaFilled(false);
         unmuteButton.setOpaque(false);
-        this.add(unmuteButton,gbc);
+        this.add(unmuteButton, gbc);
 
 
-        ImageIcon backImage = new ImageIcon(getClass().getResource("/back.png"));
-        settbackButton = new JButton("",backImage);
+        ImageIcon backImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/back.png")));
+        JButton settbackButton = new JButton("", backImage);
         gbc.gridx = 1;
         gbc.gridy = 4;
         settbackButton.setBorderPainted(false);
         settbackButton.setFocusable(false);
         settbackButton.setOpaque(false);
         settbackButton.setContentAreaFilled(false);
-        this.add(settbackButton,gbc);
+        this.add(settbackButton, gbc);
 
         settbackButton.addActionListener(new ActionListener() {
             /**
@@ -205,7 +193,7 @@ public class mySettings extends JPanel {
         try {
             getButtonPngs();
             getHeroColors();
-            testimagePng = ImageIO.read(getClass().getResource("/settingB.jpg"));
+            testimagePng = ImageIO.read(Objects.requireNonNull(getClass().getResource("/settingB.jpg")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
