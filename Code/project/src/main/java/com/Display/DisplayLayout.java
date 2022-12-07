@@ -120,13 +120,13 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         // Adding the cardPanel into layout, constraints associates panel
         //always shows First panel
-        displayPanel.add(titlePanel, "1");
-        displayPanel.add(playPanel, "2");
-        displayPanel.add(settPanel, "3");
-        displayPanel.add(diffPanel, "4");
-        displayPanel.add(pausePanel, "5");
-        displayPanel.add(gameOver, "6");
-        displayPanel.add(gameWon, "7");
+        displayPanel.add(titlePanel, "Title");
+        displayPanel.add(playPanel, "Play");
+        displayPanel.add(settPanel, "Settings");
+        displayPanel.add(diffPanel, "Difficulty");
+        displayPanel.add(pausePanel, "Pause");
+        displayPanel.add(gameOver, "GameOver");
+        displayPanel.add(gameWon, "GameWon");
 
 
         //----------------------------------Title in myTitle-------------------------------------------------
@@ -228,13 +228,13 @@ public class DisplayLayout extends JFrame implements Runnable{
 
         if(gameovertest) {
             //Show game over
-            dl.show(displayPanel, "6");
+            dl.show(displayPanel, "GameOver");
             //always need to update currentCard
             currentCard = 6;
             gameOver.setValues(timer / 1000, gameObjectData.getHero().getScore());
         }
         if(gameWonTest){
-            dl.show(displayPanel, "7");
+            dl.show(displayPanel, "GameWon");
             currentCard = 6;
             gameWon.setValues(timer/1000, gameObjectData.getHero().getScore());
         }

@@ -142,7 +142,7 @@ public class myGame extends JPanel{
                 //if panel is not open, pop out panel
                 if (dl.currentCard != 5) {
                     // show associated pause panel
-                    cl.show(dl.displayPanel, "5");
+                    cl.show(dl.displayPanel, "Pause");
 
                     // current panel is pause Panel
                     dl.currentCard = 5;

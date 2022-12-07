@@ -85,7 +85,7 @@ public class myGameOver extends JPanel {
                 dl.sound.playClick();
                 //Go back to main menu
                 // show associated difficulty panel
-                cl.show(dl.displayPanel, "1");
+                cl.show(dl.displayPanel, "Title");
 
                 // current panel is difficulty Panel
                 dl.currentCard = 1;

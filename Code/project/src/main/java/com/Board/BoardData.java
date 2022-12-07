@@ -54,14 +54,10 @@ public class BoardData {
     public void setOuterWalls() {
         for (int i = 0; i < rows; i++) {
             ObjectMap[0][i] = Objects.TREE;
-        }
-        for (int i = 0; i < rows; i++) {
             ObjectMap[columns - 1][i] = Objects.TREE;
         }
         for (int i = 0; i < columns; i++) {
             ObjectMap[i][0] = Objects.TREE;
-        }
-        for (int i = 0; i < columns; i++) {
             ObjectMap[i][rows - 1] = Objects.TREE;
         }
     }
@@ -694,10 +690,4 @@ public class BoardData {
 
 
 }
-
-    /* might be redunant
-    public String[][] getBoardData(){
-        return string2DArray;
-    }
-    */
 

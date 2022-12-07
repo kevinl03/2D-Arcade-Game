@@ -160,7 +160,7 @@ public class mySettings extends JPanel {
              */
             public void actionPerformed(ActionEvent arg0) {
                 // go back to title panel
-                cl.show(dl.displayPanel, "1");
+                cl.show(dl.displayPanel, "Title");
                 dl.sound.playClick();
                 // current panel is difficulty Panel
                 dl.currentCard = 1;

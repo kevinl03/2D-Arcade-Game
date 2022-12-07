@@ -184,7 +184,7 @@ public class myDifficulty extends JPanel {
             public void actionPerformed(ActionEvent arg0) {
                 dl.sound.playClick();
                 // show associated difficulty panel
-                cl.show(dl.displayPanel, "1");
+                cl.show(dl.displayPanel, "Title");
                 // current panel is difficulty Panel
                 dl.currentCard = 1;
             }

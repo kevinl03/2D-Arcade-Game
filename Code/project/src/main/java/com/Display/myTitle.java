@@ -115,7 +115,7 @@ public class myTitle extends JPanel {
                 dl.board = dl.gameObjectData.getBoard();
 
                 // show associated play panel
-                cl.show(dl.displayPanel, "2");
+                cl.show(dl.displayPanel, "Play");
                 // current panel is play Panel
                 dl.currentCard = 2;
                 dl.playPanel.setFocusable(true);
@@ -138,7 +138,7 @@ public class myTitle extends JPanel {
             public void actionPerformed(ActionEvent arg0)
             {
                 // show associated setting panel
-                cl.show(dl.displayPanel, "3");
+                cl.show(dl.displayPanel, "Settings");
                 dl.sound.playClick();
                 // current panel is settings Panel
                 dl.currentCard = 3;
@@ -156,7 +156,7 @@ public class myTitle extends JPanel {
              */
             public void actionPerformed(ActionEvent arg0) {
                 // show associated difficulty panel
-                cl.show(dl.displayPanel, "4");
+                cl.show(dl.displayPanel, "Difficulty");
                 dl.sound.playClick();
 
                 // current panel is difficulty Panel

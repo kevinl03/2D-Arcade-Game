@@ -124,7 +124,7 @@ private GridBagConstraints gbc;
                 dl.kh.escape = false;
                 // Out of pause
                 // show associated play panel
-                cl.show(dl.displayPanel, "2");
+                cl.show(dl.displayPanel, "Play");
 
                 // current panel is play Panel
                 dl.currentCard = 2;
@@ -152,7 +152,7 @@ private GridBagConstraints gbc;
                 dl.kh.escape = false;
                 //Go back to main menu
                 // show associated difficulty panel
-                cl.show(dl.displayPanel, "1");
+                cl.show(dl.displayPanel, "Title");
 
                 // current panel is difficulty Panel
                 dl.currentCard = 1;
