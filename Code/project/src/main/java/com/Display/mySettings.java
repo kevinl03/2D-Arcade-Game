@@ -26,7 +26,7 @@ public class mySettings extends JPanel {
     private HeroColor color;
     private JButton leftScroll;
     private JButton rightScroll;
-    private BufferedImage testimage_png;
+    private BufferedImage testimagePng;
     private JLabel settLabel;
     private Font headerText;
     private ButtonGroup soundGroup;
@@ -205,7 +205,7 @@ public class mySettings extends JPanel {
         try {
             getButtonPngs();
             getHeroColors();
-            testimage_png = ImageIO.read(getClass().getResource("/settingB.jpg"));
+            testimagePng = ImageIO.read(getClass().getResource("/settingB.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -269,8 +269,8 @@ public class mySettings extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (testimage_png != null) {
-            g.drawImage(testimage_png, 0, 0, dl.displaywidth, dl.displayheight, null);
+        if (testimagePng != null) {
+            g.drawImage(testimagePng, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
         skinSelection(g);
     }

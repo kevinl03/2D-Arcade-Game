@@ -24,7 +24,7 @@ private JLabel pauseLabel;
 private Font headerText;
 
 
-private BufferedImage pause_png;
+private BufferedImage pausePng;
 Font titleText;
 private GridBagConstraints gbc;
 
@@ -47,7 +47,7 @@ private GridBagConstraints gbc;
 
         //background
         try {
-            pause_png = ImageIO.read(getClass().getResource("/pause_background.png"));
+            pausePng = ImageIO.read(getClass().getResource("/pause_background.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -176,8 +176,8 @@ private GridBagConstraints gbc;
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (pause_png != null) {
-            g.drawImage(pause_png, 0, 0, dl.displaywidth, dl.displayheight, null);
+        if (pausePng != null) {
+            g.drawImage(pausePng, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
     }
 

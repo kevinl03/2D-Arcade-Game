@@ -19,8 +19,8 @@ public class myGameOver extends JPanel {
     private JLabel scoreLabel;
     private JButton gomenuButton;
 
-    private BufferedImage win_png;
-    private BufferedImage testimage_png;
+    private BufferedImage winPng;
+    private BufferedImage testimagePng;
     private DisplayLayout dl;
 
     /**
@@ -51,8 +51,8 @@ public class myGameOver extends JPanel {
 
         //background
         try {
-            win_png = ImageIO.read(getClass().getResource("/win.png"));
-            testimage_png = ImageIO.read(getClass().getResource("/settingB.jpg"));
+            winPng = ImageIO.read(getClass().getResource("/win.png"));
+            testimagePng = ImageIO.read(getClass().getResource("/settingB.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -103,9 +103,9 @@ public class myGameOver extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (win_png != null) {
-            g.drawImage(testimage_png, 0, 0, dl.displaywidth, dl.displayheight, null);
-            g.drawImage(win_png, 0, 0, dl.displaywidth, dl.displayheight, null);
+        if (winPng != null) {
+            g.drawImage(testimagePng, 0, 0, dl.displaywidth, dl.displayheight, null);
+            g.drawImage(winPng, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
     }
 

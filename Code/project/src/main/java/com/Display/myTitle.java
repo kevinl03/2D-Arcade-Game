@@ -8,15 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Creates this JPanel to represent the Title screen
  */
 public class myTitle extends JPanel {
 
-    private BufferedImage title_png;
-    private BufferedImage title_squirrel;
+    private BufferedImage titlePng;
+    private BufferedImage titleSquirrel;
     private Font titleText;
     private JLabel titleLabel;
     private JButton playButton;
@@ -38,8 +37,8 @@ public class myTitle extends JPanel {
      */
     public myTitle(DisplayLayout dl, CardLayout cl){
         try {
-            title_png = ImageIO.read(getClass().getResource("/title_pic.png"));
-            title_squirrel = ImageIO.read(getClass().getResource("/title_squirrel.png"));
+            titlePng = ImageIO.read(getClass().getResource("/title_pic.png"));
+            titleSquirrel = ImageIO.read(getClass().getResource("/title_squirrel.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -188,8 +187,8 @@ public class myTitle extends JPanel {
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        g.drawImage(title_png, 0, 0, displayLayout.displaywidth, displayLayout.displayheight, null);
-        g.drawImage(title_squirrel, displayLayout.displaywidth/4, displayLayout.displayheight/2, displayLayout.displaywidth/5, displayLayout.displayheight/3, null);
+        g.drawImage(titlePng, 0, 0, displayLayout.displaywidth, displayLayout.displayheight, null);
+        g.drawImage(titleSquirrel, displayLayout.displaywidth/4, displayLayout.displayheight/2, displayLayout.displaywidth/5, displayLayout.displayheight/3, null);
     }
 
     public JButton getplayButton() {return playButton;}

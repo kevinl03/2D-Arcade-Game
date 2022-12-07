@@ -25,7 +25,7 @@ public class myDifficulty extends JPanel {
     private GridBagConstraints gbc;
     private Font headerText;
     private JLabel difLabel;
-    private BufferedImage testimage_png;
+    private BufferedImage testimagePng;
 
     private DisplayLayout dl;
 
@@ -42,7 +42,7 @@ public class myDifficulty extends JPanel {
         this.dl = dl;
 
         try {
-            testimage_png = ImageIO.read(getClass().getResource("/testimage.png"));
+            testimagePng = ImageIO.read(getClass().getResource("/testimage.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -201,8 +201,8 @@ public class myDifficulty extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (testimage_png != null) {
-            g.drawImage(testimage_png, 0, 0, dl.displaywidth, dl.displayheight, null);
+        if (testimagePng != null) {
+            g.drawImage(testimagePng, 0, 0, dl.displaywidth, dl.displayheight, null);
         }
     }
 
