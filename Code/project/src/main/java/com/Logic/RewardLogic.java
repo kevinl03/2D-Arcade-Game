@@ -27,15 +27,17 @@ public class RewardLogic {
         Objects[][] objectMap = boardData.getBoardData();
         for (Bonus bonusObj : bonuses){
             //if the object is spawned, we must know to despawn it here
-            if (bonusObj.getisSpawned() && ticks - bonusObj.getStartTime() > rand.nextInt(maxLifeTime - minLifeTime + 1) + minLifeTime && objectMap[bonusObj.getX()][bonusObj.getY()] == Objects.BONUS) {
-                        //chooses a new empty tile
-                        int X = bonusObj.getX();
-                        int Y = bonusObj.getY();
-                        //set object position
-                        //replace objects and set new positions
-                        objectMap[X][Y] = Objects.EMPTY;
-                        bonusObj.setdespawnedTime(ticks);
-                        bonusObj.setisSpawned(false);
+            if (bonusObj.getisSpawned() ) {
+                if (ticks - bonusObj.getStartTime() > rand.nextInt(maxLifeTime - minLifeTime + 1) + minLifeTime && objectMap[bonusObj.getX()][bonusObj.getY()] == Objects.BONUS) {
+                    //chooses a new empty tile
+                    int X = bonusObj.getX();
+                    int Y = bonusObj.getY();
+                    //set object position
+                    //replace objects and set new positions
+                    objectMap[X][Y] = Objects.EMPTY;
+                    bonusObj.setdespawnedTime(ticks);
+                    bonusObj.setisSpawned(false);
+                }
             }
             //if the object is despawned, we must know if we have to respawn it here
             else {
