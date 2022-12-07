@@ -6,32 +6,30 @@ package com.Entities;
 */
 
 public class Bonus extends Reward {
-    public Bonus() {
-        super();
-    }
-
     private boolean isSpawned = false;
 
     protected int despawnedTime;
 
+    public Bonus(int x, int y, int time, int p) {
+        super(x, y, time, p);
+        despawnedTime = 0;
+    }
+
     public int getdespawnTime(){
         return despawnedTime;
     }
-    public void setdespawnedTime(int despawnT){
-        despawnedTime = despawnT;
+    public void setdespawnedTime(int time){
+        despawnedTime = time;
     }
 
     public boolean getisSpawned(){
         return isSpawned;
     }
-    public void setisSpawned(boolean bool){
-        isSpawned = bool;
+    public void setisSpawned(boolean isStarted){
+        isSpawned = isStarted;
     }
 
 
-    public Bonus(int x, int y, int time, int p) {
 
-        super(x, y, time, p);
-        despawnedTime = 0;
-    }
+
 }
