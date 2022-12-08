@@ -29,13 +29,20 @@ public class RewardLogic {
         for (Bonus bonusObj : bonuses){
             //if the object is spawned, we must know to despawn it here
             if (bonusObj.getisSpawned() ) {
-                if (ticks - bonusObj.getStartTime() > rand.nextInt(maxLifeTime - minLifeTime + 1) + minLifeTime && objectMap[bonusObj.getX()][bonusObj.getY()] == Objects.BONUS) {
+
+                int bonusObjX = bonusObj.getX();
+                int bonusObjY = bonusObj.getY();
+
+                Position bonusPosition = new Position(bonusObjX,bonusObjY);
+
+                int despawnTime = rand.nextInt(maxLifeTime - minLifeTime + 1) + minLifeTime;
+                int totalTimeSpawned = ticks - bonusObj.getStartTime();
+
+                if (totalTimeSpawned > despawnTime &&  boardData.getTypeAt(bonusPosition) == Objects.BONUS) {
                     //chooses a new empty tile
-                    int X = bonusObj.getX();
-                    int Y = bonusObj.getY();
                     //set object position
                     //replace objects and set new positions
-                    objectMap[X][Y] = Objects.EMPTY;
+                    objectMap[bonusObjX][bonusObjY] = Objects.EMPTY;
                     bonusObj.setdespawnedTime(ticks);
                     bonusObj.setisSpawned(false);
                 }
@@ -47,7 +54,10 @@ public class RewardLogic {
                 Position newPos = new Position(randomXY[0], randomXY[1]);
                 //if it's been between 5 - 10 seconds then we can respawn the object
                 int respawnTime = rand.nextInt(maxDespawnTime-minDespawnTime+1) + minDespawnTime;
-                if (ticks - bonusObj.getdespawnTime() > respawnTime && boardData.getTypeAt(newPos) == Objects.EMPTY){
+                int totalTimeDespawned = ticks - bonusObj.getdespawnTime();
+
+
+                if (totalTimeDespawned > respawnTime && boardData.getTypeAt(newPos) == Objects.EMPTY){
                     //show the object on the map again only if the tile is empty
                         boardData.setTypeAt(newPos, Objects.BONUS);
                         swap(bonusObj,newPos);
@@ -64,9 +74,6 @@ public class RewardLogic {
         firstPos.setY(secondPos.getY());
 
     }
-
-
-
     public int getMaxDespawnTime() {
         return maxDespawnTime;
     }
