@@ -55,14 +55,6 @@ public class RewardLogic {
                         bonusObj.setStartTime(ticks);
                         bonusObj.setdespawnedTime(ticks);
                 }
-                //used to hide object if the map just generated when game is early
-                if (ticks < NUMBER_OF_TICKS && boardData.getTypeAt(bonusObj) == Objects.BONUS ) {
-                    Position currentPosition = new Position();
-                    swap(currentPosition,bonusObj);
-                    boardData.setTypeAt(currentPosition, Objects.EMPTY);
-                    //set the position to false just in case
-                    bonusObj.setisSpawned(false);
-                }
             }
         }
     }
