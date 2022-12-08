@@ -15,10 +15,11 @@ import java.util.Random;
  * do not need to be updated inside of {@link myGame#updates()}
  */
 public class RewardLogic {
-    int maxLifeTime = 100000;
-    int maxDespawnTime = 100000;
-    int minLifeTime = 7000;
-    int minDespawnTime = 7000;
+    private int maxLifeTime = 100000;
+    private int maxDespawnTime = 100000;
+    private int minLifeTime = 7000;
+    private int minDespawnTime = 7000;
+
     public static final int NUMBER_OF_TICKS = 6000;
     public void updateRewards(ObjectData gameObjectData, int ticks){
         BoardData boardData = gameObjectData.getBoard();
@@ -83,4 +84,12 @@ public class RewardLogic {
     public int getMinDespawnTime() {
         return minDespawnTime;
     }
+
+    public void setMaxSpawnTime(int ticks){maxLifeTime = ticks;}
+
+    public void setMaxDespawnTime(int ticks){maxDespawnTime = ticks;}
+
+    public void setMinSpawnTime(int ticks){minLifeTime = ticks;}
+
+    public void setMinDespawnTime(int ticks){minDespawnTime = ticks;}
 }
