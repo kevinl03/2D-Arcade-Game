@@ -51,17 +51,12 @@ public class Sound {
     }
 
     public void playMusic(int firstTime) {
-        if(firstTime==1) {
-            setMusic();
-            play();
-            loop();
-        }
-        else {
+        if (firstTime != 1) {
             stopMusic();
-            setMusic();
-            play();
-            loop();
         }
+        setMusic();
+        play();
+        loop();
     }
     public void startupMusic() {
         playMusic(1);
