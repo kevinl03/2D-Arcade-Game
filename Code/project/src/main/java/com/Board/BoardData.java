@@ -1,6 +1,7 @@
 package com.Board;
 
 import com.Entities.Position;
+import com.Helpers.RandomXY;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -272,7 +273,7 @@ public class BoardData {
         rewardCount = dif.getRewardCount();
 
         for (int i = 0; i < rewardCount; i++) {
-            int[] xy = getRandomXY();
+            int[] xy = new RandomXY().getRandomXY(this);
             int x = xy[0];
             int y = xy[1];
 
@@ -359,7 +360,7 @@ public class BoardData {
             boolean posfound = false;
             while(!posfound){
                 //generate an array {x,y} where both variables are within bounds of map
-                int[] coords = getRandomXY();
+                int[] coords = new RandomXY().getRandomXY(this);
                 //check to see if generation is a valid
                 if (ObjectMap[coords[0]][coords[1]] == Objects.EMPTY){
 
@@ -396,7 +397,8 @@ public class BoardData {
 
         //loop for the number of enemies
         for(int i = 0; i < enemyCount; i++){
-            int[] xy = getRandomXY();
+            int[] xy = new RandomXY().getRandomXY(this);
+
             int x = xy[0];
             int y = xy[1];
             //must pass
@@ -421,7 +423,7 @@ public class BoardData {
         int bushCount = 5;
         for(int i = 0; i < bushCount; i++){
             //get random xy coordinate
-            int[] xy = getRandomXY();
+            int[] xy = new RandomXY().getRandomXY(this);
             int x = xy[0];
             int y = xy[1];
             //must be an empty tile
@@ -445,7 +447,7 @@ public class BoardData {
         for (int trapcount = 1; trapcount <= count; trapcount++){
             boolean posfound = false;
             while(!posfound){
-                int[] coords = getRandomXY();
+                int[] coords = new RandomXY().getRandomXY(this);
                 //check to see if generation is a valid
                 if (ObjectMap[coords[0]][coords[1]] == Objects.EMPTY && coords[1] != getboardheight()-2){
 
@@ -621,21 +623,6 @@ public class BoardData {
         return columns;
     }
 
-    /**
-     *
-     * @return an array of ints where array[0] = x
-     */
-    private int[] getRandomXY() {
-
-        Random rand = new Random(); //instance of random class
-
-        //-2 + 1 in order to not consider the border
-        int x = rand.nextInt(columns-2) + 1;
-        int y = rand.nextInt(rows-2) + 1;
-        //store inside of array
-
-        return new int[]{x,y};
-    }
 
     /**
      *
