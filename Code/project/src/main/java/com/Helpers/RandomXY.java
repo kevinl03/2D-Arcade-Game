@@ -6,11 +6,11 @@ import com.Board.Objects;
 import java.util.Random;
 
 
-/**
- * @param boardData 2D array of Objects, see {@link BoardData}
- * @return int[] a random position on the board that satisfied the position BoardData[int[0]][int[1]] == EMPTY
- */
 public class RandomXY {
+    /**
+     * @param boardData 2D array of Objects, see {@link BoardData}
+     * @return int[] a random position on the board that satisfied the position BoardData[int[0]][int[1]] == EMPTY
+     */
     public int[] getRandomXY(BoardData boardData) {
 
         Random rand = new Random(); //instance of random class
