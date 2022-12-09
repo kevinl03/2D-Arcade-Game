@@ -32,8 +32,30 @@ public class RewardLogic {
                 Position bonusPosition = new Position();
                 setToNewPos(bonusPosition,bonusObj);
 
+                //chooses a random number based on the lifetime which will despawn
+                //the range is from minLifetime until maxLifetime
+
+
                 int despawnTime = rand.nextInt(maxLifeTime - minLifeTime + 1) + minLifeTime;
                 int totalTimeSpawned = ticks - bonusObj.getStartTime();
+
+                //as ticks gets reset for every call of updateRewards, the time period in
+                //which the ticks is greater than despawn time decreases. Maxlifetime is made
+                //quite large so that there is a wide range of possible despawn times.
+                // The longer ticks, the higher probability to despawn.
+                // As a result the distribution to despawn is randomized
+
+                //Range :   0 <------- minLifeTime <------------------------------> MaxLifeTime --> Error
+                // Progression of ticks:              ^   despawnTime anywhere here   ^
+                // totalTimeSpawned += 525
+                //            totalTimeSpawned
+                //                 totalTimeSpawned
+                //                      totalTimeSpawned ....
+                //                                                       totalTimeSpawned
+                //                                            if(randint < totalTimeSpawned) -> condition for despawn
+                //
+                //ensures that rates are randomized
+                //allows for possibility (although unlikely) for having very long times to respawn
 
                 if (totalTimeSpawned > despawnTime &&  boardData.getTypeAt(bonusPosition) == Objects.BONUS) {
                     //chooses a new empty tile
@@ -52,6 +74,25 @@ public class RewardLogic {
                 //if it's been between 5 - 10 seconds then we can respawn the object
                 int respawnTime = rand.nextInt(maxDespawnTime-minDespawnTime+1) + minDespawnTime;
                 int totalTimeDespawned = ticks - bonusObj.getdespawnTime();
+
+                //as ticks gets increased for every call of updateRewards, the time period in
+                //which the ticks are greater than respawn time decreases. Maxlifetime is made
+                //quite large but realistically the randint will choose a number somewhere in the middle which
+                //will be the average time it will respawn. The longer ticks, the higher probability
+                //to respawn. As a result the distribution to respawn is randomized
+
+                //Range :   0 <------- minDespawnTime <------------------------------> MaxDespawn time --> Error
+                // Progression of ticks:              ^      respawnTime anywhere here   ^
+                // totalTimeDespawned +=525
+                //            totalTimeDespawned
+                //                 totalTimeDespawned
+                //                      totalTimeDespawned ....
+                //                                                      totalTimeDespawned
+                //                                            if(randint < totalTimeDespawned) -> condition for respawn
+                //
+                //ensures that rates are randomized
+                //allows for possibility (although unlikely) for having very long times to despawn
+
 
                 if (totalTimeDespawned > respawnTime && boardData.getTypeAt(newPos) == Objects.EMPTY){
                     //show the object on the map again only if the tile is empty
