@@ -1,7 +1,4 @@
 Building in terminal:
-\*During building (the testing portion) please do not click off the
-window or input any keypresses/mouse clicks. This may cause the keyhandler
-test to fail!
 
     1. Change directory to find cd Code/project
     2. mvn package
